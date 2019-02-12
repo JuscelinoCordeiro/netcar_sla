@@ -1,8 +1,8 @@
-<div class="row-fluid" id="total">
+<div class="row">
     <!--	<h1>Tela Inicial</h1>-->
-    <div class="span4"></div>
+    <div class="col-md-4"></div>
 
-    <div class="span4" id="div-login">
+    <div class="col-md-4" id="div-login">
         <fieldset id="fieldset-login">
             <form name="form-login" action="c_login/logar" method="post">
                 <legend class="text-black hr3">Login</legend>
@@ -27,7 +27,7 @@
 
     </div>
     <!--	div corpo-->
-    <div class="span4"></div>
+    <div class="col-md-4"></div>
 
 </div>
 
