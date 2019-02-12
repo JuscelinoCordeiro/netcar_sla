@@ -11,7 +11,7 @@ class C_login extends CI_Controller {
 
     public function index() {
 
-        $info['titulo'] = "Login";
+        $info['titulo'] = "NetCar - Login";
 
 //
 
@@ -37,7 +37,8 @@ class C_login extends CI_Controller {
 //        $this->session->set_userdata($dados);
 
         $this->load->view('header');
-        $this->load->view('v_inicio', $dados);
+        $this->load->view('navbar');
+        $this->load->view('v_home');
         $this->load->view('footer');
     }
 
