@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-isset($titulo) ? $titulo : $titulo = "Página de teste";
+isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

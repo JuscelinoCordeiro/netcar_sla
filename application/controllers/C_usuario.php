@@ -2,50 +2,56 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_login extends CI_Controller {
+class C_usuario extends MY_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('m_login');
+
+//        if (!$this->session->logado) {
+//            redirect('c_login');
+//        }
+
+        $this->load->model('m_usuario');
     }
 
     public function index() {
 
-        $info['titulo'] = "NetCar - Login";
-
-//
-
-        $this->load->view('header', $info);
-        $this->load->view('v_login');
-        $this->load->view('footer');
+//        $info['titulo'] = "Serviços";
+//        $dados['servicos'] = $this->m_servico->getservicos();
+//        $this->load->view('header', $info);
+//        $this->load->view('navbar');
+//        $this->load->view('v_servico', $dados);
+//        $this->load->view('footer');
     }
 
-    public function logar() {
+    public function listarUsuarios() {
+        $dados['usuarios'] = $this->m_usuario->getUsuarios();
+        $dados['titulo'] = "Usuários";
+        $this->showTemplate('v_usuario', $dados);
+    }
 
-        $idt = $this->input->post('idt');
-        $senha = $this->input->post('senha');
+    public function excluirUsuario($cd_usuario) {
+        $valida = $this->m_usuario->excluirUsuario($cd_usuario);
+//        $dados['titulo'] = "Usuários";
+//        $this->showTemplate('v_usuario', $dados);
+    }
 
-        $valida = $this->m_login->existeUsuario($idt, $senha);
+    public function criarServico($servico) {
+        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
 
-        if ($valida) {
-            $dados = $this->m_login->getUsuario($idt, $senha);
-            $this->session->set_userdata('dados_usuario', $dados);
-            $this->session->set_userdata('logado', TRUE);
-        } else {
-            echo 'usuario inválido';
+        if (isset($dados['servico']) && !empty($dados['servico'])) {
+            $this->load->view('inc/v_inc_servico_editar', $dados);
         }
-
-//        $this->session->set_userdata($dados);
-
-        $this->load->view('header');
-        $this->load->view('navbar');
-        $this->load->view('v_home');
-        $this->load->view('footer');
     }
 
-    public function logout() {
-        $this->session->sess_destroy();
-        redirect('c_login');
+    public function editarServico($cd_servico) {
+        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
+
+        $info['titulo'] = "Editar Serviço";
+
+        if (isset($dados['servico']) && !empty($dados['servico'])) {
+            $this->showTemplate($info, 'inc/v_inc_servico_editar', $dados);
+        }
     }
 
 //

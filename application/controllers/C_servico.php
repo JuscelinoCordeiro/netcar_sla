@@ -2,10 +2,15 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_servico extends CI_Controller {
+class C_servico extends MY_Controller {
 
     function __construct() {
         parent::__construct();
+
+//        if (!$this->session->logado) {
+//            redirect('c_login');
+//        }
+
         $this->load->model('m_servico');
     }
 
@@ -13,12 +18,44 @@ class C_servico extends CI_Controller {
 
         $info['titulo'] = "Serviços";
         $dados['servicos'] = $this->m_servico->getservicos();
-//
-
         $this->load->view('header', $info);
         $this->load->view('navbar');
         $this->load->view('v_servico', $dados);
         $this->load->view('footer');
+    }
+
+    public function salvarServico() {
+        $cd_servico = $this->input->post('cd_servico');
+        $servico = $this->input->post('servico');
+        echo $cd_servico;
+        echo $servico;
+        die();
+        $salvo = $this->m_servico->updateServico($cd_servico, $servico);
+
+//        if ($salvo) {
+//            $dados['mensagem'] = "Serviço alterado com sucesso.";
+//            $this->load->view('inc/v_inc_sucesso', $dados);
+//        } else {
+//            $this->load->view('errors/cli/error_exception');
+//        }
+    }
+
+    public function criarServico($servico) {
+        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
+
+        if (isset($dados['servico']) && !empty($dados['servico'])) {
+            $this->load->view('inc/v_inc_servico_editar', $dados);
+        }
+    }
+
+    public function editarServico($cd_servico) {
+        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
+
+        $info['titulo'] = "Editar Serviço";
+
+        if (isset($dados['servico']) && !empty($dados['servico'])) {
+            $this->showTemplate($info, 'inc/v_inc_servico_editar', $dados);
+        }
     }
 
 //

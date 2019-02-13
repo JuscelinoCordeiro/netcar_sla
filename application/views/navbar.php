@@ -13,7 +13,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/netcar/usuario_listar">
+                            <a href="c_usuario/listarUsuarios">
                                 <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Listar
                             </a>
                         </li>
@@ -47,7 +47,7 @@
                         <li><a href="#"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Minha conta</a></li>
                         <li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Trocar senha</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sair</a></li>
+                        <li><a href="c_login/logout"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sair</a></li>
                     </ul>
                 </li>
             </ul>
