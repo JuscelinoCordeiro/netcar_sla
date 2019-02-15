@@ -17,10 +17,13 @@
                 <input type="hidden" name="acao" value="logar"/>
                 <input type="submit" value="Entrar" class="btn btn-success pull-right"/>
             </form>
-
         </fieldset>
-
         <br><br>
+        <?php
+        if (isset($mensagem) && !empty($mensagem)) {
+            echo '<div class="alert alert-danger">' . $mensagem . '</div>';
+        }
+        ?>
         <p class="footer text-center">Page rendered in <strong>{elapsed_time}</strong>
             seconds. <?php echo (ENVIRONMENT === 'development') ? 'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
         </p>
