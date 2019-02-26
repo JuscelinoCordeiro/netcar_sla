@@ -3,8 +3,9 @@
     <div class="col-md-4"></div>
 
     <div class="col-md-4">
+        <br>
         <img src="<?= base_url('assets/img/carwash.jpg') ?>" alt="carwash"/>
-        <br><br>
+        <br>
     </div>
     <!--	div corpo-->
     <div class="col-md-4"></div>

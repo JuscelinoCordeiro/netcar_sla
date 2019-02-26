@@ -1,4 +1,3 @@
-
 <div id="row">
     <div class="col-md-2"></div>
     <div class="col-md-8 text text-center"><h2 class="titulo"><?= $titulo ?></h2></div>

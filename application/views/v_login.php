@@ -4,7 +4,7 @@
 
     <div class="col-md-4" id="div-login">
         <fieldset id="fieldset-login">
-            <form name="form-login" action="c_login/logar" method="post">
+            <form name="form-login" action="/netcar/c_login/logar" method="post">
                 <legend class="text-black hr3">Login</legend>
                 <div class="form-group">
                     <label class="control-label">Identidade</label>

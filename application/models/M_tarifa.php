@@ -3,29 +3,22 @@
 if (!defined('BASEPATH'))
     exit('No	direct script access allowed');
 
-class M_usuario extends CI_Model {
+class M_tarifa extends CI_Model {
 
     public function __construct() {
         parent::__construct();
     }
 
-    public function getUsuarios() {
-        $sql = "SELECT u.*, up.cod_perfil, p.descricao
-                FROM usuario u
-                INNER JOIN usuario_perfil up
-                ON u.cd_usuario = up.cod_usuario
-                LEFT JOIN perfil p
-                ON up.cod_perfil = p.cod";
+    public function getTarifas() {
+        $sql = "SELECT t.*, tv.tipo, s.servico
+                FROM tarifa t
+                INNER JOIN tipo_veiculo tv
+                ON t.cd_tpveiculo = tv.cd_tpveiculo
+                INNER JOIN servico s
+                ON t.cd_servico = s.cd_servico
+                where s.ativo = 1
+                ORDER BY t.cd_tpveiculo";
         return $this->db->query($sql);
-    }
-
-    //SEM SENHA E COM NIVEL 0 DEFAULT (USUÁRIO)
-    public function cadastrarUsuario($dados) {
-        $sql = "INSERT INTO usuario"
-                . "(nome, idt, endereco, celular, fixo)"
-                . " VALUES (?, ?, ?, ?, ? )";
-//        return $this->db->query($sql, array($dados));
-        return $this->db->query($sql, array($dados['nome'], $dados['idt'], $dados['endereco'], $dados['celular'], $dados['fixo']));
     }
 
     public function getusuarioById($cd_usuario) {
@@ -46,6 +39,11 @@ class M_usuario extends CI_Model {
     public function updateUsuario($cd_servico, $servico) {
         $sql = "update servico set servico = ? where cd_servico = ?";
         return $this->db->query($sql, array($servico, $cd_servico));
+    }
+
+    public function criarUsuario($servico) {
+        $sql = "insert into servico (servico) values ?";
+        return $this->db->query($sql, $servico);
     }
 
 }

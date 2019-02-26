@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_usuario extends MY_Controller {
+class C_tarifa extends MY_Controller {
 
     function __construct() {
         parent::__construct();
@@ -11,17 +11,14 @@ class C_usuario extends MY_Controller {
 //            redirect('c_login');
 //        }
 
-        $this->load->model('m_usuario');
+        $this->load->model('m_tarifa');
     }
 
     public function index() {
 
-//        $info['titulo'] = "Serviços";
-//        $dados['servicos'] = $this->m_servico->getservicos();
-//        $this->load->view('header', $info);
-//        $this->load->view('navbar');
-//        $this->load->view('v_servico', $dados);
-//        $this->load->view('footer');
+        $dados['tarifas'] = $this->m_tarifa->getTarifas();
+        $dados['titulo'] = "Tarifas";
+        $this->showTemplate('v_tarifa', $dados);
     }
 
     public function listarUsuarios() {
@@ -36,31 +33,12 @@ class C_usuario extends MY_Controller {
 //        $this->showTemplate('v_usuario', $dados);
     }
 
-    public function cadastrarUsuario() {
-        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
-            $dados['nome'] = $this->input->post('nome');
-            $dados['idt'] = $this->input->post('idt');
-            $dados['endereco'] = $this->input->post('endereco');
-            $dados['celular'] = $this->input->post('celular');
-            $dados['fixo'] = $this->input->post('fixo');
+    public function criarServico($servico) {
+        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
 
-//            print_r($dados);
-
-            $valida['mensagem'] = $this->m_usuario->cadastrarUsuario($dados);
-            unset($dados);
-
-            $this->showAjax('v_mensagem', $valida);
-        } else {
-            $dados['titulo'] = "teste ajax";
-            $this->showAjax('inc/v_inc_usuario_adicionar', $dados);
+        if (isset($dados['servico']) && !empty($dados['servico'])) {
+            $this->load->view('inc/v_inc_servico_editar', $dados);
         }
-
-
-//        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
-//
-//        if (isset($dados['servico']) && !empty($dados['servico'])) {
-//            $this->load->view('inc/v_inc_servico_editar', $dados);
-//        }
     }
 
     public function editarServico($cd_servico) {

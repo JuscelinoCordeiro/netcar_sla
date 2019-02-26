@@ -18,10 +18,15 @@ class MY_Controller extends CI_Controller {
     }
 
     public function showTemplate($view = null, $dados = null) {
-        $this->load->view('header');
+        $info['titulo'] = $dados['titulo'];
+        $this->load->view('header', $info);
         $this->load->view('navbar');
         $this->load->view($view, $dados);
         $this->load->view('footer');
+    }
+
+    public function showAjax($view = null, $dados = null) {
+        $this->load->view($view, $dados);
     }
 
 //    public static function &get_instance() {
