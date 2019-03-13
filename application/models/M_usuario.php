@@ -10,22 +10,16 @@ class M_usuario extends CI_Model {
     }
 
     public function getUsuarios() {
-        $sql = "SELECT u.*, up.cod_perfil, p.descricao
-                FROM usuario u
-                INNER JOIN usuario_perfil up
-                ON u.cd_usuario = up.cod_usuario
-                LEFT JOIN perfil p
-                ON up.cod_perfil = p.cod";
+        $sql = "select u.*,up.perfil from usuario u inner join usuario_perfil up on nivel = id_perfil";
         return $this->db->query($sql);
     }
 
     //SEM SENHA E COM NIVEL 0 DEFAULT (USUÁRIO)
     public function cadastrarUsuario($dados) {
         $sql = "INSERT INTO usuario"
-                . "(nome, idt, endereco, celular, fixo)"
-                . " VALUES (?, ?, ?, ?, ? )";
-//        return $this->db->query($sql, array($dados));
-        return $this->db->query($sql, array($dados['nome'], $dados['idt'], $dados['endereco'], $dados['celular'], $dados['fixo']));
+                . "(nome, idt, endereco, celular, nivel, fixo)"
+                . " VALUES (?, ?, ?, ?, ?, ?)";
+        return $this->db->query($sql, array($dados['nome'], $dados['idt'], $dados['endereco'], $dados['celular'], $dados['nivel'], $dados['fixo']));
     }
 
     public function getusuarioById($cd_usuario) {

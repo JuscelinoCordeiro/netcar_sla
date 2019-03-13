@@ -35,6 +35,9 @@ class C_login extends MY_Controller {
                     $this->session->set_userdata('logado', TRUE);
                     $dados['titulo'] = "NetCar - Home";
                     $this->showTemplate('v_inicio', $dados);
+                } else{
+                    $info['mensagem'] = "Usuário e/ou senha inválido";
+                    $this->index($info);
                 }
 //                else {
 //                    $info['mensagem'] = "Usuário e/ou senha inválido";
@@ -50,8 +53,6 @@ class C_login extends MY_Controller {
 //            $info['mensagem'] = "Usuário e/ou senha inválido";
 //            $this->index($info);
 //        }
-        $info['mensagem'] = "Usuário e/ou senha inválido";
-        $this->index($info);
     }
 
     public function logout() {

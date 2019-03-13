@@ -43,10 +43,10 @@ class C_usuario extends MY_Controller {
             $dados['endereco'] = $this->input->post('endereco');
             $dados['celular'] = $this->input->post('celular');
             $dados['fixo'] = $this->input->post('fixo');
-
+            $dados['nivel'] = $this->input->post('nivel');
 //            print_r($dados);
-
             $valida['mensagem'] = $this->m_usuario->cadastrarUsuario($dados);
+             
             unset($dados);
 
             $this->showAjax('v_mensagem', $valida);

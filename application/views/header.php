@@ -106,8 +106,28 @@ isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
                                         aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="erroTitulo">Erro!</h4>
                             </div>
-                            <div id="erroTexto" class="modal-body">
-                                ...
+                            <div id="erroTexto" class="modal-body alert alert-danger">
+                        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                <!--<button type="button" class="btn btn-primary">Salvar mudan�as</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- div de Sucesso -->
+                <div class="modal fade text-danger" id="sucesso" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title text-success" id="sucessoTitulo">Sucesso</h4>
+                            </div>
+                            <div id="sucessoTexto" class="modal-body alert alert-success">
+                                
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
