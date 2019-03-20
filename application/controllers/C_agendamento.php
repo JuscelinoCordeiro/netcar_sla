@@ -35,14 +35,16 @@ class C_agendamento extends My_Controller{
                 $valida['mensagem'] = $this->m_usuario->addAgendamento($dados);
                  
                 unset($dados);
-    
+            
                 $this->showAjax('v_mensagem', $valida);
             } else {
                 $dados['titulo'] = "Agendamento";
-
+                $dados['usuarios'] = $this->m_agendamento->getUsuarios();
+                $dados['tipo_veiculo'] = $this->m_agendamento->getTipoVeiculo();
+                $dados['servicos'] = $this->m_agendamento->getServicos($this->input->post('tipo_servico'));
                 $this->showTemplate('v_agendamento_adicionar', $dados);
+                echo $this->input->post('tipo_servico');
             }
-    
     }
 
 }

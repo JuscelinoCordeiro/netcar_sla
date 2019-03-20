@@ -37,8 +37,8 @@
                             <a href="?pagina=manutencao" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Faturamento <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/netcar/faturamento_diario"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Diário </a></li>
-                                <li><a href="/netcar/faturamento_mensal"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Últimos 30 dias </a></li>
+                                <li><a href="/netcar/c_faturamento/listarFaturamentoDiario"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Diário </a></li>
+                                <li><a href="/netcar/c_faturamento/listarFaturamentoMensal"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Últimos 30 dias </a></li>
                             </ul>
                         </li>
                         <li><a href="/netcar/ajuda"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ajuda</a></li>

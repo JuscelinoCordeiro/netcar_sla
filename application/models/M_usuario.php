@@ -22,9 +22,9 @@ class M_usuario extends CI_Model {
         return $this->db->query($sql, array($dados['nome'], $dados['idt'], $dados['endereco'], $dados['celular'], $dados['nivel'], $dados['fixo']));
     }
 
-    public function getusuarioById($cd_usuario) {
+    public function getUsuarioById($cd_usuario) {
         $sql = "select * from usuario where cd_usuario = ?";
-        return $this->db->query($sql, $cd_usuario);
+        return $this->db->query($sql, $cd_usuario)->result_array();
     }
 
     public function excluirUsuario($cd_usuario) {
