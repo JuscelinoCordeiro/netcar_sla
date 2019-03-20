@@ -7,11 +7,11 @@
                 <select name="cd_usuario" >
                     <option value="" selected="selected">Selecione o usuario</option>
                     <?php
-                          
+                      foreach($usuarios->result() as $usuario){    
                     ?>
-                    <option value="<%= usuario.getCdUsuario()%>"><%= usuario.getNome()%></option>
+                    <option value="<?= $usuario->cd_usuario ?>"><?= $usuario->nome ?></option>
                    <?php
-                   
+                      }
                    ?>
                 </select>
             </div>
@@ -27,13 +27,13 @@
             <div class="controls">
                 <select name="cd_tpveiculo" id="id_tpveiculo">
                     <option value="" selected="selected">Selecione a tipo de veiculo</option>
-                    <%
-                        TipoVeiculoDAO tpVeiculo = new TipoVeiculoDAO();
-                        List<TipoVeiculo> listTpVeiculo = tpVeiculo.getListaTipoVeiculos();
-                        for (TipoVeiculo tipo : listTpVeiculo) {
-                    %>
-                    <option value="<%= tipo.getCdTpVeiculo()%>"><%= tipo.getTipo()%></option>
-                    <% }%>   
+                    <?php 
+                        foreach($tipo_veiculo->result() as $tipo){
+                    ?>
+                        <option class="tipo_veiculo" value="<?= $tipo->cd_tpveiculo ?>"><?= $tipo->tipo ?></option>
+                    <?php
+                        }
+                    ?>
                 </select>
             </div>
         </div>
@@ -43,13 +43,13 @@
             <div class="controls">
                 <select name="cd_servico" id="id_servico">
                     <option value="" selected="selected">Selecione o serviço</option>
-                    <%
-                        ServicoDAO servico = new ServicoDAO();
-                        List<Servico> listServico = servico.getListaDeServico();
-                        for (Servico sv : listServico) {
-                    %>
-                    <option value="<%= sv.getCdServico()%>"><%= sv.getServico()%></option>
-                    <% }%>   
+                    <?php 
+                        foreach($servicos->result() as $servico){
+                    ?>
+                    <option value="<?= $servico->cd_servico ?>"><?= $servico->servico ?></option>
+                        <?php
+                        }
+                        ?>  
                 </select>
             </div>
         </div>
@@ -90,60 +90,28 @@
     </form>
 </div>
 <script>
-    $(function () {
-        var tarifas = {
-            '1': {
-                '1': 'R$ 10,00',
-                '2': 'R$ 20,00',
-                '4': 'R$ 15,00'
-            },
-            '2': {
-                '1': 'R$ 15,00',
-                '2': 'R$ 30,00',
-                '3': 'R$ 10,00',
-                '4': 'R$ 20,00'
-            },
-            '3': {
-                '1': 'R$ 15,00',
-                '2': 'R$ 3500',
-                '3': 'R$ 10,00',
-                '4': 'R$ 20,00'
-            },
-            '4': {
-                '1': 'R$ 25,00',
-                '2': 'R$ 50,00',
-                '3': 'R$ 10,00',
-                '4': 'R$ 40,00'
-            },
-            '5': {
-                '1': 'R$ 20,00',
-                '2': 'R$ 50,00',
-                '3': 'R$ 20,00',
-                '4': 'R$ 40,00'
-            },
-            '6': {
-                '1': 'R$ 50,00',
-                '2': 'R$ 150,00',
-                '3': 'R$ 30,00',
-                '4': 'R$ 70,00'
-            },
-            '7': {
-                '1': 'R$ 15,00',
-                '2': 'R$ 40,00',
-                '3': 'R$ 15,00',
-                '4': 'R$ 30,00'
-            }
-        };
+    $(document).ready(function() {
+        $('#id_tpveiculo').on('change', function() {
+            var tipo_servico = $(this).val();
+            $.ajax({
+                url: '/netcar/c_agendamento/addAgendamento',
+                type: 'POST',
+                data: { tipo_servico : tipo_servico },
+                dataType: 'json',
+                success: function(data) {    
+                var options = '<option value=""></option>';
 
-        $("#id_tpveiculo").change(function () {
-            var cdTpVeiculo = $(this).val();
-            $("#id_servico").change(function () {
-                var cdServico = $(this).val();
-                $("#id_preco").val(tarifas[cdTpVeiculo][cdServico]);
+                for (var i = 0; i < data.length; i++) {
+                    options += '<option value="' +
+                    data[i].cd_servico + '">' +
+                    data[i].servico + '</option>';
+                }
+
+                $('#id_servico').html(options);
+                }
             });
         });
     });
-
 
     $(function () {
         $("#data_agenda").datepicker(
@@ -151,7 +119,7 @@
                     dateFormat: 'dd/mm/yy',
                     dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
                     dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'S�b', 'Dom'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
                     monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                     monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
                 });

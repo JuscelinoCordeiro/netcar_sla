@@ -7,9 +7,9 @@ class C_usuario extends MY_Controller {
     function __construct() {
         parent::__construct();
 
-//        if (!$this->session->logado) {
-//            redirect('c_login');
-//        }
+        if (!$this->session->logado) {
+            redirect('c_login');
+        }
 
         $this->load->model('m_usuario');
     }
@@ -46,7 +46,7 @@ class C_usuario extends MY_Controller {
             $dados['nivel'] = $this->input->post('nivel');
 //            print_r($dados);
             $valida['mensagem'] = $this->m_usuario->cadastrarUsuario($dados);
-             
+
             unset($dados);
 
             $this->showAjax('v_mensagem', $valida);
@@ -54,22 +54,19 @@ class C_usuario extends MY_Controller {
             $dados['titulo'] = "teste ajax";
             $this->showAjax('inc/v_inc_usuario_adicionar', $dados);
         }
-
-
-//        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
-//
-//        if (isset($dados['servico']) && !empty($dados['servico'])) {
-//            $this->load->view('inc/v_inc_servico_editar', $dados);
-//        }
     }
 
-    public function editarServico($cd_servico) {
-        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
+    public function editarUsuario($cd_usuario) {
+        $dados['usuario'] = $this->m_usuario->getUsuarioById($cd_usuario);
+//        print_r($dados['usuario']);
 
-        $info['titulo'] = "Editar Serviço";
+        $dados['titulo'] = "Editar Usuário";
 
-        if (isset($dados['servico']) && !empty($dados['servico'])) {
-            $this->showTemplate($info, 'inc/v_inc_servico_editar', $dados);
+        if (isset($dados['usuario']) && !empty($dados['usuario'])) {
+            $this->showAjax('inc/v_inc_usuario_editar', $dados);
+        } else {
+            $mensagem['mensagem'] = "Usuário inexistente";
+            $this->showAjax('v_mensagem', $mensagem);
         }
     }
 

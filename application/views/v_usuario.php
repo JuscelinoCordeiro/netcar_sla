@@ -28,7 +28,7 @@
                 <td class="text text-center text-uppercase"><?= $user->fixo ?></td>
                 <td class="text text-center text-uppercase"><?= $user->perfil ?></td>
                 <td class="text text-center text-uppercase">
-                    <a href="/netcar_sla/c_usuario/editarUsuario/<?= $user->cd_usuario ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar" border="0"/></a>
+                    <a href="/netcar/c_usuario/editarUsuario/<?= $user->cd_usuario ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar" border="0"/></a>
                     <a class="excluir" data-nome="<?= $user->nome ?>" data-cd_usuario="<?= $user->cd_usuario ?>" href="javascript: void(0)"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir" border="0"/></a>
                 </td>
             </tr>
