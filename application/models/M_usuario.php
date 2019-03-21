@@ -24,7 +24,7 @@ class M_usuario extends CI_Model {
 
     public function getUsuarioById($cd_usuario) {
         $sql = "select * from usuario where cd_usuario = ?";
-        return $this->db->query($sql, $cd_usuario)->result_array();
+        return $this->db->query($sql, $cd_usuario)->row_array();
     }
 
     public function excluirUsuario($cd_usuario) {
@@ -37,9 +37,10 @@ class M_usuario extends CI_Model {
         return ($valida1);
     }
 
-    public function updateUsuario($cd_servico, $servico) {
-        $sql = "update servico set servico = ? where cd_servico = ?";
-        return $this->db->query($sql, array($servico, $cd_servico));
+    public function editarUsuario($dados) {
+        $sql = "update usuario set nome = ?, endereco = ?, celular = ?, fixo = ?, nivel = ?, idt = ? where cd_usuario = ?";
+        return $this->db->query($sql, array($dados['nome'], $dados['endereco'], $dados['celular'], $dados['fixo'],
+                    $dados['nivel'], $dados['idt'], $dados['cd_usuario']));
     }
 
 }
