@@ -28,13 +28,8 @@ class M_usuario extends CI_Model {
     }
 
     public function excluirUsuario($cd_usuario) {
-        $sql = "delete from usuario u where cd_usuario = ?"
-                . "inner join usuario_perfil up"
-                . "on  u.cd_usuario = up.cod_usuario";
-//        $sql2 = "delete from usuario_perfil where cod_usuario = ?";
-        $valida1 = $this->db->query($sql, $cd_usuario);
-//        $valida2 = $this->db->query($sql2, $cd_usuario);
-        return ($valida1);
+        $sql = "delete from usuario where cd_usuario = ?";
+        return $this->db->query($sql, $cd_usuario);
     }
 
     public function editarUsuario($dados) {

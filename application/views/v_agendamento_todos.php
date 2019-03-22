@@ -15,62 +15,89 @@
             </tr>
         </thead>
         <?php
-        foreach($agendamentos->result() as $agendamento){
-        ?>    
-        <tr>
-            <td><?= $agendamento->cd_agendamento ?></td>
-            <td>asdfasd</td>
-            <td>asdfsdf</td>
-            <td><?= $agendamento->placa ?></td>
-            <td>asdfasdfa</td>
-            <td><?= date('d/m/Y', strtotime($agendamento->data)) ?></td>
-            <td><?= $agendamento->horario ?></td>
-            <td>asdfasd</td><!--com gambiarra-->
-            <td class="text-center">
-                <?php 
+        foreach ($agendamentos->result() as $agendamento) {
+            ?>
+            <tr>
+                <td><?= $agendamento->cd_agendamento ?></td>
+                <td>asdfasd</td>
+                <td>asdfsdf</td>
+                <td><?= $agendamento->placa ?></td>
+                <td>asdfasdfa</td>
+                <td><?= date('d/m/Y', strtotime($agendamento->data)) ?></td>
+                <td><?= $agendamento->horario ?></td>
+                <td>asdfasd</td><!--com gambiarra-->
+                <td class="text-center">
+                    <?php
                     $status = $agendamento->status;
-                    if ($status == 0){
-
-                ?>
-                <span class="label label-warning">
-                    <?php echo "ABERTO"; ?>
-                </span>
-                <a class="finalizar" data-id="<?= $agendamento->cd_agendamento ?>" href="javascript: void(0)"><img src="img/b_finalizar.png" alt="finalizar" title="Finalizar servi�o" border="0"/></a>
-                <a href="/netcar/agendamento_editar?cd_agendamento=<?= $agendamento->cd_agendamento ?>"><img src="img/b_edit.png" alt="editar" title="Editar agendamento" border="0"/></a>
-                <a class="excluir" data-id="<?= $agendamento->cd_agendamento ?>" href="javascript: void(0)"><img src="img/b_excluir.png" alt="excluir" title="Excluir agendamento" border="0"/></a>
-                    <?php 
-                    } else {
-                        echo "FINALIZADO";
-                    }
-                    ?>
-            </td>
-        </tr>
-        <?php
+                    if ($status == 0) {
+                        ?>
+                        <span class="label label-warning">
+                            <?php echo "ABERTO"; ?>
+                        </span>
+                        <a class="finalizar" data-id="<?= $agendamento->cd_agendamento ?>" href="javascript: void(0)"><img src="<?= base_url('assets/img/b_finalizar.png') ?>" alt="finalizar" title="Finalizar serviço" border="0"/></a>
+                        <a href="/netcar/agendamento_editar?cd_agendamento=<?= $agendamento->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar agendamento" border="0"/></a>
+                        <a class="excluir" id="btnExc<?= $agendamento->cd_agendamento ?>" cd_agend="<?= $agendamento->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir agendamento" border="0"/></a>
+                            <?php
+                        } else {
+                            echo "FINALIZADO";
+                        }
+                        ?>
+                </td>
+            </tr>
+            <?php
         }
         ?>
     </table>
 </div>
 
 <script>
-    $(function() {
+    $('a[id^=btnExc]').click(function() {
 
-        $(".finalizar").click(function() {
-            var id = $(this).data("id");
-            if (confirm("Voc� deseja finalizar o servi�o?")) {
-                window.location = "/netcar/agendamento_finalizar?id=" + id;
-            }
+        cd_agend = $(this).attr('cd_agend');
+
+        $('#excluir').on('shown.bs.modal', function(e) {
+
+            $('#excluirModal').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: '/netcar/c_agendamento/excluirAgendamento',
+                    cache: false,
+                    data: {cd_agend: cd_agend},
+                    beforeSend: function(xhr) {
+                        xhr.overrideMimeType("text/plain; charset=UTF-8");
+                    },
+                    complete: function() {
+                    },
+                    success: function(data) {
+                        if (data === '1') {
+                            $('#sucesso').on('hidden.bs.modal', function(e) {
+                                window.location.reload();
+                            });
+                            $('#excluir').modal('hide');
+                            var msg = 'Agendamento excluído com sucesso!';
+                            $('#sucessoTexto').html(msg);
+                            $('#sucesso').modal('show');
+                        } else {
+                            $('#erro').on('hidden.bs.modal', function(e) {
+                                window.location.reload();
+                            });
+                            $('#excluir').modal('hide');
+                            var msg = 'ERRO ao excluir o agendamento.';
+                            $('#erroTexto').html(msg);
+                            $('#erro').modal('show');
+                        }
+                    },
+                    error: function() {
+                        $("#erro").html('Ocorreu um erro no sistema.');
+                        $("#erro").dialog("open");
+                    }
+                });
+            });
+
         });
 
-    });
-
-    $(function() {
-
-        $(".excluir").click(function() {
-            var id = $(this).data("id");
-            if (confirm("Voc� deseja excluir o agendamento?")) {
-                window.location = "/netcar/agendamento_excluir?id=" + id;
-            }
-        });
+        $("#excluirTexto").html('<b>Confirma a exclusão do usuário?</b>');
+        $("#excluir").modal("show");
 
     });
 </script>

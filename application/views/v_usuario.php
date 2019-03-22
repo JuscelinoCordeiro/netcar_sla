@@ -29,7 +29,7 @@
                 <td class="text text-center text-uppercase"><?= $user->perfil ?></td>
                 <td class="text text-center text-uppercase">
                     <a href="#" id="btnEdit<?= $user->cd_usuario ?>" cd_usuario="<?= $user->cd_usuario ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar usuário" border="0"/></a>
-                    <a class="excluir" data-nome="<?= $user->nome ?>" data-cd_usuario="<?= $user->cd_usuario ?>" href="javascript: void(0)"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir" border="0"/></a>
+                    <a class="excluir" id="btnExc<?= $user->cd_usuario ?>" cd_usuario="<?= $user->cd_usuario ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir usuário" border="0"/></a>
                 </td>
             </tr>
 
@@ -71,15 +71,56 @@
     });
 
 
-    $(function() {
+    $('a[id^=btnExc]').click(function() {
 
-        $(".excluir").click(function() {
-            var nome = $(this).data("nome");
-//            var id = $(this).data("id");
-            if (confirm("Você deseja excluir o usuário " + nome)) {
-                window.location = "/netcar_sla/c_usuario/excluirUsuario/<?= $user->cd_usuario ?>";
-            }
+        cd_usuario = $(this).attr('cd_usuario');
+
+        $('#excluir').on('shown.bs.modal', function(e) {
+
+            $('#excluirModal').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: '/netcar/c_usuario/excluirUsuario',
+                    cache: false,
+                    data: {cd_usuario: cd_usuario},
+                    beforeSend: function(xhr) {
+                        xhr.overrideMimeType("text/plain; charset=UTF-8");
+                    },
+                    complete: function() {
+                    },
+                    success: function(data) {
+                        if (data === '1') {
+
+                            $('#sucesso').on('hidden.bs.modal', function(e) {
+                                window.location.reload();
+                            });
+                            $('#excluir').modal('hide');
+                            var msg = 'Usuário excluído com sucesso!';
+                            $('#sucessoTexto').html(msg);
+                            $('#sucesso').modal('show');
+
+                        } else {
+
+                            $('#erro').on('hidden.bs.modal', function(e) {
+                                window.location.reload();
+                            });
+                            $('#excluir').modal('hide');
+                            var msg = 'ERRO ao excluir o usuário.';
+                            $('#erroTexto').html(msg);
+                            $('#erro').modal('show');
+                        }
+                    },
+                    error: function() {
+                        $("#erro").html('Ocorreu um erro no sistema.');
+                        $("#erro").dialog("open");
+                    }
+                });
+            });
+
         });
+
+        $("#excluirTexto").html('<b>Confirma a exclusão do usuário?</b>');
+        $("#excluir").modal("show");
 
     });
 </script>

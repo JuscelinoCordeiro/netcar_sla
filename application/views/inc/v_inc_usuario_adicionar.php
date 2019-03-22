@@ -81,17 +81,19 @@
                     $('#sucessoTexto').text("Sucesso ao adicionar usuário.");
                     $('#sucesso').modal('show');
                     $().ready(function() {
-                        setTimeout(function () {
+                        setTimeout(function() {
                             $('#sucesso').modal('hide');
                         }, 2000);
                     });
+//                    $("#visualizarTexto").modal('hide');
+//                    location.reload();
                 },
                 error: function() {
                     $("#erroTexto").html("Erro ao cadastrar, tente novamente.");
                     $("#erro").modal('show');
                     $().ready(function() {
-                        setTimeout(function () {
-                            $('#erro').modal('hide'); 
+                        setTimeout(function() {
+                            $('#erro').modal('hide');
                         }, 2000);
                     });
                 }
