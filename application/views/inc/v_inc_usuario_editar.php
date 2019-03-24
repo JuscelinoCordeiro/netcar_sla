@@ -84,25 +84,27 @@
                 complete: function() {
                 },
                 success: function(data) {
-                    $("#visualizarTexto").html(data);
-                    $("#modal").modal('show');
-                    $('#sucessoTexto').text("Usuário editado com sucesso.");
-                    $('#sucesso').modal('show');
-                    $().ready(function() {
-                        setTimeout(function() {
-                            $('#sucesso').modal('hide');
-                        }, 2000);
-                    });
-                    $('#modal').modal('hide');
+                    if (data === '1') {
+                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#alteracao').modal('hide');
+                        var msg = 'Usuário editado com sucesso.';
+                        $('#sucessoTexto').html(msg);
+                        $('#sucesso').modal('show');
+                    } else {
+                        $('#erro').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#excluir').modal('hide');
+                        var msg = 'ERRO ao editar usuário.';
+                        $('#erroTexto').html(msg);
+                        $('#erro').modal('show');
+                    }
                 },
                 error: function() {
-                    $("#erroTexto").html("Erro ao editar usuário, tente novamente.");
+                    $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
-                    $().ready(function() {
-                        setTimeout(function() {
-                            $('#erro').modal('hide');
-                        }, 2000);
-                    });
                 }
             });
             e.preventDefault();

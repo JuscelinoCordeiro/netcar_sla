@@ -77,20 +77,20 @@ isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
                 </div>
 
                 <!-- MODAL PADRAO BOOTSTRAP -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="alteracao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                <h4 class="modal-title" id="alteracaoTitulo">Confirma alteração</h4>
                             </div>
-                            <div id="modal-conteudo" class="modal-body">
+                            <div id="alteracaoTexto" class="modal-body">
                                 ...
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                <button id="alteracaoModal" type="button" class="btn btn-primary">Salvar alteração</button>
                             </div>
                         </div>
                     </div>

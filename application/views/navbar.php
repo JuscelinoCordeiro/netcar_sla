@@ -15,6 +15,10 @@
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cadastrar
                                 </a>
                             </li>
+                            <li><a id="pesq_usuario" data-sort="userpesq"  href="/netcar/c_usuario/pesquisarUsuario">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
+                                </a>
+                            </li>
                             <li>
                                 <a href="/netcar/c_usuario/listarUsuarios">
                                     <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Listar
@@ -25,13 +29,19 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Agendamentos <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/netcar/c_agendamento/cadastrarAgendamento" id="cad_agend"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agendar</a></li>
+                            <li><a href="#" id="cad_agenda" data-sort="agendamento"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cadastrar</a></li>
                             <li><a href="/netcar/c_agendamento/listarAgendamentosDoDia"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></i> Listar agenda</a></li>
                             <li><a href="/netcar/c_agendamento/listarAgendamentos"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Listar todos</a></li>
                             <!--<li><a href="/netcar/agendamento_pesquisar"><i class="icon-search"></i> Pesquisar</a></li>-->
                         </ul>
                     </li>
-                    <li><a href="/netcar/c_servico"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Serviços</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Serviços <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="cad_serv" data-sort="cad_servico"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cadastrar</a></li>
+                            <li><a href="/netcar/c_servico"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Listar</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/netcar/c_tarifa"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Tarifas</a></li>
                     <li class="dropdown">
                         <a href="?pagina=manutencao" class="dropdown-toggle" data-toggle="dropdown">
@@ -60,10 +70,37 @@
 </div>
 <script>
     $(document).ready(function() {
+
+        //CADASTRAR agendamento
+        $("#cad_agenda").click(function(e) {
+            valor = $("#cad_agenda").data("sort");
+            $.ajax({
+                type: 'POST',
+                url: '/netcar/c_agendamento/cadastrarAgendamento',
+                cache: false,
+                data: {
+                    valor: valor
+                },
+                beforeSend: function(xhr) {
+                    xhr.overrideMimeType("text/plain; charset=UTF-8");
+                },
+                complete: function() {
+                },
+                success: function(data) {
+                    $("#modalTexto").html(data);
+                    $("#modal").modal('show');
+                },
+                error: function() {
+                    $("#erroTexto").html("erro");
+                    $("#erro").modal('show');
+                }
+            });
+            e.preventDefault();
+        });
+
+        //CADASTRAR USUÁRIO
         $("#cad_usuario").click(function(e) {
             valor = $("#cad_usuario").data("sort");
-//            alert("funciona");
-
             $.ajax({
                 type: 'POST',
                 url: '/netcar/c_usuario/cadastrarUsuario',
@@ -87,5 +124,35 @@
             });
             e.preventDefault();
         });
+
+
+        //CADASTRAR SERVIÇO
+        $("#cad_serv").click(function(e) {
+            valor = $("#cad_serv").data("sort");
+            $.ajax({
+                type: 'POST',
+                url: '/netcar/c_servico/cadastrarServico',
+                cache: false,
+                data: {
+                    valor: valor
+                },
+                beforeSend: function(xhr) {
+                    xhr.overrideMimeType("text/plain; charset=UTF-8");
+                },
+                complete: function() {
+                },
+                success: function(data) {
+                    $("#modalTexto").html(data);
+                    $("#modal").modal('show');
+                },
+                error: function() {
+                    $("#erroTexto").html("erro");
+                    $("#erro").modal('show');
+                }
+            });
+            e.preventDefault();
+        });
+
+
     });
 </script>

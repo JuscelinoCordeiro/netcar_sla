@@ -40,12 +40,20 @@ class C_agendamento extends My_Controller {
 
             $this->showAjax('v_mensagem', $valida);
         } else {
-            $dados['titulo'] = "Agendamento";
-            $dados['usuarios'] = $this->m_agendamento->getUsuarios();
-            $dados['tipo_veiculo'] = $this->m_agendamento->getTipoVeiculo();
-            $dados['servicos'] = $this->m_agendamento->getServicos($this->input->post('tipo_servico'));
-            $this->showTemplate('v_agendamento_adicionar', $dados);
-            echo $this->input->post('tipo_servico');
+            if (($this->input->post('valor') !== null) && ($this->input->post('valor') === "agendamento" )) {
+                $this->load->model('m_usuario');
+                $this->load->model('m_veiculo');
+                $this->load->model('m_servico');
+                $this->load->model('m_tarifa');
+
+
+                $dados['titulo'] = "Agendamento de serviço";
+                $dados['usuarios'] = $this->m_usuario->getUsuarios()->result();
+                $dados['tipo_veiculos'] = $this->m_veiculo->getTpVeiculos()->result();
+                $dados['servicos'] = $this->m_servico->getServicosAtivos()->result();
+                $dados['tarifas'] = $this->m_tarifa->getTarifas()->result();
+                $this->showAjax('inc/v_inc_agendamento_adicionar', $dados);
+            }
         }
     }
 
@@ -61,5 +69,3 @@ class C_agendamento extends My_Controller {
     }
 
 }
-
-?>

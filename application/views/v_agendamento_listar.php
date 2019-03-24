@@ -1,4 +1,4 @@
-<div id="row">
+<div class="row">
     <?php
     if ($agendamentos_dia->result()) {
         ?>

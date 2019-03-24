@@ -57,17 +57,19 @@ class C_usuario extends MY_Controller {
             $dados['fixo'] = $this->input->post('fixo');
             $dados['nivel'] = $this->input->post('nivel');
             $dados['cd_usuario'] = $this->input->post('cd_usuario');
-            print_r($dados);
-            $valida['mensagem'] = $this->m_usuario->editarUsuario($dados);
+
+            $retorno = $this->m_usuario->editarUsuario($dados);
 
             unset($dados);
-
-            $this->showAjax('v_mensagem', $valida);
+            if ($retorno) {
+                echo 1;
+            } else {
+                echo 0;
+            }
         } else {
             $cd_usuario = (int) $this->input->post('cd_usuario');
 
             $dados['usuario'] = $this->m_usuario->getUsuarioById($cd_usuario);
-//        print_r($dados['usuario']);
             $dados['titulo'] = "Editar Usuário";
 
             if (isset($dados['usuario']) && !empty($dados['usuario'])) {
@@ -88,6 +90,19 @@ class C_usuario extends MY_Controller {
         } else {
             echo 0;
         }
+    }
+
+    public function pesquisarUsuario() {
+        $dados = $this->input->post('dados');
+
+        $retorno = $this->m_usuario->pesquisarUsuario($dados);
+        print_r($retorno);
+
+//        if ($retorno) {
+//            echo 1;
+//        } else {
+//            echo 0;
+//        }
     }
 
 }
