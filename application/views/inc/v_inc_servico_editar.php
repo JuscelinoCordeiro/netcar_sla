@@ -1,40 +1,61 @@
-<?php
-$serv = $servico->row();
-?>
-<link  type="text/css" rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css') ?>"/>
+<link rel="stylesheet" href="<?= base_url('assets/css/estilo.css') ?>"/>
 <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <h2 class="titulo">Editar serviço</h2>
-        <!--<a class="btn btn-success pull-right" href="/netcar_sla/c_servico">Voltar</a>-->
-        <form>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h2 class="titulo">Cadastrar Serviço</h2>
+        <!--<a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>-->
+        <form id="form_cad_usuario" action="" method="post">
+            <legend class="text-black hr3">Dados do Serviço</legend>
             <div class="form-group">
-                <!--<label>Código do serviço</label>-->
+                <label class="control-label">Tipo de serviço</label>
+                <input class="form-control" type="text" name="servico" required value="<?= $servico->servico ?>"/>
             </div>
             <div class="form-group">
-                <label>Serviço</label>
-                <input id="servico" type="text" class="form-control" data-cd_servico="<?= $serv->cd_servico ?>" value="<?= $serv->servico ?>">
+                <label class="control-label">Tipos de veículos</label>
             </div>
-            <button id="salvar" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+            <?php
+            $check = "";
+            foreach ($tipo_veiculos as $tpVeiculo) {
+                foreach ($tarifas as $tarifa) {
+                    if ($tpVeiculo->cd_tpveiculo == $tarifa->cd_tpveiculo) {
+                        $check = "checked";
+                    }
+                }
+                ?>
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="check" id="tpv<?= $tpVeiculo->cd_tpveiculo ?>" value="<?= $tpVeiculo->cd_tpveiculo ?>" <?= $check ?> > <?= $tpVeiculo->tipo ?>
+                </label>
+                <?php
+            }
+            ?>
+
+            <input type="hidden" name="acao" value="editar"/>
+            <input type="hidden" name="cd_servico" value="<?= $servico->cd_servico ?>"/>
         </form>
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-2"></div>
 </div>
-
-<script type="text/javascript">
+<script>
     $(document).ready(function() {
-        $("#salvar").click(function(e) {
+        $("#salvarModal").click(function(e) {
+            servico = $("input[name=servico]").val();
+            cd_servico = $("input[name=cd_servico]").val();
+            acao = $("input[name=acao]").val();
+            var tipo_veiculos = new Array();
+            $("input[name=check]:checked").each(function() {
+                tipo_veiculos.push($(this).val());
+            });
 
-            servico = $("#servico").val();
-            cd_servico = $("#servico").data("cd_servico");
-//            alert(servico + cd_servico);
             $.ajax({
                 type: 'POST',
-                url: 'c_servico/salvarServico',
+                url: '/netcar/c_servico/editarServico',
                 cache: false,
                 data: {
                     servico: servico,
-                    cd_servico: cd_servico
+                    cd_servico: cd_servico,
+                    tipo_veiculos: tipo_veiculos,
+                    acao: acao
                 },
                 beforeSend: function(xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
@@ -42,11 +63,26 @@ $serv = $servico->row();
                 complete: function() {
                 },
                 success: function(data) {
-                    $("#visualizarTexto").html("OK!! Operação concluida com sucesso.");
-                    $("#visualizar").modal();
+                    if (data === '1') {
+                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#alteracao').modal('hide');
+                        var msg = 'Serviço alterado com sucesso.';
+                        $('#sucessoTexto').html(msg);
+                        $('#sucesso').modal('show');
+                    } else {
+                        $('#erro').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#excluir').modal('hide');
+                        var msg = 'ERRO ao alterar o serviço.';
+                        $('#erroTexto').html(msg);
+                        $('#erro').modal('show');
+                    }
                 },
                 error: function() {
-                    $("#erroTexto").html("erro");
+                    $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }
             });

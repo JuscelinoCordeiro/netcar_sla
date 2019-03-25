@@ -1,94 +1,78 @@
+<link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css') ?>"/>
+<link rel="stylesheet" href="<?= base_url('assets/css/estilo.css') ?>"/>
 
-<div class="view-dados">
-    <h2 class="titulo">Agendar Serviço</h2>
-    <a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>
-    <form class="form-horizontal" action="/netcar/agendamento_adicionar" method="post">
-        <div class="control-group">
-            <label class="control-label" >Usuario</label>
-            <div class="controls">
-                <select name="cd_usuario" >
-                    <option value="" selected="selected">Selecione o usuario</option>
-                    <%
-                    UsuarioDAO user = new UsuarioDAO();
-                    List<Usuario> listaUsuario = user.getListaDeUsuario();
-                        for (Usuario usuario : listaUsuario) {
-                        %>
-                        <option value="<%= usuario.getCdUsuario()%>"><%= usuario.getNome()%></option>
-                        <% }%>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h2 class="titulo">Agendar serviço</h2>
+        <form id="form_cad_agendamento" action="" method="post">
+            <legend class="text-black hr3">Dados para cadastrar</legend>
+            <div class="form-group">
+                <label class="control-label">Nome</label>
+                <select class="form-control" name="cd_usuario" >
+                    <option value="" selected="">Selecione o usuario</option>
+                    <?php
+                    foreach ($usuarios as $usuario) {
+                        echo '<option value=\"' . $usuario->cd_usuario . '\">' . $usuario->nome . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Placa</label>
-            <div class="controls">
-                <input type="text" name="placa" placeholder="Digite a placa do ve�culo"/>
+            <div class="form-group">
+                <label class="control-label">Placa do veículo</label>
+                <input class="form-control" type="text" name="idt" required placeholder="Digite a placa do veículo (opicional)"/>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Tipo de veiculo</label>
-            <div class="controls">
-                <select name="cd_tpveiculo" id="id_tpveiculo">
-                    <option value="" selected="selected">Selecione a tipo de veiculo</option>
-                    <%
-                    TipoVeiculoDAO tpVeiculo = new TipoVeiculoDAO();
-                    List<TipoVeiculo> listTpVeiculo = tpVeiculo.getListaTipoVeiculos();
-                        for (TipoVeiculo tipo : listTpVeiculo) {
-                        %>
-                        <option value="<%= tipo.getCdTpVeiculo()%>"><%= tipo.getTipo()%></option>
-                        <% }%>
+            <div class="form-group">
+                <label for="Perfil" class="control-label">Tipo de veiculo</label>
+                <select class="form-control" name="nivel"  required>
+                    <option value="" selected="">Selecione o tipo de veículo</option>
+                    <?php
+                    foreach ($tipo_veiculos as $tpveiculos) {
+                        echo '<option value=\"' . $tpveiculos->cd_tp_veiculo . '\">' . $tpveiculos->tipo . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">Servi�o</label>
-            <div class="controls">
-                <select name="cd_servico" id="id_servico">
-                    <option value="" selected="selected">Selecione o servi�o</option>
-                    <%
-                    ServicoDAO servico = new ServicoDAO();
-                    List<Servico> listServico = servico.getListaDeServico();
-                        for (Servico sv : listServico) {
-                        %>
-                        <option value="<%= sv.getCdServico()%>"><%= sv.getServico()%></option>
-                        <% }%>
+            <div class="form-group">
+                <label for="Perfil" class="control-label">Serviço</label>
+                <select class="form-control" name="nivel"  required>
+                    <option value="">Selecione uma opção</option>
+                    <!--fazer foreach-->
                 </select>
             </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label">Data</label>
-            <span id="dt_agenda">
-                <div class="controls">
-                    <input id="data_agenda" type="text" name="data" placeholder="Ex.: dd/mm/aaaa"/>
-                    <span class="textfieldInvalidFormatMsg msg">Formato de data inv�lido.</span>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="control-label">Data</label>
+                    <span id="dt_agenda">
+                        <div class="controls">
+                            <input class="form-control" id="data_agenda" type="text" name="data" placeholder="Ex.: dd/mm/aaaa"/>
+                            <span class="textfieldInvalidFormatMsg msg">Formato de data inválido.</span>
+                        </div>
+                    </span>
                 </div>
-            </span>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Hor�rio: </label>
-            <div class="controls">
-                <span id="h_agenda"
-                      <div class="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true">
-                        <input type="text" name="horario" class="form-control">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-time"></span>
-                        </span>
-                        <span class="textfieldInvalidFormatMsg msg">Formato de hora inv�lido.</span>
-                    </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Pre�o</label>
-                <div class="controls">
-                    <input type="text" name="preco" value="" id="id_preco"/>
+                <!--hora-->
+                <div class="form-group">
+                    <label class="control-label">Horário: </label>
+                    <span id="h_agenda">
+                        <div class="controls">
+                            <div class="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true">
+                                <input type="text" name="horario" class="form-control">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                                <span class="textfieldInvalidFormatMsg msg">Formato de hora inválido.</span>
+                            </div>
+                        </div>
+                    </span>
                 </div>
             </div>
-            <div class="control-group">
-                <div class="controls">
-                    <input class="btn btn-danger" type="submit" value="Agendar"/>
-                </div>
+            <div class="form-group">
+                <label class="control-label">Valor</label>
+                <input class="form-control" type="text" name="preco" required />
             </div>
-    </form>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
 </div>
 <script>
     $(function() {
@@ -150,10 +134,10 @@
         $("#data_agenda").datepicker(
                 {
                     dateFormat: 'dd/mm/yy',
-                    dayNames: ['Domingo', 'Segunda', 'Ter�a', 'Quarta', 'Quinta', 'Sexta', 'S�bado', 'Domingo'],
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
                     dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'S�b', 'Dom'],
-                    monthNames: ['Janeiro', 'Fevereiro', 'Mar�o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                     monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
                 });
     });
