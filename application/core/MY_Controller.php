@@ -29,7 +29,4 @@ class MY_Controller extends CI_Controller {
         $this->load->view($view, $dados);
     }
 
-//    public static function &get_instance() {
-//        return self::$instance;
-//    }
 }

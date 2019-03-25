@@ -77,20 +77,20 @@ isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
                 </div>
 
                 <!-- MODAL PADRAO BOOTSTRAP -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="alteracao" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                <h4 class="modal-title" id="alteracaoTitulo">Confirma alteração</h4>
                             </div>
-                            <div id="modal-conteudo" class="modal-body">
+                            <div id="alteracaoTexto" class="modal-body">
                                 ...
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                <button id="alteracaoModal" type="button" class="btn btn-primary">Salvar alteração</button>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
                                 <h4 class="modal-title" id="erroTitulo">Erro!</h4>
                             </div>
                             <div id="erroTexto" class="modal-body alert alert-danger">
-                        
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -127,11 +127,29 @@ isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
                                 <h4 class="modal-title text-success" id="sucessoTitulo">Sucesso</h4>
                             </div>
                             <div id="sucessoTexto" class="modal-body alert alert-success">
-                                
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                                 <!--<button type="button" class="btn btn-primary">Salvar mudan�as</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- DIV DE JANELA DE EXCLUSÃO PARA AS VIEWS QUE UTILIZAM MODAL -->
+                <div class="modal fade text-primary" id="excluir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title text-danger" id="excluirTitulo"> Exclusão </h4>
+                            </div>
+                            <div id="excluirTexto" class="modal-body  text-danger">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button id="cancelarModal" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button id="excluirModal" type="button" class="btn btn-danger" data-loading-text="Carregando...">Excluir</button>
                             </div>
                         </div>
                     </div>

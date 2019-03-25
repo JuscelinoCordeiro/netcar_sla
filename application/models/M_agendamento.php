@@ -1,53 +1,91 @@
-<?php 
-if (!defined('BASEPATH'))
-exit('No	direct script access allowed');
+<?php
 
-class M_agendamento extends CI_Model{
+    if (!defined('BASEPATH'))
+        exit('No	direct script access allowed');
 
-    public function __construct() {
-        parent::__construct();
-    }
+    class M_agendamento extends CI_Model {
 
-    public function getAgendamentosDoDia(){
-        $sql =  "select * from agendamento where data between '".date("Y-m-d")." 00:00:00' and '".date("Y-m-d")." 23:59:59'";
-       return $this->db->query($sql);
-    }
-
-    public function getAgendamentos() {
-        $sql = "select * from agendamento";
-       return $this->db->query($sql);
-    }
-    
-    public function addAgendamento(){
-        $sql = "INSERT INTO agendamento (cd_usuario, cd_tpveiculo, cd_servico, placa, data, horario, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
-       return $this->db->query($sql, array($dados['cd_usuario'], $dados['cd_tpveiculo'], $dados['cd_servico'], $dados['placa'], $dados['data'], $dados['horario'], $dados['status']));
-    }
-
-    public function getUsuarios(){
-        $sql = "SELECT cd_usuario, nome FROM usuario";
-       return $this->db->query($sql);
-    }
-
-    public function getTipoVeiculo(){
-        $sql = "SELECT cd_tpveiculo, tipo FROM tipo_veiculo";
-       return $this->db->query($sql); 
-    }
-
-    public function getServicos($tipo_servico){
-        $sql = "select s.cd_servico, servico from servico s inner join tarifa t on t.cd_servico = s.cd_servico where cd_tpveiculo = ? and ativo = 1"; 
-        $results = $this->db->query($sql, $tipo_servico);
-        foreach($results->result() as $result){
-            $categorias[] = array(
-                'cd_servico' => $result->cd_servico,
-                'servico'    => $result->servico
-            );
+        public function __construct() {
+            parent::__construct();
         }
-       return json_encode($categorias);
+
+        public function getAgendamentosDoDia($dtHoje) {
+            $sql = "select ag.*, user.nome, tp.*, sv.*, ta.preco "
+                    . "from agendamento as ag inner join usuario as user on ag.cd_usuario = user.cd_usuario "
+                    . "inner join tipo_veiculo as tp on tp.cd_tpveiculo = ag.cd_tpveiculo "
+                    . "inner join servico as sv on ag.cd_servico = sv.cd_servico "
+                    . "inner join tarifa as ta on tp.cd_tpveiculo = ta.cd_tpveiculo and sv.cd_servico = ta.cd_servico "
+                    . "where data = ? order by horario desc";
+            return $this->db->query($sql, $dtHoje);
+        }
+
+        public function getAgendamentoByData($dt_ini, $dt_fim) {
+            $sql = "select ag.*, user.nome, tp.*, sv.*, ta.preco "
+                    . "from agendamento as ag inner join usuario as user on ag.cd_usuario = user.cd_usuario "
+                    . "inner join tipo_veiculo as tp on tp.cd_tpveiculo = ag.cd_tpveiculo "
+                    . "inner join servico as sv on ag.cd_servico = sv.cd_servico "
+                    . "inner join tarifa as ta on tp.cd_tpveiculo = ta.cd_tpveiculo and sv.cd_servico = ta.cd_servico "
+                    . " where data between ? and ? "
+                    . "order by ag.data desc";
+            return $this->db->query($sql, array($dt_ini, $dt_fim));
+        }
+
+        public function getAgendamento($cd_agend) {
+            $sql = "select ag.*, user.nome, tp.*, sv.*, ta.preco "
+                    . " from agendamento as ag inner join usuario as user on ag.cd_usuario = user.cd_usuario "
+                    . " inner join tipo_veiculo as tp on tp.cd_tpveiculo = ag.cd_tpveiculo "
+                    . " inner join servico as sv on ag.cd_servico = sv.cd_servico "
+                    . " inner join tarifa as ta on tp.cd_tpveiculo = ta.cd_tpveiculo and sv.cd_servico = ta.cd_servico "
+                    . " where cd_agendamento = ?"
+                    . " order by ag.data desc";
+            return $this->db->query($sql, $cd_agend);
+        }
+
+        public function cadastrarAgendamento($dados) {
+            $sql = "INSERT INTO agendamento (cd_usuario, cd_tpveiculo, cd_servico, placa, data, horario, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
+            return $this->db->query($sql, array($dados['cd_usuario'], $dados['cd_tpveiculo'], $dados['cd_servico'], $dados['placa'], $dados['data'], $dados['horario'], $dados['status']));
+        }
+
+        public function excluirAgendamento($cd_agend) {
+            $sql = "delete from agendamento where cd_agendamento = ?";
+            return $this->db->query($sql, $cd_agend);
+        }
+
+        public function finalizarAgendamento($cd_agend) {
+            $this->load->model('m_faturamento');
+
+            try {
+                //atualiza o nome do serviço
+                $sql = "update agendamento set status = 1 where cd_agendamento = ?";
+                $finalizou = $this->db->query($sql, $cd_agend);
+
+
+                if ($finalizou === FALSE) {
+                    throw new Exception("Erro ao editar na tabela serviço.");
+                }
+
+// cd_agendamento 	cd_usuario 	cd_tpveiculo 	cd_servico 	placa 	data 	horario 	status
+                //lança o agendamento finalizado na tabela faturamento
+                $sql = "insert into faturamento (cd_tpveiculo, cd_servico, data,	valor)"
+                        . " values (?, ?, ?, ?,? )";
+
+                //terminar
+                $finalizado = $this->getAgendamento($cd_agend)->row();
+
+                //print_r($finalizado);
+                //die();
+                $faturou = $this->m_faturamento->setFaturamento($finalizado);
+                //$finalizado->cd_tpveiculo, $finalizado->cd_servico, $finalizado->data, $finalizado->horario, $finalizado->valor);
+                //verifica se houve erros
+                if ($finalizou === TRUE && $faturou == TRUE) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } catch (Exception $ex) {
+                return 0;
+            }
+        }
+
     }
-    
-
-}
-
-
-?>

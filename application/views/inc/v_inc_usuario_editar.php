@@ -3,40 +3,39 @@
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <h2 class="titulo"><? $titulo ?></h2>
-        <!--<a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>-->
-        <form id="form_cad_usuario" action="" method="post">
-            <legend class="text-black hr3">Dados usuário</legend>
+        <h2 class="titulo"><?= $titulo ?></h2>
+        <form id="form_edit_usuario" action="" method="post">
+            <legend class="text-black hr3">Dados do usuário</legend>
             <div class="form-group">
                 <label class="control-label">Nome</label>
-                <input class="form-control" type="text" name="nome" required value="<? $usuario['nome'] ?>"/>
+                <input class="form-control" type="text" name="nome" required value="<?= $usuario['nome'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Identidade</label>
-                <input class="form-control" type="text" name="idt" required value="<? $usuario['idt'] ?>"/>
+                <input class="form-control" type="text" name="idt" required value="<?= $usuario['idt'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Endereço</label>
-                <input class="form-control" type="text" name="endereco" required value="<? $usuario['endereco'] ?>"/>
+                <input class="form-control" type="text" name="endereco" required value="<?= $usuario['endereco'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Celular</label>
-                <input class="form-control" type="text" name="celular" required value="<? $usuario['celular'] ?>"/>
+                <input class="form-control" type="text" name="celular" required value="<?= $usuario['celular'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Tel Fixo</label>
-                <input class="form-control" type="text" name="fixo" required value="<? $usuario['fixo'] ?>"/>
+                <input class="form-control" type="text" name="fixo" required value="<?= $usuario['fixo'] ?>"/>
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Perfil</label>
                 <select class="form-control" name="nivel"  required>
-                    <option value="<? $usuario['nivel'] ?>">
+                    <option value="<?= $usuario['nivel'] ?>">
                         <?php
                         echo $usuario['nivel'] == "0" ? "Cliente" : "";
                         echo $usuario['nivel'] == "1" ? "Operador" : "";
                         echo $usuario['nivel'] == "2" ? "Financeiro" : "";
                         echo $usuario['nivel'] == "3" ? "Gerente" : "";
-                        ?>"
+                        ?>
                     </option>
                     <option value="0">Cliente</option>
                     <option value="1">Operador</option>
@@ -45,9 +44,8 @@
                 </select>
             </div>
 
-            <input type="hidden" name="acao" value="cadastrar"/>
-            <input type="hidden" name="cd_usuario" value="<? $usuario['cd_usuario'] ?>"/>
-            <!--<input type="submit" value="Cadastrar" class="btn btn-success pull-right"/>-->
+            <input type="hidden" name="acao" value="editar"/>
+            <input type="hidden" name="cd_usuario" value="<?= $usuario['cd_usuario'] ?>"/>
         </form>
     </div>
     <div class="col-md-2"></div>
@@ -64,7 +62,7 @@
             nivel = $("select[name=nivel]").val();
             acao = $("input[name=acao]").val();
             cd_usuario = $("input[name=cd_usuario]").val();
-//            alert(nome);
+
 
             $.ajax({
                 type: 'POST',
@@ -86,24 +84,27 @@
                 complete: function() {
                 },
                 success: function(data) {
-                    $("#visualizarTexto").html(data);
-                    $("#modal").modal('show');
-                    $('#sucessoTexto').text("Usuário editado com sucesso.");
-                    $('#sucesso').modal('show');
-                    $().ready(function() {
-                        setTimeout(function() {
-                            $('#sucesso').modal('hide');
-                        }, 2000);
-                    });
+                    if (data === '1') {
+                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#alteracao').modal('hide');
+                        var msg = 'Usuário editado com sucesso.';
+                        $('#sucessoTexto').html(msg);
+                        $('#sucesso').modal('show');
+                    } else {
+                        $('#erro').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#excluir').modal('hide');
+                        var msg = 'ERRO ao editar usuário.';
+                        $('#erroTexto').html(msg);
+                        $('#erro').modal('show');
+                    }
                 },
                 error: function() {
-                    $("#erroTexto").html("Erro ao editar usuário, tente novamente.");
+                    $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
-                    $().ready(function() {
-                        setTimeout(function() {
-                            $('#erro').modal('hide');
-                        }, 2000);
-                    });
                 }
             });
             e.preventDefault();

@@ -7,9 +7,7 @@ class C_tarifa extends MY_Controller {
     function __construct() {
         parent::__construct();
 
-//        if (!$this->session->logado) {
-//            redirect('c_login');
-//        }
+        $this->isLogado();
 
         $this->load->model('m_tarifa');
     }
@@ -21,130 +19,34 @@ class C_tarifa extends MY_Controller {
         $this->showTemplate('v_tarifa', $dados);
     }
 
-    public function listarUsuarios() {
-        $dados['usuarios'] = $this->m_usuario->getUsuarios();
-        $dados['titulo'] = "Usuários";
-        $this->showTemplate('v_usuario', $dados);
-    }
+    public function editarTarifa() {
 
-    public function excluirUsuario($cd_usuario) {
-        $valida = $this->m_usuario->excluirUsuario($cd_usuario);
-//        $dados['titulo'] = "Usuários";
-//        $this->showTemplate('v_usuario', $dados);
-    }
+        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
+            $cd_servico = $this->input->post('cd_servico');
+            $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+            $preco = $this->input->post('preco');
 
-    public function criarServico($servico) {
-        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
+            $retorno = $this->m_tarifa->editarTarifa($cd_servico, $cd_tpveiculo, $preco);
 
-        if (isset($dados['servico']) && !empty($dados['servico'])) {
-            $this->load->view('inc/v_inc_servico_editar', $dados);
+            if ($retorno) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        } else {
+            $this->load->model('m_servico');
+            $this->load->model('m_veiculo');
+
+            $cd_servico = $this->input->post('cd_servico');
+            $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+
+            $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
+            $dados['tipo_veiculo'] = $this->m_veiculo->getTpVeiculoById($cd_tpveiculo)->row();
+            $dados['tarifa'] = $this->m_tarifa->getTarifaServicoTpVeiculo($cd_servico, $cd_tpveiculo)->row();
+
+            $dados['titulo'] = "Edição de tarifa";
+            $this->showAjax('inc/v_inc_tarifa_editar', $dados);
         }
     }
 
-    public function editarServico($cd_servico) {
-        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
-
-        $info['titulo'] = "Editar Serviço";
-
-        if (isset($dados['servico']) && !empty($dados['servico'])) {
-            $this->showTemplate($info, 'inc/v_inc_servico_editar', $dados);
-        }
-    }
-
-//
-//    public function municipiosPorRegiao() {
-//
-//        $info['titulo'] = "Tela Regiões";
-//        $info['descricao'] = "Municípios por Regio";
-//
-//        $idRegiao = (int) strip_tags($this->input->post('valor'));
-//        if (isset($idRegiao) && !empty($idRegiao)) {
-//            $dados['muniRegiao'] = $this->m_ibge->buscarMunicipiosPorRegiao($idRegiao);
-//        }
-//
-//        $this->load->view('header', $info);
-//        $this->load->view('v_inicio', $dados);
-//        $this->load->view('footer');
-//    }
-//
-//    public function municipiosPorEstado() {
-//
-//        $info['titulo'] = "Tela Regi�es";
-//        $info['descricao'] = "Munic�pios por Estado";
-//
-//        $idEstado = (int) strip_tags($this->input->post('valor'));
-//        $info['estado'] = $this->m_ibge->pegarEstadoPorId($idEstado)->row()->NM_UF;
-//        if (isset($idEstado) && !empty($idEstado)) {
-//            $info['muniEstado'] = $this->m_ibge->buscarMunicipiosPorEstado($idEstado);
-//        }
-//
-//        $this->load->view('inc/v_inc_muniEstado', $info);
-//    }
-//
-////		BUSCAR OS ESTADOS, DADO UMA REGIAO
-//    public function estadosPorRegiao() {
-//        $info['titulo'] = "Tela Regi�es";
-//        $info['descricao'] = "Estados por Regiao";
-//
-//        $idRegiao = (int) strip_tags($this->input->post('valor'));
-//        if (isset($idRegiao) && !empty($idRegiao)) {
-//            $info['estRegiao'] = $this->m_ibge->buscarEstadoPorRegiao($idRegiao);
-//        }
-//
-//        $info['regiao'] = $this->m_ibge->pegarRegiaoPorId($idRegiao)->row()->NM_REGIAO_IBGE;
-//
-//        $this->load->view('inc/v_inc_estRegioes', $info);
-//    }
-//
-//    //FUN��O PARA O COMBOBOX SELECT DE CADASTRO DE BAIRRO
-//    public function getEstadosPorRegiao() {
-//        $idRegiao = (int) strip_tags($this->input->post('valor'));
-//        if (isset($idRegiao) && !empty($idRegiao)) {
-//            $estRegiao = $this->m_ibge->buscarEstadoPorRegiao($idRegiao)->result();
-//            $option['option'] = "<option value=''>Selecione um estado</option>";
-//            foreach ($estRegiao as $linha) {
-//                $option['option'] .= "\"<option value='$linha->ID_UF_IBGE'>$linha->NM_UF</option>\"";
-//            }
-//        } else {
-//            $option = "ERRO";
-//        }
-////			return $option;
-//        $this->load->view('inc/v_inc_selEstado', $option);
-//    }
-//
-//    //FUN��O PARA O COMBOBOX SELECT DE CADASTRO DE BAIRRO
-//    public function getMunicipiosPorEstado() {
-//        $idEstado = (int) strip_tags($this->input->post('valor'));
-//        if (isset($idEstado) && !empty($idEstado)) {
-//            $municipios = $this->m_ibge->buscarMunicipiosPorEstado($idEstado)->result();
-//            $option['option'] = "<option value=''>Selecione um municipio</option>";
-//            foreach ($municipios as $municipio) {
-//                $option['option'] .= "\"<option value='$municipio->ID_MUNI_IBGE'>$municipio->NM_MUNI</option>\"";
-//            }
-//        } else {
-//            $option = "ERRO";
-//        }
-////			return $option;
-//        $this->load->view('inc/v_inc_selMunicipio', $option);
-//    }
-//
-//    public function cadastrarBairro() {
-//        $cadastrar = $this->input->post('cadastrar');
-//
-//        if ($cadastrar) {
-//            $idRegiao = $this->input->post('idRegiao');
-//            $idEstado = $this->input->post('idEstado');
-//            $idMunicipio = $this->input->post('idMunicipio');
-//            $bairro = $this->input->post('bairro');
-//
-//            $dadosBairro = array($bairro, $idMunicipio);
-//
-//            $info['cadastro'] = $this->m_ibge->cadastrarBairro($dadosBairro);
-//        } else {
-//            $info['titulo'] = "Tela cadastro de bairro";
-//            $info['descricao'] = "Cadastro de bairro em um estado espec�fico";
-//
-//            $this->load->view('inc/v_inc_cadBairro', $info);
-//        }
-//    }
 }

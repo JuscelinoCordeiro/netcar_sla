@@ -326,7 +326,7 @@
       | https://codeigniter.com/user_guide/libraries/encryption.html
       |
      */
-    $config['encryption_key'] = '3a2d68d546c2ea2a0ee57fd7364b94aa4096419458e6eb95ad7c1e08115e71f2';
+    $config['encryption_key'] = '';
 
     /*
       |--------------------------------------------------------------------------

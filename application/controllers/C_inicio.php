@@ -12,13 +12,7 @@ class C_inicio extends MY_Controller {
     public function index() {
 
         $info['titulo'] = "NetCar - Home";
-
         $this->showTemplate('v_inicio', $info);
-
-//        $this->load->view('header', $info);
-//        $this->load->view('navbar');
-//        $this->load->view('v_home');
-//        $this->load->view('footer');
     }
 
 }
