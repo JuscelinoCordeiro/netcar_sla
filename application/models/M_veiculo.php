@@ -3,14 +3,14 @@
 if (!defined('BASEPATH'))
     exit('No	direct script access allowed');
 
-class M_servico extends CI_Model {
+class M_veiculo extends CI_Model {
 
     public function __construct() {
         parent::__construct();
     }
 
-    public function getServicos() {
-        $sql = " select * from servico";
+    public function getTipoVeiculo() {
+        $sql = " select * from tipo_veiculo";
         return $this->db->query($sql);
     }
 

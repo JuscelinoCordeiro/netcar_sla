@@ -26,6 +26,10 @@ class C_agendamento extends My_Controller {
     }
 
     public function cadastrarAgendamento() {
+        $this->load->model('m_usuario');
+        $this->load->model('m_servico');
+        $this->load->model('m_veiculo');
+
         if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "novoAgendamento" )) {
             $dados['cd_usuario'] = $this->input->post('cd_usuario');
             $dados['cd_tpveiculo'] = $this->input->post('tipo_veiculo');
@@ -34,18 +38,22 @@ class C_agendamento extends My_Controller {
             $dados['data'] = $this->input->post('data');
             $dados['horario'] = $this->input->post('horario');
             $dados['status'] = $this->input->post('status');
-            $valida['mensagem'] = $this->m_usuario->addAgendamento($dados);
+            $retorno = $this->m_agendamento->cadastrarAgendamento($dados);
 
             unset($dados);
 
-            $this->showAjax('v_mensagem', $valida);
+            if ($retorno) {
+                echo 1;
+            } else {
+                echo 0;
+            }
         } else {
-            $dados['titulo'] = "Agendamento";
-            $dados['usuarios'] = $this->m_agendamento->getUsuarios();
-            $dados['tipo_veiculo'] = $this->m_agendamento->getTipoVeiculo();
-            $dados['servicos'] = $this->m_agendamento->getServicos($this->input->post('tipo_servico'));
-            $this->showTemplate('v_agendamento_adicionar', $dados);
-            echo $this->input->post('tipo_servico');
+            $dados['titulo'] = "Agendar serviço";
+            $dados['usuarios'] = $this->m_usuario->getUsuarios();
+            $dados['tipo_veiculo'] = $this->m_veiculo->getTipoVeiculo();
+            $dados['servicos'] = $this->m_servico->getServicos($this->input->post('tipo_servico'));
+            $this->showAjax('inc/v_inc_agendamento_adicionar', $dados);
+//            echo $this->input->post('tipo_servico');
         }
     }
 

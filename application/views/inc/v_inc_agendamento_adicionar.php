@@ -1,32 +1,27 @@
-<%@page import="DAO.*, modelo.*, java.util.*"%>
-<%
-
-    TarifaDAO tarifa = new TarifaDAO();
-%>
 
 <div class="view-dados">
-    <h2 class="titulo">Agendar Serviço</h2> 
+    <h2 class="titulo">Agendar ServiÃ§o</h2>
     <a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>
     <form class="form-horizontal" action="/netcar/agendamento_adicionar" method="post">
         <div class="control-group">
-            <label class="control-label" >Usuario</label> 
+            <label class="control-label" >Usuario</label>
             <div class="controls">
                 <select name="cd_usuario" >
                     <option value="" selected="selected">Selecione o usuario</option>
                     <%
-                        UsuarioDAO user = new UsuarioDAO();
-                        List<Usuario> listaUsuario = user.getListaDeUsuario();
+                    UsuarioDAO user = new UsuarioDAO();
+                    List<Usuario> listaUsuario = user.getListaDeUsuario();
                         for (Usuario usuario : listaUsuario) {
-                    %>
-                    <option value="<%= usuario.getCdUsuario()%>"><%= usuario.getNome()%></option>
-                    <% }%>   
+                        %>
+                        <option value="<%= usuario.getCdUsuario()%>"><%= usuario.getNome()%></option>
+                        <% }%>
                 </select>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Placa</label>
             <div class="controls">
-                <input type="text" name="placa" placeholder="Digite a placa do veículo"/>
+                <input type="text" name="placa" placeholder="Digite a placa do veï¿½culo"/>
             </div>
         </div>
         <div class="control-group">
@@ -35,28 +30,28 @@
                 <select name="cd_tpveiculo" id="id_tpveiculo">
                     <option value="" selected="selected">Selecione a tipo de veiculo</option>
                     <%
-                        TipoVeiculoDAO tpVeiculo = new TipoVeiculoDAO();
-                        List<TipoVeiculo> listTpVeiculo = tpVeiculo.getListaTipoVeiculos();
+                    TipoVeiculoDAO tpVeiculo = new TipoVeiculoDAO();
+                    List<TipoVeiculo> listTpVeiculo = tpVeiculo.getListaTipoVeiculos();
                         for (TipoVeiculo tipo : listTpVeiculo) {
-                    %>
-                    <option value="<%= tipo.getCdTpVeiculo()%>"><%= tipo.getTipo()%></option>
-                    <% }%>   
+                        %>
+                        <option value="<%= tipo.getCdTpVeiculo()%>"><%= tipo.getTipo()%></option>
+                        <% }%>
                 </select>
             </div>
         </div>
 
         <div class="control-group">
-            <label class="control-label">Serviço</label>
+            <label class="control-label">Serviï¿½o</label>
             <div class="controls">
                 <select name="cd_servico" id="id_servico">
-                    <option value="" selected="selected">Selecione o serviço</option>
+                    <option value="" selected="selected">Selecione o serviï¿½o</option>
                     <%
-                        ServicoDAO servico = new ServicoDAO();
-                        List<Servico> listServico = servico.getListaDeServico();
+                    ServicoDAO servico = new ServicoDAO();
+                    List<Servico> listServico = servico.getListaDeServico();
                         for (Servico sv : listServico) {
-                    %>
-                    <option value="<%= sv.getCdServico()%>"><%= sv.getServico()%></option>
-                    <% }%>   
+                        %>
+                        <option value="<%= sv.getCdServico()%>"><%= sv.getServico()%></option>
+                        <% }%>
                 </select>
             </div>
         </div>
@@ -66,12 +61,12 @@
             <span id="dt_agenda">
                 <div class="controls">
                     <input id="data_agenda" type="text" name="data" placeholder="Ex.: dd/mm/aaaa"/>
-                    <span class="textfieldInvalidFormatMsg msg">Formato de data inválido.</span>
+                    <span class="textfieldInvalidFormatMsg msg">Formato de data invï¿½lido.</span>
                 </div>
             </span>
         </div>
         <div class="control-group">
-            <label class="control-label">Horário: </label>
+            <label class="control-label">Horï¿½rio: </label>
             <div class="controls">
                 <span id="h_agenda"
                       <div class="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true">
@@ -79,11 +74,11 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-time"></span>
                         </span>
-                        <span class="textfieldInvalidFormatMsg msg">Formato de hora inválido.</span>
+                        <span class="textfieldInvalidFormatMsg msg">Formato de hora invï¿½lido.</span>
                     </div>
             </div>
             <div class="control-group">
-                <label class="control-label">Preço</label>
+                <label class="control-label">Preï¿½o</label>
                 <div class="controls">
                     <input type="text" name="preco" value="" id="id_preco"/>
                 </div>
@@ -96,7 +91,7 @@
     </form>
 </div>
 <script>
-    $(function () {
+    $(function() {
         var tarifas = {
             '1': {
                 '1': 'R$ 10,00',
@@ -141,9 +136,9 @@
             }
         };
 
-        $("#id_tpveiculo").change(function () {
+        $("#id_tpveiculo").change(function() {
             var cdTpVeiculo = $(this).val();
-            $("#id_servico").change(function () {
+            $("#id_servico").change(function() {
                 var cdServico = $(this).val();
                 $("#id_preco").val(tarifas[cdTpVeiculo][cdServico]);
             });
@@ -151,14 +146,14 @@
     });
 
 
-    $(function () {
+    $(function() {
         $("#data_agenda").datepicker(
                 {
                     dateFormat: 'dd/mm/yy',
-                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                    dayNames: ['Domingo', 'Segunda', 'Terï¿½a', 'Quarta', 'Quinta', 'Sexta', 'Sï¿½bado', 'Domingo'],
                     dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sï¿½b', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Marï¿½o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                     monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
                 });
     });

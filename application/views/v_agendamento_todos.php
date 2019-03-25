@@ -1,5 +1,5 @@
 <div id="conteudo w-100">
-    <h2 class="titulo">Todos os agendamentos</h2>
+    <h3 class="titulo">Todos os agendamentos</h3>
     <table class="tabela table table-bordered table-condensed table-hover">
         <thead>
             <tr>

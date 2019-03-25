@@ -2,7 +2,7 @@
     <?php
     if ($agendamentos_dia->result()) {
         ?>
-        <h2 class="titulo">Agenda para hoje</h2>
+        <h3 class="titulo">Agenda para hoje</h3>
         <table class="tabela table table-bordered table-condensed table-hover">
             <thead>
                 <tr>
