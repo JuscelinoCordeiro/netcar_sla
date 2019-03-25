@@ -14,15 +14,27 @@ class C_agendamento extends My_Controller {
     }
 
     public function listarAgendamentosDoDia() {
-        $dados['agendamentos_dia'] = $this->m_agendamento->getAgendamentosDoDia();
-        $dados['titulo'] = "Agendamentos";
+        $dtHoje = date('Y/m/d');
+        $dados['agendamentos_dia'] = $this->m_agendamento->getAgendamentosDoDia($dtHoje);
+
+        $dados['titulo'] = "Agenda do dia";
         $this->showTemplate("v_agendamento_listar", $dados);
     }
 
     public function listarAgendamentos() {
-        $dados['agendamentos'] = $this->m_agendamento->getAgendamentos();
-        $dados['titulo'] = "Agendamentos";
-        $this->showTemplate("v_agendamento_todos", $dados);
+        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "pesquisar" )) {
+
+            $dt_ini = inverteData($this->input->post('dt_inicio'));
+
+            $dt_fim = inverteData($this->input->post('dt_fim'));
+
+            $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim)->result();
+
+            $dados['titulo'] = "Agendamentos";
+            $this->showAjax("v_agendamento_todos", $dados);
+        } else {
+            $this->showAjax('inc/v_inc_agendamento_pesquisar');
+        }
     }
 
     public function cadastrarAgendamento() {
@@ -65,6 +77,46 @@ class C_agendamento extends My_Controller {
             echo 1;
         } else {
             echo 0;
+        }
+    }
+
+    public function finalizarAgendamento() {
+        $cd_agend = $this->input->post('cd_agend');
+
+        $retorno = $this->m_agendamento->finalizarAgendamento($cd_agend);
+        if ($retorno) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+
+    //PERCISA COMBOBOX
+    public function editarAgendamento() {
+        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
+            $cd_agend = $this->input->post('cd_agend');
+
+            //editar
+            $retorno = $this->m_agendamento->editarAgendamento($cd_servico, $servico, $tipo_veiculos);
+
+            if ($retorno) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        } else {
+            $cd_agend = $this->input->post('cd_agend');
+
+            $this->load->model('m_veiculo');
+            $this->load->model('m_tarifa');
+
+            $cd_servico = $this->input->post('cd_servico');
+            $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
+            $dados['tipo_veiculos'] = $this->m_veiculo->getTpVeiculos()->result();
+            $dados['tarifas'] = $this->m_tarifa->getTarifaServico($cd_servico)->result();
+
+            $dados['titulo'] = "Edição de Serviço";
+            $this->showAjax('inc/v_inc_servico_editar', $dados);
         }
     }
 
