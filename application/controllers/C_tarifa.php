@@ -56,7 +56,7 @@ class C_tarifa extends MY_Controller {
         $tarifa = $this->m_tarifa->getTarifaServicoTpVeiculo($cd_servico, $cd_tpveiculo)->row()->preco;
 //        print_r($this->db->last_query());
         if ($tarifa != NULL) {
-            echo $tarifa;
+            echo "R$ " . $tarifa . ",00";
         } else {
             echo 'ERRO!! Serviço não tarifado.';
         }

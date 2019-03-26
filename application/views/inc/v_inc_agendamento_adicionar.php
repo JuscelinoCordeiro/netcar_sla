@@ -9,18 +9,18 @@
             <legend class="text-black hr3">Dados para cadastrar</legend>
             <div class="form-group">
                 <label class="control-label">Nome</label>
-                <select class="form-control" name="cd_usuario" >
+                <select class="form-control" name="usuario" >
                     <option value="" selected="">Selecione o usuario</option>
                     <?php
                     foreach ($usuarios as $usuario) {
-                        echo '<option value=\"' . $usuario->cd_usuario . '\">' . $usuario->nome . '</option>';
+                        echo '<option value="' . $usuario->cd_usuario . '">' . $usuario->nome . '</option>';
                     }
                     ?>
                 </select>
             </div>
             <div class="form-group">
                 <label class="control-label">Placa do veículo</label>
-                <input class="form-control" type="text" name="idt" required placeholder="Digite a placa do veículo (opicional)"/>
+                <input class="form-control" type="text" name="placa" required placeholder="Digite a placa do veículo (opcional)"/>
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Tipo de veiculo</label>
@@ -69,6 +69,7 @@
                 <label class="control-label">Valor</label>
                 <input class="form-control" type="text" name="preco" id="preco" required value="Selecione o tipo de veículo e o serviço."/>
             </div>
+            <input type="hidden" name="acao" value="novoAgendamento"/>
         </form>
     </div>
     <div class="col-md-2"></div>
@@ -76,6 +77,64 @@
 
 <script>
     $(document).ready(function() {
+        //cadastrar o agendamento
+        $("#salvarModal").click(function(e) {
+            cd_usuario = $("select[name=usuario]").val();
+            placa = $("input[name=placa]").val();
+            cd_tpveiculo = $("select[name=tipo_veiculo]").val();
+            cd_servico = $("select[name=servico]").val();
+            data = $("input[name=data]").val();
+            horario = $("input[name=horario]").val();
+//            valor = $("input[name=preco]").val();
+            acao = $("input[name=acao]").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/netcar/c_agendamento/cadastrarAgendamento',
+                cache: false,
+                data: {
+                    cd_usuario: cd_usuario,
+                    placa: placa,
+                    cd_tpveiculo: cd_tpveiculo,
+                    cd_servico: cd_servico,
+                    data: data,
+                    horario: horario,
+                    acao: acao
+                },
+                beforeSend: function(xhr) {
+                    xhr.overrideMimeType("text/plain; charset=UTF-8");
+                },
+                complete: function() {
+                },
+                success: function(data) {
+                    if (data === '1') {
+                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#alteracao').modal('hide');
+                        var msg = 'Agendamento realizado com sucesso.';
+                        $('#sucessoTexto').html(msg);
+                        $('#sucesso').modal('show');
+                    } else {
+                        $('#erro').on('hidden.bs.modal', function(e) {
+                            window.location.reload();
+                        });
+                        $('#excluir').modal('hide');
+                        var msg = 'ERRO ao cadastrar agendamento.';
+                        $('#erroTexto').html(msg);
+                        $('#erro').modal('show');
+                    }
+                },
+                error: function() {
+                    $("#erroTexto").html("Erro no sistema, tente novamente.");
+                    $("#erro").modal('show');
+                }
+            });
+            e.preventDefault();
+        });
+
+
+        //combobox servico
         $('#tipo_veiculo').on('change', function() {
             var cd_tpveiculo = $(this).val();
             if (cd_tpveiculo) {
@@ -94,6 +153,7 @@
             }
         });
 
+        //combobox preço
         $('#servico').on('change', function() {
             var cd_servico = $(this).val();
             var cd_tpveiculo = $('#tipo_veiculo').val();
