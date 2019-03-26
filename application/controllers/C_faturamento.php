@@ -9,19 +9,33 @@ class C_faturamento extends MY_Controller {
         $this->load->model('m_faturamento');
     }
 
-    public function getFaturamentoDiario() {
+    public function listarFaturamentoDiario() {
+        $faturamento = $this->m_faturamento->listarFaturamentoDiario();
+
         $dados['titulo'] = "Faturamento Diário";
-        $dados['faturamento_diario'] = $this->m_faturamento->getFaturamentoDiario();
+        $dados['faturamento'] = $faturamento['faturamento'];
+        $dados['total'] = $faturamento['total'];
+//        print_r($dados);
+//        die();
         $this->showTemplate('v_faturamento_diario', $dados);
     }
 
-    public function getFaturamentoMensal() {
+    public function listarFaturamentoPeriodo() {
+        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "pesquisar" )) {
+            $dt_ini = inverteData($this->input->post('dt_inicio'));
+            $dt_fim = inverteData($this->input->post('dt_fim'));
 
-        $dados['titulo'] = "Faturamento Mensal";
-        $dados['faturamento_mensal'] = $this->m_faturamento->getFaturamentoMensal();
-        $this->showTemplate('v_faturamento_mensal', $dados);
+            $faturamento = $this->m_faturamento->listarFaturamentoPeriodo($dt_ini, $dt_fim);
+            $dados['titulo'] = "Faturamentos";
+            $dados['faturamento'] = $faturamento['faturamento'];
+            $dados['total'] = $faturamento['total'];
+            $dados['dt_inicio'] = $dt_ini;
+            $dados['dt_fim'] = $dt_fim;
+
+            $this->showAjax("v_faturamento_periodo", $dados);
+        } else {
+            $this->showAjax('inc/v_inc_faturamento_pesquisar');
+        }
     }
 
 }
-
-?>

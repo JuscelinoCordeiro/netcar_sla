@@ -39,7 +39,8 @@
             $("input[name=check]:checked").each(function() {
                 tipo_veiculos.push($(this).val());
             });
-
+//            alert(tipo_veiculos);
+//            exit();
             $.ajax({
                 type: 'POST',
                 url: '/netcar/c_servico/cadastrarServico',

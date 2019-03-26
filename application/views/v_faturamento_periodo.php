@@ -3,7 +3,7 @@
     if ($faturamento) {
         ?>
         <div class="col-md-2"></div>
-        <div class="col-md-8"><h3 class="titulo text text-center">Faturamento do dia</h3></div>
+        <div class="col-md-8"><h3 class="titulo text text-center">Faturamento para o período de <?= inverteData($dt_inicio) . " a " . inverteData($dt_fim) ?></h3></div>
         <table class="tabela table table-bordered table-condensed table-hover">
             <thead>
                 <tr class="text text-center text-uppercase">
@@ -37,7 +37,7 @@
         <div class="col-md-2"></div>
     <?php } else { ?>
         <div class="col-md-3"></div>
-        <div  id=""class="col-md-6" ><h3>Até o momento não existe faturamento, <?= date('d/m/y') ?>.</h3></div>
+        <div  id=""class="col-md-6" ><h3>Até o momento não existe faturamento para o período informado.</h3></div>
         <div class="col-md-3"></div>
     <?php } ?>
 </div>

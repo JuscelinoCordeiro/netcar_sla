@@ -60,6 +60,3 @@
         <div class="col-md-3"></div>
     <?php } ?>
 </div>
-<script>
-
-</script>

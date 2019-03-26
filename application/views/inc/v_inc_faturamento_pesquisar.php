@@ -3,10 +3,10 @@
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <h2 class="titulo">Pesquisar agendamentos</h2>
+        <h2 class="titulo">Pesquisar faturamento</h2>
         <!--<a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>-->
         <form id="form_cad_usuario" action="" method="post">
-            <legend class="text-black hr3">Informa as datas para pesquisa</legend>
+            <legend class="text-black hr3">Informe as datas para pesquisa</legend>
             <div class="form-group">
                 <label class="control-label">Data inicial</label>
                 <span id="dt_agenda">
@@ -64,7 +64,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/netcar/c_agendamento/listarAgendamentos',
+                url: '/netcar/c_faturamento/listarFaturamentoPeriodo',
                 cache: false,
                 data: {
                     dt_inicio: dt_inicio,

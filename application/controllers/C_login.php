@@ -19,7 +19,7 @@ class C_login extends MY_Controller {
     }
 
     public function logar() {
-        if (($this->session->userdata('logado') !== NULL) && ($this->session->userdata('logado') === TRUE)) {
+        if (($this->session->userdata('logado') === TRUE)) {
             redirect('c_inicio');
         } else {
             $idt = $this->input->post('idt');

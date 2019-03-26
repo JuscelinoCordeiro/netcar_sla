@@ -1,7 +1,6 @@
-
-<div class="row">
+<!--<div class="row">-->
+<div class="col-md-12">
     <nav class="navbar navbar-default">
-
         <div class="container-fluid" id="nav1">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <!--<a class="brand" href="#"></a>-->
@@ -27,7 +26,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" id="cad_agenda" data-sort="agendamento"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cadastrar</a></li>
                             <li><a href="/netcar/c_agendamento/listarAgendamentosDoDia"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></i> Listar agenda do dia</a></li>
-                            <li><a href="#"id="btnBuscaAgenda" data-sort="busa_agenda"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Listar por período</a></li>
+                            <li><a href="#"id="btnBuscaAgenda" data-sort="busca_agenda"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> Listar por período</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -43,7 +42,7 @@
                             <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Faturamento <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/netcar/c_faturamento/listarFaturamentoDiario"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Faturamento do dia </a></li>
-                            <li><a href="/netcar/c_faturamento/listarFaturamentoMensal"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Faturamento por período </a></li>
+                            <li><a href="#" id="btnBuscaFatura" data-sort="busca_fatura"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Faturamento por período </a></li>
                         </ul>
                     </li>
                     <li><a href="/netcar/ajuda"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ajuda</a></li>
@@ -63,118 +62,5 @@
         </div> <!--fim da div container-->
     </nav>
 </div>
-<div class="row" id="resposta_ajax"></div>
-<script>
-    $(document).ready(function() {
-
-        //CADASTRAR agendamento
-        $("#cad_agenda").click(function(e) {
-            valor = $("#cad_agenda").data("sort");
-            $.ajax({
-                type: 'POST',
-                url: '/netcar/c_agendamento/cadastrarAgendamento',
-                cache: false,
-                data: {
-                    valor: valor
-                },
-                beforeSend: function(xhr) {
-                    xhr.overrideMimeType("text/plain; charset=UTF-8");
-                },
-                complete: function() {
-                },
-                success: function(data) {
-                    $("#modalTexto").html(data);
-                    $("#modal").modal('show');
-                },
-                error: function() {
-                    $("#erroTexto").html("erro");
-                    $("#erro").modal('show');
-                }
-            });
-            e.preventDefault();
-        });
-
-        //CADASTRAR USUÁRIO
-        $("#cad_usuario").click(function(e) {
-            valor = $("#cad_usuario").data("sort");
-            $.ajax({
-                type: 'POST',
-                url: '/netcar/c_usuario/cadastrarUsuario',
-                cache: false,
-                data: {
-                    valor: valor
-                },
-                beforeSend: function(xhr) {
-                    xhr.overrideMimeType("text/plain; charset=UTF-8");
-                },
-                complete: function() {
-                },
-                success: function(data) {
-                    $("#modalTexto").html(data);
-                    $("#modal").modal('show');
-                },
-                error: function() {
-                    $("#erroTexto").html("erro");
-                    $("#erro").modal('show');
-                }
-            });
-            e.preventDefault();
-        });
-
-
-        //CADASTRAR SERVIÇO
-        $("#cad_serv").click(function(e) {
-            valor = $("#cad_serv").data("sort");
-            $.ajax({
-                type: 'POST',
-                url: '/netcar/c_servico/cadastrarServico',
-                cache: false,
-                data: {
-                    valor: valor
-                },
-                beforeSend: function(xhr) {
-                    xhr.overrideMimeType("text/plain; charset=UTF-8");
-                },
-                complete: function() {
-                },
-                success: function(data) {
-                    $("#modalTexto").html(data);
-                    $("#modal").modal('show');
-                },
-                error: function() {
-                    $("#erroTexto").html("erro");
-                    $("#erro").modal('show');
-                }
-            });
-            e.preventDefault();
-        });
-
-
-        //CADASTRAR SERVIÇO
-        $("#btnBuscaAgenda").click(function(e) {
-            valor = $("#btnBuscaAgenda").data("sort");
-            $.ajax({
-                type: 'POST',
-                url: '/netcar/c_agendamento/listarAgendamentos',
-                cache: false,
-                data: {
-                    valor: valor
-                },
-                beforeSend: function(xhr) {
-                    xhr.overrideMimeType("text/plain; charset=UTF-8");
-                },
-                complete: function() {
-                },
-                success: function(data) {
-                    $("#modalTexto").html(data);
-                    $("#modal").modal('show');
-                },
-                error: function() {
-                    $("#erroTexto").html("erro");
-                    $("#erro").modal('show');
-                }
-            });
-            e.preventDefault();
-        });
-    });
-</script>
+<!--</div>-->
+<div class="col-md-12" id="resposta_ajax">

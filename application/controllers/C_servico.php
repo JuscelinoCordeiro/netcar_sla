@@ -65,6 +65,7 @@ class C_servico extends MY_Controller {
         if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
             $servico = $this->input->post('servico');
             $tipo_veiculos = $this->input->post('tipo_veiculos');
+
             $retorno = $this->m_servico->cadastrarServico($servico, $tipo_veiculos);
 
             if ($retorno) {

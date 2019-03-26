@@ -24,6 +24,7 @@ isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
         <script type="text/javascript" src="<?= base_url('assets/js/clockpicker.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/spry/SpryValidationTextField.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui/js/jquery-ui-1.10.4.custom.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/js/js_navbar.js') ?>"></script>
 
     </head>
     <body>
