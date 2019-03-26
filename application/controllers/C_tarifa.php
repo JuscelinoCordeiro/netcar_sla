@@ -49,4 +49,17 @@ class C_tarifa extends MY_Controller {
         }
     }
 
+    public function getTarifaServicoTpVeiculo() {
+        $cd_servico = $this->input->post('cd_servico');
+        $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+
+        $tarifa = $this->m_tarifa->getTarifaServicoTpVeiculo($cd_servico, $cd_tpveiculo)->row()->preco;
+//        print_r($this->db->last_query());
+        if ($tarifa != NULL) {
+            echo $tarifa;
+        } else {
+            echo 'ERRO!! Serviço não tarifado.';
+        }
+    }
+
 }

@@ -7,23 +7,25 @@
         <!--<a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>-->
         <form id="form_cad_usuario" action="" method="post">
             <legend class="text-black hr3">Informe as datas para pesquisa</legend>
-            <div class="form-group">
-                <label class="control-label">Data inicial</label>
-                <span id="dt_agenda">
-                    <div class="controls">
-                        <input id="data_agenda" type="text" name="data_inicio" placeholder="dd/mm/aaaa"/>
-                        <span class="textfieldInvalidFormatMsg msg">Formato de data inválido.</span>
-                    </div>
-                </span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Data final</label>
-                <span id="dt_agenda2">
-                    <div class="controls">
-                        <input id="data_agenda2" type="text" name="data_fim" placeholder="dd/mm/aaaa"/>
-                        <span class="textfieldInvalidFormatMsg msg">Formato de data inválido.</span>
-                    </div>
-                </span>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="control-label">Data inicial</label>
+                    <span id="dt_agenda">
+                        <div class="controls">
+                            <input class="form-control" id="data_agenda" type="text" name="data_inicio" placeholder="dd/mm/aaaa"/>
+                            <span class="textfieldInvalidFormatMsg msg">Formato de data inválido.</span>
+                        </div>
+                    </span>
+                </div>
+                <div class="form-group pull-right">
+                    <label class="control-label">Data final</label>
+                    <span id="dt_agenda2">
+                        <div class="controls">
+                            <input  class="form-control" id="data_agenda2" type="text" name="data_fim" placeholder="dd/mm/aaaa"/>
+                            <span class="textfieldInvalidFormatMsg msg">Formato de data inválido.</span>
+                        </div>
+                    </span>
+                </div>
             </div>
             <input type="hidden" name="acao" value="pesquisar"/>
         </form>

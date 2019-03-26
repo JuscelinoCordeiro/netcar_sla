@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <h2 class="titulo">Cadastrar Serviço</h2>
+        <h2 class="titulo">Editar Serviço</h2>
         <!--<a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>-->
         <form id="form_cad_usuario" action="" method="post">
             <legend class="text-black hr3">Dados do Serviço</legend>
@@ -15,8 +15,8 @@
                 <label class="control-label">Tipos de veículos</label>
             </div>
             <?php
-            $check = "";
             foreach ($tipo_veiculos as $tpVeiculo) {
+                $check = "";
                 foreach ($tarifas as $tarifa) {
                     if ($tpVeiculo->cd_tpveiculo == $tarifa->cd_tpveiculo) {
                         $check = "checked";

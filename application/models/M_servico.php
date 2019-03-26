@@ -14,6 +14,14 @@ class M_servico extends CI_Model {
         return $this->db->query($sql);
     }
 
+    public function getServicosTpVeiculos($cd_tpveiculo) {
+        $this->load->model('m_tarifa');
+        $sql = "select s.* from servico as s"
+                . " inner join tarifa as t on s.cd_servico = t.cd_servico "
+                . " where t.cd_tpveiculo = ?";
+        return $this->db->query($sql, $cd_tpveiculo);
+    }
+
     public function getServicosAtivos() {
         $sql = " select * from servico where ativo = 1";
         return $this->db->query($sql);

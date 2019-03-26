@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_servico extends MY_Controller {
+class C_veiculo extends MY_Controller {
 
     function __construct() {
         parent::__construct();
@@ -24,20 +24,7 @@ class C_servico extends MY_Controller {
         $this->load->view('footer');
     }
 
-    public function comboServicos() {
-        $cd_tpVeiculo = $this->input->post('cd_tpveiculo');
-
-        $servicos = $this->m_servico->getServicosTpVeiculos($cd_tpVeiculo)->result();
-//        print_r($servicos);
-        $servico = "<option value=\"\">Selecione um serviço</option>";
-        foreach ($servicos as $sv) {
-            $servico .= '<option value="' . $sv->cd_servico . '">' . $sv->servico . '</option>';
-        }
-        echo $servico;
-    }
-
-    public function getServicoById() {
-        $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
+    public function getTipoVeiculos() {
 
         if (isset($dados['servico']) && !empty($dados['servico'])) {
             $this->load->view('inc/v_inc_servico_editar', $dados);

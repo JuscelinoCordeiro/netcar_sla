@@ -24,20 +24,19 @@
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Tipo de veiculo</label>
-                <select class="form-control" name="nivel"  required>
+                <select class="form-control" name="tipo_veiculo" id="tipo_veiculo"  required >
                     <option value="" selected="">Selecione o tipo de veículo</option>
                     <?php
                     foreach ($tipo_veiculos as $tpveiculos) {
-                        echo '<option value=\"' . $tpveiculos->cd_tp_veiculo . '\">' . $tpveiculos->tipo . '</option>';
+                        echo '<option value="' . $tpveiculos->cd_tpveiculo . '">' . $tpveiculos->tipo . '</option>';
                     }
                     ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Serviço</label>
-                <select class="form-control" name="nivel"  required>
-                    <option value="">Selecione uma opção</option>
-                    <!--fazer foreach-->
+                <select class="form-control" name="servico" id="servico"  required>
+                    <option value="">Selecione o tipo de veículo primeiro</option>
                 </select>
             </div>
             <div class="form-inline">
@@ -68,67 +67,53 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Valor</label>
-                <input class="form-control" type="text" name="preco" required />
+                <input class="form-control" type="text" name="preco" id="preco" required value="Selecione o tipo de veículo e o serviço."/>
             </div>
         </form>
     </div>
     <div class="col-md-2"></div>
 </div>
-<script>
-    $(function() {
-        var tarifas = {
-            '1': {
-                '1': 'R$ 10,00',
-                '2': 'R$ 20,00',
-                '4': 'R$ 15,00'
-            },
-            '2': {
-                '1': 'R$ 15,00',
-                '2': 'R$ 30,00',
-                '3': 'R$ 10,00',
-                '4': 'R$ 20,00'
-            },
-            '3': {
-                '1': 'R$ 15,00',
-                '2': 'R$ 3500',
-                '3': 'R$ 10,00',
-                '4': 'R$ 20,00'
-            },
-            '4': {
-                '1': 'R$ 25,00',
-                '2': 'R$ 50,00',
-                '3': 'R$ 10,00',
-                '4': 'R$ 40,00'
-            },
-            '5': {
-                '1': 'R$ 20,00',
-                '2': 'R$ 50,00',
-                '3': 'R$ 20,00',
-                '4': 'R$ 40,00'
-            },
-            '6': {
-                '1': 'R$ 50,00',
-                '2': 'R$ 150,00',
-                '3': 'R$ 30,00',
-                '4': 'R$ 70,00'
-            },
-            '7': {
-                '1': 'R$ 15,00',
-                '2': 'R$ 40,00',
-                '3': 'R$ 15,00',
-                '4': 'R$ 30,00'
-            }
-        };
 
-        $("#id_tpveiculo").change(function() {
-            var cdTpVeiculo = $(this).val();
-            $("#id_servico").change(function() {
-                var cdServico = $(this).val();
-                $("#id_preco").val(tarifas[cdTpVeiculo][cdServico]);
-            });
+<script>
+    $(document).ready(function() {
+        $('#tipo_veiculo').on('change', function() {
+            var cd_tpveiculo = $(this).val();
+            if (cd_tpveiculo) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/netcar/c_servico/comboServicos',
+                    data: {cd_tpveiculo: cd_tpveiculo},
+                    success: function(html) {
+                        $('#servico').html(html);
+                        $('#preco').val('Selecione o tipo de veículo e o serviço.');
+                    }
+                });
+            } else {
+                $('#servico').html('<option value="">Selecione primeiro o tipo de veículo.</option>');
+                $('#preco').html('<option value="">Selecione primeiro o serviço.</option>');
+            }
+        });
+
+        $('#servico').on('change', function() {
+            var cd_servico = $(this).val();
+            var cd_tpveiculo = $('#tipo_veiculo').val();
+            if (cd_servico) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/netcar/c_tarifa/getTarifaServicoTpVeiculo',
+                    data: {
+                        cd_servico: cd_servico,
+                        cd_tpveiculo: cd_tpveiculo
+                    },
+                    success: function(html) {
+                        $('#preco').val(html);
+                    }
+                });
+            } else {
+                $('#preco').val('Serviço não tarifado');
+            }
         });
     });
-
 
     $(function() {
         $("#data_agenda").datepicker(
@@ -141,9 +126,7 @@
                     monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
                 });
     });
-
     $('.clockpicker').clockpicker();
-
     var dt_agenda = new Spry.Widget.ValidationTextField("data", "date", {format: "dd/mm/yyyy", useCharacterMasking: true});
     var h_agenda = new Spry.Widget.ValidationTextField("horario", "time", {format: "HH:mm", useCharacterMasking: true});
 </script>
