@@ -1,4 +1,5 @@
 <!--<div class="row">-->
+<?php $cd_usuario_logado = ($this->session->userdata('dados_usuario')->cd_usuario); ?>
 <div class="col-md-12">
     <nav class="navbar navbar-default">
         <div class="container-fluid" id="nav1">
@@ -45,14 +46,14 @@
                             <li><a href="#" id="btnBuscaFatura" data-sort="busca_fatura"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Faturamento por período </a></li>
                         </ul>
                     </li>
-                    <li><a href="/netcar/ajuda"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ajuda</a></li>
+                    <!--<li><a href="/netcar/ajuda"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ajuda</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Área do usuário <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Minha conta</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Trocar senha</a></li>
+                            <li><a href="#" id="minha_conta" data-sort="<?= $cd_usuario_logado ?>"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Minha conta</a></li>
+                            <li><a href="#" id="troca_senha" data-sort="<?= $cd_usuario_logado ?>"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Trocar senha</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/netcar/c_login/logout"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sair</a></li>
                         </ul>
@@ -64,3 +65,4 @@
 </div>
 <!--</div>-->
 <div class="col-md-12" id="resposta_ajax">
+

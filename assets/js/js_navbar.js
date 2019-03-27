@@ -1,4 +1,31 @@
 $(document).ready(function() {
+//CADASTRAR agendamento
+    $("#minha_conta").click(function(e) {
+        cd_usuario = $("#minha_conta").data("sort");
+        $.ajax({
+            type: 'POST',
+            url: '/netcar/c_usuario/contaUsuario',
+            cache: false,
+            data: {
+                cd_usuario: cd_usuario
+            },
+            beforeSend: function(xhr) {
+                xhr.overrideMimeType("text/plain; charset=UTF-8");
+            },
+            complete: function() {
+            },
+            success: function(data) {
+                $("#modalTexto").html(data);
+                $("#modal").modal('show');
+            },
+            error: function() {
+                $("#erroTexto").html("erro");
+                $("#erro").modal('show');
+            }
+        });
+        e.preventDefault();
+    });
+
 
     //CADASTRAR agendamento
     $("#cad_agenda").click(function(e) {

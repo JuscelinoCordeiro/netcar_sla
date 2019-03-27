@@ -8,7 +8,7 @@
 </style>
 <div class="row">
     <div class="col-md-2"></div>
-    <div class="col-md-8 text text-center"><h3 class="titulo">Agendamentos</h3></div>
+    <div class="col-md-8 text text-center"><h3 class="titulo">Agendamentos para o período de <?= inverteData($dt_inicio) . " a " . inverteData($dt_fim) ?></h3></div>
     <div class="col-md-2"></div>
     <table class="tabela table table-bordered table-condensed table-hover">
         <thead>

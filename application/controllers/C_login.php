@@ -20,7 +20,7 @@ class C_login extends MY_Controller {
 
     public function logar() {
         if (($this->session->userdata('logado') === TRUE)) {
-            redirect('c_inicio');
+            redirect('c_inicio/index');
         } else {
             $idt = $this->input->post('idt');
             $senha = $this->input->post('senha');
@@ -31,8 +31,8 @@ class C_login extends MY_Controller {
                     $valida = $this->m_login->existeUsuario($idt, $senha);
 
                     if ($valida) {
-                        $dados = $this->m_login->getUsuario($idt, $senha);
-                        $this->session->set_userdata('dados_usuario', $dados);
+                        $usuario = $this->m_login->getUsuario($idt, $senha);
+                        $this->session->set_userdata('dados_usuario', $usuario);
                         $this->session->set_userdata('logado', TRUE);
                         $dados['titulo'] = "NetCar - Home";
                         $this->showTemplate('v_inicio', $dados);

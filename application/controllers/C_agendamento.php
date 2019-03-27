@@ -18,20 +18,21 @@ class C_agendamento extends My_Controller {
         $dados['agendamentos_dia'] = $this->m_agendamento->getAgendamentosDoDia($dtHoje);
 
         $dados['titulo'] = "Agenda do dia";
-        $this->showTemplate("v_agendamento_listar", $dados);
+        $this->showTemplate("v_agendamento_diario", $dados);
     }
 
     public function listarAgendamentos() {
         if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "pesquisar" )) {
 
             $dt_ini = inverteData($this->input->post('dt_inicio'));
-
             $dt_fim = inverteData($this->input->post('dt_fim'));
 
             $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim)->result();
-
+            $dados['dt_inicio'] = $dt_ini;
+            $dados['dt_fim'] = $dt_fim;
             $dados['titulo'] = "Agendamentos";
-            $this->showAjax("v_agendamento_todos", $dados);
+
+            $this->showAjax("v_agendamento_periodo", $dados);
         } else {
             $this->showAjax('inc/v_inc_agendamento_pesquisar');
         }

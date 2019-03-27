@@ -15,7 +15,38 @@ class C_usuario extends MY_Controller {
     }
 
     public function index() {
+//exibe a conta do usuario
+    }
 
+    public function contaUsuario() {
+        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "atualizar" )) {
+            $dados['nome'] = $this->input->post('nome');
+            $dados['idt'] = $this->input->post('idt');
+            $dados['endereco'] = $this->input->post('endereco');
+            $dados['celular'] = $this->input->post('celular');
+            $dados['fixo'] = $this->input->post('fixo');
+            $dados['cd_usuario'] = $this->input->post('cd_usuario');
+
+            $retorno = $this->m_usuario->atualizarContaUsuario($dados);
+
+            unset($dados);
+            if ($retorno) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        } else {
+            $cd_usuario = (int) $this->input->post('cd_usuario');
+
+            $dados['usuario'] = $this->m_usuario->getContaUsuario($cd_usuario);
+            $dados['titulo'] = "Minha conta";
+
+            if (isset($dados['usuario']) && !empty($dados['usuario'])) {
+                $this->showAjax('inc/v_inc_usuario_conta', $dados);
+            } else {
+                redirect('c_login/logout');
+            }
+        }
     }
 
     public function listarUsuarios() {

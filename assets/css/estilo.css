@@ -199,7 +199,7 @@ table td img{
     font: 28px 'Trebuchet MS', Arial, Helvetica, sans-serif;
     color: #000;
     font-weight: bold;
-    /*margin-left: 10px;*/
+    margin-top: -2px;
     margin-bottom: 12px;
     /*width: 850px;*/
 }

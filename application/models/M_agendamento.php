@@ -37,7 +37,7 @@ class M_agendamento extends CI_Model {
                 . " inner join servico as sv on ag.cd_servico = sv.cd_servico "
                 . " inner join tarifa as ta on tp.cd_tpveiculo = ta.cd_tpveiculo and sv.cd_servico = ta.cd_servico "
                 . " where cd_agendamento = ?"
-                . " order by ag.data desc, ";
+                . " order by ag.data desc, ag.horario asc";
         return $this->db->query($sql, $cd_agend);
     }
 
