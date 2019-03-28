@@ -9,14 +9,24 @@ class M_veiculo extends CI_Model {
         parent::__construct();
     }
 
-    public function getTpVeiculos() {
+    public function getVeiculos() {
         $sql = "select * from tipo_veiculo";
         return $this->db->query($sql);
     }
 
-    public function getTpVeiculoById($cd_tpveiculo) {
+    public function getVeiculoById($cd_tpveiculo) {
         $sql = "select * from tipo_veiculo where cd_tpveiculo = ?";
         return $this->db->query($sql, $cd_tpveiculo);
+    }
+
+    public function editarVeiculo($cd_tpveiculo) {
+//        $sql = "select * from tipo_veiculo where cd_tpveiculo = ?";
+//        return $this->db->query($sql, $cd_tpveiculo);
+    }
+
+    public function cadastrarVeiculo($cd_tpveiculo) {
+//        $sql = "select * from tipo_veiculo where cd_tpveiculo = ?";
+//        return $this->db->query($sql, $cd_tpveiculo);
     }
 
     //SEM SENHA E COM NIVEL 0 DEFAULT (USUÁRIO)

@@ -14,9 +14,8 @@ class C_usuario extends MY_Controller {
         $this->load->model('m_usuario');
     }
 
-    public function index() {
-//exibe a conta do usuario
-    }
+//conta_
+
 
     public function contaUsuario() {
         if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "atualizar" )) {
@@ -123,12 +122,11 @@ class C_usuario extends MY_Controller {
         }
     }
 
-    public function pesquisarUsuario() {
-        $dados = $this->input->post('dados');
-
-        $retorno = $this->m_usuario->pesquisarUsuario($dados);
-        print_r($retorno);
-
+    public function alterarSenha() {
+//        $dados = $this->input->post('dados');
+//
+//        $retorno = $this->m_usuario->pesquisarUsuario($dados);
+//        print_r($retorno);
 //        if ($retorno) {
 //            echo 1;
 //        } else {

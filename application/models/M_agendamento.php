@@ -65,7 +65,6 @@ class M_agendamento extends CI_Model {
                 throw new Exception("Erro ao editar na tabela serviço.");
             }
 
-// cd_agendamento 	cd_usuario 	cd_tpveiculo 	cd_servico 	placa 	data 	horario 	status
             //lança o agendamento finalizado na tabela faturamento
             $sql = "insert into faturamento (cd_tpveiculo, cd_servico, data,	valor)"
                     . " values (?, ?, ?, ?,? )";

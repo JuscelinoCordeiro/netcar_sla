@@ -45,8 +45,7 @@ class C_login extends MY_Controller {
         }
     }
 
-    public
-            function logout() {
+    public function logout() {
         $this->session->sess_destroy();
         redirect('c_login');
     }

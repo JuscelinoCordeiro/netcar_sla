@@ -24,18 +24,6 @@ class C_servico extends MY_Controller {
         $this->load->view('footer');
     }
 
-    public function comboServicos() {
-        $cd_tpVeiculo = $this->input->post('cd_tpveiculo');
-
-        $servicos = $this->m_servico->getServicosTpVeiculos($cd_tpVeiculo)->result();
-//        print_r($servicos);
-        $servico = "<option value=\"\">Selecione um serviço</option>";
-        foreach ($servicos as $sv) {
-            $servico .= '<option value="' . $sv->cd_servico . '">' . $sv->servico . '</option>';
-        }
-        echo $servico;
-    }
-
     public function getServicoById() {
         $dados['servico'] = $this->m_servico->getservicoById($cd_servico);
 
@@ -117,6 +105,18 @@ class C_servico extends MY_Controller {
         } else {
             echo 0;
         }
+    }
+
+    public function comboServicos() {
+        $cd_tpVeiculo = $this->input->post('cd_tpveiculo');
+
+        $servicos = $this->m_servico->getServicosTpVeiculos($cd_tpVeiculo)->result();
+//        print_r($servicos);
+        $servico = "<option value=\"\">Selecione um serviço</option>";
+        foreach ($servicos as $sv) {
+            $servico .= '<option value="' . $sv->cd_servico . '">' . $sv->servico . '</option>';
+        }
+        echo $servico;
     }
 
 }

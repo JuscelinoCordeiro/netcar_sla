@@ -47,22 +47,22 @@ class M_usuario extends CI_Model {
                     $dados['idt'], $dados['cd_usuario']));
     }
 
-    public function pesquisarUsuario($dados) {
-        $sql = "select u.cd_usuario, u.nome, u.endereco, u.celular, u.fixo, u.nivel, u.idt, up.perfil "
-                . " from usuario u"
-                . " inner join usuario_perfil up on u.nivel = up.id_perfil"
-                . " where u.nome like '%" . $dados . "%' or u.idt = " . $dados . "";
-        return $this->db->query($sql)->row();
-    }
+//    public function pesquisarUsuario($dados) {
+//        $sql = "select u.cd_usuario, u.nome, u.endereco, u.celular, u.fixo, u.nivel, u.idt, up.perfil "
+//                . " from usuario u"
+//                . " inner join usuario_perfil up on u.nivel = up.id_perfil"
+//                . " where u.nome like '%" . $dados . "%' or u.idt = " . $dados . "";
+//        return $this->db->query($sql)->row();
+//    }
 
     public function getContaUsuario($cd_usuario) {
         $sql = "select cd_usuario, nome, idt, endereco, celular, nivel, fixo from usuario where cd_usuario = ?";
         return $this->db->query($sql, $cd_usuario)->row_array();
     }
 
-    public function trocaSenha($cd_usuario) {
+    public function trocarSenha($cd_usuario, $senha_antiga, $senha_nova) {
         $sql = "update usuario set senha = ? where cd_usuario = ? and senha = ?";
-        return $this->db->query($sql, $cd_usuario)->row_array();
+        return $this->db->query($sql, array($senha_nova, $cd_usuario, $senha_antiga));
     }
 
 }
