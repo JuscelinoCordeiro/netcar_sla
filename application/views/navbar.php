@@ -53,7 +53,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Área do usuário <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#" id="minha_conta" data-sort="<?= $cd_usuario_logado ?>"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Minha conta</a></li>
-                            <li><a href="#" id="troca_senha" data-sort="<?= $cd_usuario_logado ?>"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Trocar senha</a></li>
+                            <li><a href="#" id="trocar_senha" data-sort="<?= $cd_usuario_logado ?>"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Trocar senha</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/netcar/c_login/logout"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sair</a></li>
                         </ul>

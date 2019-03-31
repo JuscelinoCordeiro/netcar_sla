@@ -14,9 +14,6 @@ class C_usuario extends MY_Controller {
         $this->load->model('m_usuario');
     }
 
-//conta_
-
-
     public function contaUsuario() {
         if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "atualizar" )) {
             $dados['nome'] = $this->input->post('nome');
@@ -122,16 +119,34 @@ class C_usuario extends MY_Controller {
         }
     }
 
-    public function alterarSenha() {
-//        $dados = $this->input->post('dados');
-//
-//        $retorno = $this->m_usuario->pesquisarUsuario($dados);
-//        print_r($retorno);
-//        if ($retorno) {
-//            echo 1;
-//        } else {
-//            echo 0;
-//        }
+    public function trocarSenha() {
+        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "trocar_senha" )) {
+            $dados['senha_antiga'] = $this->input->post('senha_antiga');
+            $dados['senha_nova'] = $this->input->post('senha_nova');
+            $dados['cd_usuario'] = $this->input->post('cd_usuario');
+
+            $retorno = $this->m_usuario->atualizarContaUsuario($dados);
+
+            unset($dados);
+
+            if ($retorno) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        } else {
+            $cd_usuario = (int) $this->input->post('cd_usuario');
+
+            $dados['usuario'] = $this->m_usuario->getContaUsuario($cd_usuario);
+            $dados['titulo'] = "Trocar senha";
+
+            if (isset($dados['usuario']) && !empty($dados['usuario'])) {
+                $this->showAjax('inc/v_inc_usuario_senha', $dados);
+            }
+//            else {
+//                redirect('c_login/logout');
+//            }
+        }
     }
 
 }

@@ -1,5 +1,32 @@
 $(document).ready(function() {
-//CADASTRAR agendamento
+    //TROCAR SENHA
+    $("#trocar_senha").click(function(e) {
+        cd_usuario = $("#trocar_senha").data("sort");
+        $.ajax({
+            type: 'POST',
+            url: '/netcar/c_usuario/trocarSenha',
+            cache: false,
+            data: {
+                cd_usuario: cd_usuario
+            },
+            beforeSend: function(xhr) {
+                xhr.overrideMimeType("text/plain; charset=UTF-8");
+            },
+            complete: function() {
+            },
+            success: function(data) {
+                $("#modalTexto").html(data);
+                $("#modal").modal('show');
+            },
+            error: function() {
+                $("#erroTexto").html("erro");
+                $("#erro").modal('show');
+            }
+        });
+        e.preventDefault();
+    });
+
+//MINHA CONTA
     $("#minha_conta").click(function(e) {
         cd_usuario = $("#minha_conta").data("sort");
         $.ajax({
@@ -27,7 +54,7 @@ $(document).ready(function() {
     });
 
 
-    //CADASTRAR agendamento
+    //CADASTRAR AGENDAMENTO
     $("#cad_agenda").click(function(e) {
         valor = $("#cad_agenda").data("sort");
         $.ajax({
