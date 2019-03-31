@@ -7,16 +7,16 @@
         <form id="form_edit_usuario" action="" method="post">
             <legend class="text-black hr3">Dados do usuário</legend>
             <div class="form-group">
-                <label class="control-label">Senha anterior</label>
-                <input class="form-control" type="text" name="senha_antiga" required/>
+                <label class="control-label">Senha atual</label>
+                <input class="form-control text text-uppercase" type="text" name="senha_antiga" required/>
             </div>
             <div class="form-group">
                 <label class="control-label">Nova senha</label>
-                <input class="form-control" type="text" name="senha_nova" required/>
+                <input class="form-control text text-uppercase" type="text" name="senha_nova" required/>
             </div>
             <div class="form-group">
                 <label class="control-label">Confirme a nova senha</label>
-                <input class="form-control" type="text" name="senha_confirma" required/>
+                <input class="form-control text text-uppercase" type="text" name="senha_confirma" required/>
             </div>
             <input type="hidden" name="acao" value="trocar_senha"/>
             <input type="hidden" name="cd_usuario" value="<?= $usuario['cd_usuario'] ?>"/>
@@ -26,11 +26,11 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 //        $("#salvarModal").html("Atualizar dados");
 
-        $("#salvarModal").click(function(e) {
+        $("#salvarModal").click(function (e) {
             senha_antiga = $("input[name=senha_antiga]").val();
             senha_nova = $("input[name=senha_nova]").val();
             senha_confirma = $("input[name=senha_confirma]").val();
@@ -52,14 +52,14 @@
                     senha_confirma: senha_confirma,
                     cd_usuario: cd_usuario
                 },
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function() {
+                complete: function () {
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                        $('#sucesso').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
 //                        $('#alteracao').modal('hide');
@@ -67,7 +67,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function(e) {
+                        $('#erro').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -76,7 +76,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }

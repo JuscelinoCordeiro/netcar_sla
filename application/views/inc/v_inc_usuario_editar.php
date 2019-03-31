@@ -8,33 +8,33 @@
             <legend class="text-black hr3">Dados do usuário</legend>
             <div class="form-group">
                 <label class="control-label">Nome</label>
-                <input class="form-control" type="text" name="nome" required value="<?= $usuario['nome'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="nome" required value="<?= $usuario['nome'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Identidade</label>
-                <input class="form-control" type="text" name="idt" required value="<?= $usuario['idt'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="idt" required value="<?= $usuario['idt'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Endereço</label>
-                <input class="form-control" type="text" name="endereco" required value="<?= $usuario['endereco'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="endereco" required value="<?= $usuario['endereco'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Celular</label>
-                <input class="form-control" type="text" name="celular" required value="<?= $usuario['celular'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="celular" required value="<?= $usuario['celular'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Tel Fixo</label>
-                <input class="form-control" type="text" name="fixo" required value="<?= $usuario['fixo'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="fixo" required value="<?= $usuario['fixo'] ?>"/>
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Perfil</label>
                 <select class="form-control" name="nivel"  required>
                     <option value="<?= $usuario['nivel'] ?>">
                         <?php
-                        echo $usuario['nivel'] == "0" ? "Cliente" : "";
-                        echo $usuario['nivel'] == "1" ? "Operador" : "";
-                        echo $usuario['nivel'] == "2" ? "Financeiro" : "";
-                        echo $usuario['nivel'] == "3" ? "Gerente" : "";
+                            echo $usuario['nivel'] == "0" ? "CLIENTE" : "";
+                            echo $usuario['nivel'] == "1" ? "OPERADOR" : "";
+                            echo $usuario['nivel'] == "2" ? "FINANCEIRO" : "";
+                            echo $usuario['nivel'] == "3" ? "GERENTE" : "";
                         ?>
                     </option>
                     <option value="0">Cliente</option>
@@ -52,8 +52,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $("#salvarModal").click(function(e) {
+    $(document).ready(function () {
+        $("#salvarModal").click(function (e) {
             nome = $("input[name=nome]").val();
             idt = $("input[name=idt]").val();
             endereco = $("input[name=endereco]").val();
@@ -78,14 +78,14 @@
                     acao: acao,
                     cd_usuario: cd_usuario
                 },
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function() {
+                complete: function () {
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                        $('#sucesso').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -93,7 +93,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function(e) {
+                        $('#erro').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -102,7 +102,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }

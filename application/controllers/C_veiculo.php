@@ -1,115 +1,84 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+    defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_veiculo extends MY_Controller {
+    class C_veiculo extends MY_Controller {
 
-    function __construct() {
-        parent::__construct();
+        function __construct() {
+            parent::__construct();
 
-        if (!$this->session->logado) {
-            redirect('c_login');
+            if (!$this->session->logado) {
+                redirect('c_login');
+            }
+
+            $this->load->model('m_veiculo');
         }
 
-        $this->load->model('m_servico');
+        public function index() {
+
+            $info['titulo'] = "Veículos";
+            $dados['veiculos'] = $this->m_veiculo->getVeiculos();
+            $this->load->view('header', $info);
+            $this->load->view('navbar');
+            $this->load->view('v_veiculo', $dados);
+            $this->load->view('footer');
+        }
+
+        public function getVeiculoById() {
+            $dados['veiculo'] = $this->m_veiculo->getVeiculoById($cd_tpveiculo);
+
+            if (isset($dados['veiculo']) && !empty($dados['veiculo'])) {
+                $this->load->view('inc/v_inc_veiculo_editar', $dados);
+            }
+        }
+
+        public function editarVeiculo() {
+            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
+                $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+                $tipo_veiculo = $this->input->post('tipo_veiculo');
+
+                $retorno = $this->m_veiculo->editarVeiculo($cd_tpveiculo, $tipo_veiculo);
+
+                if ($retorno) {
+                    echo 1;
+                } else {
+                    echo 0;
+                }
+            } else {
+                $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+                $dados['veiculo'] = $this->m_veiculo->getVeiculoById($cd_tpveiculo)->row();
+                $dados['titulo'] = "Editar Veículo";
+                $this->showAjax('inc/v_inc_veiculo_editar', $dados);
+            }
+        }
+
+        public function cadastrarVeiculo() {
+            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
+                $tipo_veiculo = $this->input->post('tipo_veiculo');
+
+                $retorno = $this->m_veiculo->cadastrarVeiculo($tipo_veiculo);
+
+                if ($retorno) {
+                    echo 1;
+                } else {
+                    echo 0;
+                }
+            } else {
+                $dados['titulo'] = "Cadastro de Veículo";
+                $this->showAjax('inc/v_inc_veiculo_adicionar');
+            }
+        }
+
+        public function excluirVeiculo() {
+            $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+
+            $retorno = $this->m_veiculo->excluirVeiculo($cd_tpveiculo);
+
+            if ($retorno) {
+                echo 1;
+            } else {
+                echo 0;
+            }
+        }
+
     }
-
-    public function index() {
-
-        $info['titulo'] = "Veiculos";
-//        $dados['servicos'] = $this->m_servico->getservicos();
-//        $this->load->view('header', $info);
-//        $this->load->view('navbar');
-//        $this->load->view('v_servico', $dados);
-//        $this->load->view('footer');
-    }
-
-    public function getVeiculoById() {
-
-//        if (isset($dados['servico']) && !empty($dados['servico'])) {
-//            $this->load->view('inc/v_inc_servico_editar', $dados);
-//        }
-    }
-
-    public function cadastrarVeiculo() {
-
-    }
-
-    public function editarVeiculo() {
-
-    }
-
-//    public function editarServico() {
-//
-//        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
-//            $cd_servico = $this->input->post('cd_servico');
-//            $servico = $this->input->post('servico');
-//            $tipo_veiculos = $this->input->post('tipo_veiculos');
-//
-//            //editar
-//            $retorno = $this->m_servico->editarServico($cd_servico, $servico, $tipo_veiculos);
-//
-//            if ($retorno) {
-//                echo 1;
-//            } else {
-//                echo 0;
-//            }
-//        } else {
-//            $this->load->model('m_veiculo');
-//            $this->load->model('m_tarifa');
-//
-//            $cd_servico = $this->input->post('cd_servico');
-//            $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
-//            $dados['tipo_veiculos'] = $this->m_veiculo->getTpVeiculos()->result();
-//            $dados['tarifas'] = $this->m_tarifa->getTarifaServico($cd_servico)->result();
-//
-//            $dados['titulo'] = "Edição de Serviço";
-//            $this->showAjax('inc/v_inc_servico_editar', $dados);
-//        }
-//    }
-//    public function cadastrarServico() {
-//        if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
-//            $servico = $this->input->post('servico');
-//            $tipo_veiculos = $this->input->post('tipo_veiculos');
-//
-//            $retorno = $this->m_servico->cadastrarServico($servico, $tipo_veiculos);
-//
-//            if ($retorno) {
-//                echo 1;
-//            } else {
-//                echo 0;
-//            }
-//        } else {
-//            $this->load->model('m_veiculo');
-//            $dados['tipo_veiculos'] = $this->m_veiculo->getTpVeiculos()->result();
-//
-//            $dados['titulo'] = "Cadastro de Serviço";
-//            $this->showAjax('inc/v_inc_servico_adicionar', $dados);
-//        }
-//    }
-//
-//    public function excluirServico() {
-//        $cd_servico = $this->input->post('cd_servico');
-//
-//        $retorno = $this->m_servico->excluirServico($cd_servico);
-//
-//        if ($retorno) {
-//            echo 1;
-//        } else {
-//            echo 0;
-//        }
-//    }
-//
-//    public function mudarStatus() {
-//        $cd_servico = $this->input->post('cd_servico');
-//        $status = $this->input->post('status');
-//
-//        $retorno = $this->m_servico->mudarStatus($cd_servico, $status);
-//
-//        if ($retorno) {
-//            echo 1;
-//        } else {
-//            echo 0;
-//        }
-//    }
-}

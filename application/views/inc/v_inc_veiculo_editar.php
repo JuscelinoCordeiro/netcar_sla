@@ -6,32 +6,13 @@
         <h2 class="titulo">Editar Serviço</h2>
         <!--<a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>-->
         <form id="form_cad_usuario" action="" method="post">
-            <legend class="text-black hr3">Dados do Serviço</legend>
+            <legend class="text-black hr3">Dados do Veículo</legend>
             <div class="form-group">
-                <label class="control-label">Tipo de serviço</label>
-                <input class="form-control text text-uppercase" type="text" name="servico" required value="<?= $servico->servico ?>"/>
+                <label class="control-label">Tipo de veículo</label>
+                <input class="form-control text text-uppercase" type="text" name="tipo_veiculo" required value="<?= $veiculo->tipo ?>"/>
             </div>
-            <div class="form-group">
-                <label class="control-label">Tipos de veículos</label>
-            </div>
-            <?php
-                foreach ($tipo_veiculos as $tpVeiculo) {
-                    $check = "";
-                    foreach ($tarifas as $tarifa) {
-                        if ($tpVeiculo->cd_tpveiculo == $tarifa->cd_tpveiculo) {
-                            $check = "checked";
-                        }
-                    }
-                    ?>
-                    <label class="checkbox-inline">
-                        <input class=" text text-uppercase"type="checkbox" name="check" id="tpv<?= $tpVeiculo->cd_tpveiculo ?>" value="<?= $tpVeiculo->cd_tpveiculo ?>" <?= $check ?> > <?= $tpVeiculo->tipo ?>
-                    </label>
-                    <?php
-                }
-            ?>
-
             <input type="hidden" name="acao" value="editar"/>
-            <input type="hidden" name="cd_servico" value="<?= $servico->cd_servico ?>"/>
+            <input type="hidden" name="cd_tpveiculo" value="<?= $veiculo->cd_tpveiculo ?>"/>
         </form>
     </div>
     <div class="col-md-2"></div>
@@ -39,22 +20,17 @@
 <script>
     $(document).ready(function () {
         $("#salvarModal").click(function (e) {
-            servico = $("input[name=servico]").val();
-            cd_servico = $("input[name=cd_servico]").val();
+            tipo_veiculo = $("input[name=tipo_veiculo]").val();
+            cd_tpveiculo = $("input[name=cd_tpveiculo]").val();
             acao = $("input[name=acao]").val();
-            var tipo_veiculos = new Array();
-            $("input[name=check]:checked").each(function () {
-                tipo_veiculos.push($(this).val());
-            });
 
             $.ajax({
                 type: 'POST',
-                url: '/netcar/c_servico/editarServico',
+                url: '/netcar/c_veiculo/editarVeiculo',
                 cache: false,
                 data: {
-                    servico: servico,
-                    cd_servico: cd_servico,
-                    tipo_veiculos: tipo_veiculos,
+                    tipo_veiculo: tipo_veiculo,
+                    cd_tpveiculo: cd_tpveiculo,
                     acao: acao
                 },
                 beforeSend: function (xhr) {
@@ -68,7 +44,7 @@
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
-                        var msg = 'Serviço alterado com sucesso.';
+                        var msg = 'Veículo alterado com sucesso.';
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
@@ -76,7 +52,7 @@
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
-                        var msg = 'ERRO ao alterar o serviço.';
+                        var msg = 'ERRO ao alterar o veículo.';
                         $('#erroTexto').html(msg);
                         $('#erro').modal('show');
                     }

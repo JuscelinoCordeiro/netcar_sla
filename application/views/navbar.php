@@ -37,6 +37,13 @@
                             <li><a href="/netcar/c_servico"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Listar</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="<?= base_url('assets/img/car2.png') ?>" height="20" width="20"/> Veículos <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="cad_veiculo" data-sort="cad_veiculo"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Cadastrar</a></li>
+                            <li><a href="/netcar/c_veiculo"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Listar</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/netcar/c_tarifa"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Tarifas</a></li>
                     <li class="dropdown">
                         <a href="?pagina=manutencao" class="dropdown-toggle" data-toggle="dropdown">

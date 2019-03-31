@@ -9,15 +9,15 @@
             <legend class="text-black hr3">Dados do Serviço</legend>
             <div class="form-group">
                 <label class="control-label">Tipo de serviço</label>
-                <input class="form-control" disabled type="text" name="servico" required value="<?= $servico->servico ?>"/>
+                <input class="form-control text text-uppercase" disabled type="text" name="servico" required value="<?= $servico->servico ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Tipo de veículo</label>
-                <input class="form-control" disabled type="text" name="servico" required value="<?= $tipo_veiculo->tipo ?>"/>
+                <input class="form-control text text-uppercase" disabled type="text" name="servico" required value="<?= $tipo_veiculo->tipo ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Preço</label>
-                <input class="form-control" type="text" name="preco" required value="<?= $tarifa->preco ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="preco" required value="<?= $tarifa->preco ?>"/>
             </div>
 
             <input type="hidden" name="acao" value="editar"/>
@@ -28,8 +28,8 @@
     <div class="col-md-2"></div>
 </div>
 <script>
-    $(document).ready(function() {
-        $("#salvarModal").click(function(e) {
+    $(document).ready(function () {
+        $("#salvarModal").click(function (e) {
             cd_servico = $("input[name=cd_servico]").val();
             cd_tpveiculo = $("input[name=cd_tpveiculo]").val();
             preco = $("input[name=preco]").val();
@@ -45,14 +45,14 @@
                     preco: preco,
                     acao: acao
                 },
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function() {
+                complete: function () {
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                        $('#sucesso').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -60,7 +60,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function(e) {
+                        $('#erro').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -69,7 +69,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }

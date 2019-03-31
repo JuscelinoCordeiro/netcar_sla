@@ -8,23 +8,23 @@
             <legend class="text-black hr3">Dados do usuário</legend>
             <div class="form-group">
                 <label class="control-label">Nome</label>
-                <input class="form-control" type="text" name="nome" required value="<?= $usuario['nome'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="nome" required value="<?= $usuario['nome'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Identidade</label>
-                <input class="form-control" type="text" name="idt" required value="<?= $usuario['idt'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="idt" required value="<?= $usuario['idt'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Endereço</label>
-                <input class="form-control" type="text" name="endereco" required value="<?= $usuario['endereco'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="endereco" required value="<?= $usuario['endereco'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Celular</label>
-                <input class="form-control" type="text" name="celular" required value="<?= $usuario['celular'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="celular" required value="<?= $usuario['celular'] ?>"/>
             </div>
             <div class="form-group">
                 <label class="control-label">Tel Fixo</label>
-                <input class="form-control" type="text" name="fixo" required value="<?= $usuario['fixo'] ?>"/>
+                <input class="form-control text text-uppercase" type="text" name="fixo" required value="<?= $usuario['fixo'] ?>"/>
             </div>
             <input type="hidden" name="acao" value="atualizar"/>
             <input type="hidden" name="cd_usuario" value="<?= $usuario['cd_usuario'] ?>"/>
@@ -34,11 +34,11 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 //        $("#salvarModal").html("Atualizar dados");
 
-        $("#salvarModal").click(function(e) {
+        $("#salvarModal").click(function (e) {
             nome = $("input[name=nome]").val();
             idt = $("input[name=idt]").val();
             endereco = $("input[name=endereco]").val();
@@ -61,14 +61,14 @@
                     acao: acao,
                     cd_usuario: cd_usuario
                 },
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function() {
+                complete: function () {
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                        $('#sucesso').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -76,7 +76,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function(e) {
+                        $('#erro').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -85,7 +85,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }

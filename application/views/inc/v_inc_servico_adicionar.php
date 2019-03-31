@@ -9,19 +9,19 @@
             <legend class="text-black hr3">Dados do Serviço</legend>
             <div class="form-group">
                 <label class="control-label">Tipo de serviço</label>
-                <input class="form-control" type="text" name="servico" required />
+                <input class="form-control  text text-uppercase" type="text" name="servico" required />
             </div>
             <div class="form-group">
                 <label class="control-label">Tipos de veículos</label>
             </div>
             <?php
-            foreach ($tipo_veiculos as $tpVeiculo) {
-                ?>
-                <label class="checkbox-inline">
-                    <input type="checkbox" name="check" id="tpv<?= $tpVeiculo->cd_tpveiculo ?>" value="<?= $tpVeiculo->cd_tpveiculo ?>"> <?= $tpVeiculo->tipo ?>
-                </label>
-                <?php
-            }
+                foreach ($tipo_veiculos as $tpVeiculo) {
+                    ?>
+                    <label class="checkbox-inline">
+                        <input class=" text text-uppercase"type="checkbox" name="check" id="tpv<?= $tpVeiculo->cd_tpveiculo ?>" value="<?= $tpVeiculo->cd_tpveiculo ?>"> <?= $tpVeiculo->tipo ?>
+                    </label>
+                    <?php
+                }
             ?>
 
             <input type="hidden" name="acao" value="cadastrar"/>
@@ -31,12 +31,12 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $("#salvarModal").click(function(e) {
+    $(document).ready(function () {
+        $("#salvarModal").click(function (e) {
             servico = $("input[name=servico]").val();
             acao = $("input[name=acao]").val();
             var tipo_veiculos = new Array();
-            $("input[name=check]:checked").each(function() {
+            $("input[name=check]:checked").each(function () {
                 tipo_veiculos.push($(this).val());
             });
 //            alert(tipo_veiculos);
@@ -50,14 +50,14 @@
                     tipo_veiculos: tipo_veiculos,
                     acao: acao
                 },
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function() {
+                complete: function () {
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                        $('#sucesso').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -65,7 +65,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function(e) {
+                        $('#erro').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -74,7 +74,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#erroTexto").html("Erro no sistema ao cadastrar, tente novamente.");
                     $("#erro").modal('show');
                 }

@@ -9,33 +9,33 @@
             <legend class="text-black hr3">Dados para cadastrar</legend>
             <div class="form-group">
                 <label class="control-label">Nome</label>
-                <select class="form-control" name="usuario" >
+                <select class="form-control text text-uppercase" name="usuario" >
                     <option value="" selected="">Selecione o usuario</option>
                     <?php
-                    foreach ($usuarios as $usuario) {
-                        echo '<option value="' . $usuario->cd_usuario . '">' . $usuario->nome . '</option>';
-                    }
+                        foreach ($usuarios as $usuario) {
+                            echo '<option class="text text-uppercase" value="' . $usuario->cd_usuario . '">' . $usuario->nome . '</option>';
+                        }
                     ?>
                 </select>
             </div>
             <div class="form-group">
                 <label class="control-label">Placa do veículo</label>
-                <input class="form-control" type="text" name="placa" required placeholder="Digite a placa do veículo (opcional)"/>
+                <input class="form-control  text text-uppercase" type="text" name="placa" required placeholder="Digite a placa do veículo (opcional)"/>
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Tipo de veiculo</label>
-                <select class="form-control" name="tipo_veiculo" id="tipo_veiculo"  required >
+                <select class="form-control text text-uppercase" name="tipo_veiculo" id="tipo_veiculo"  required >
                     <option value="" selected="">Selecione o tipo de veículo</option>
                     <?php
-                    foreach ($tipo_veiculos as $tpveiculos) {
-                        echo '<option value="' . $tpveiculos->cd_tpveiculo . '">' . $tpveiculos->tipo . '</option>';
-                    }
+                        foreach ($tipo_veiculos as $tpveiculos) {
+                            echo '<option value="' . $tpveiculos->cd_tpveiculo . '">' . $tpveiculos->tipo . '</option>';
+                        }
                     ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Serviço</label>
-                <select class="form-control" name="servico" id="servico"  required>
+                <select class="form-control text text-uppercase" name="servico" id="servico"  required>
                     <option value="">Selecione o tipo de veículo primeiro</option>
                 </select>
             </div>
@@ -44,7 +44,7 @@
                     <label class="control-label">Data</label>
                     <span id="dt_agenda">
                         <div class="controls">
-                            <input class="form-control" id="data_agenda" type="text" name="data" placeholder="Ex.: dd/mm/aaaa"/>
+                            <input class="form-control text text-uppercase" id="data_agenda" type="text" name="data" placeholder="Ex.: dd/mm/aaaa"/>
                             <span class="textfieldInvalidFormatMsg msg">Formato de data inválido.</span>
                         </div>
                     </span>
@@ -67,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Valor</label>
-                <input class="form-control" type="text" name="preco" id="preco" required value="Selecione o tipo de veículo e o serviço."/>
+                <input class="form-control  text text-uppercase" type="text" name="preco" id="preco" required value="Selecione o tipo de veículo e o serviço."/>
             </div>
             <input type="hidden" name="acao" value="novoAgendamento"/>
         </form>
@@ -76,9 +76,9 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         //cadastrar o agendamento
-        $("#salvarModal").click(function(e) {
+        $("#salvarModal").click(function (e) {
             cd_usuario = $("select[name=usuario]").val();
             placa = $("input[name=placa]").val();
             cd_tpveiculo = $("select[name=tipo_veiculo]").val();
@@ -101,14 +101,14 @@
                     horario: horario,
                     acao: acao
                 },
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function() {
+                complete: function () {
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                        $('#sucesso').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -116,7 +116,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function(e) {
+                        $('#erro').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -125,7 +125,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }
@@ -135,14 +135,14 @@
 
 
         //combobox servico
-        $('#tipo_veiculo').on('change', function() {
+        $('#tipo_veiculo').on('change', function () {
             var cd_tpveiculo = $(this).val();
             if (cd_tpveiculo) {
                 $.ajax({
                     type: 'POST',
                     url: '/netcar/c_servico/comboServicos',
                     data: {cd_tpveiculo: cd_tpveiculo},
-                    success: function(html) {
+                    success: function (html) {
                         $('#servico').html(html);
                         $('#preco').val('Selecione o tipo de veículo e o serviço.');
                     }
@@ -154,7 +154,7 @@
         });
 
         //combobox preço
-        $('#servico').on('change', function() {
+        $('#servico').on('change', function () {
             var cd_servico = $(this).val();
             var cd_tpveiculo = $('#tipo_veiculo').val();
             if (cd_servico) {
@@ -165,7 +165,7 @@
                         cd_servico: cd_servico,
                         cd_tpveiculo: cd_tpveiculo
                     },
-                    success: function(html) {
+                    success: function (html) {
                         $('#preco').val(html);
                     }
                 });
@@ -175,7 +175,7 @@
         });
     });
 
-    $(function() {
+    $(function () {
         $("#data_agenda").datepicker(
                 {
                     dateFormat: 'dd/mm/yy',

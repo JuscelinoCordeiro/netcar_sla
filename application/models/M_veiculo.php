@@ -1,63 +1,60 @@
 <?php
 
-if (!defined('BASEPATH'))
-    exit('No	direct script access allowed');
+    if (!defined('BASEPATH'))
+        exit('No	direct script access allowed');
 
-class M_veiculo extends CI_Model {
+    class M_veiculo extends CI_Model {
 
-    public function __construct() {
-        parent::__construct();
+        public function __construct() {
+            parent::__construct();
+        }
+
+        public function getVeiculos() {
+            $sql = "select * from tipo_veiculo";
+            return $this->db->query($sql);
+        }
+
+        public function getVeiculoById($cd_tpveiculo) {
+            $sql = "select * from tipo_veiculo where cd_tpveiculo = ?";
+            return $this->db->query($sql, $cd_tpveiculo);
+        }
+
+        public function editarVeiculo($cd_tpveiculo, $tipo_veiculo) {
+            $sql = "UPDATE tipo_veiculo SET tipo = ? WHERE cd_tpveiculo = ?";
+            return $this->db->query($sql, array($tipo_veiculo, $cd_tpveiculo));
+        }
+
+        public function cadastrarVeiculo($tipo_veiculo) {
+            $sql = "INSERT INTO tipo_veiculo (tipo) VALUES (?)";
+            return $this->db->query($sql, $tipo_veiculo);
+        }
+
+        public function excluirVeiculo($cd_tpveiculo) {
+            try {
+                $sql_del = "delete from tipo_veiculo where cd_tpveiculo = ?";
+                $result_del = $this->db->query($sql_del, $cd_tpveiculo);
+
+                if ($result_del === FALSE) {
+                    throw new Exception("Erro ao excluir na tabela tipo_veiculo.");
+                }
+
+                $sql_tarifa = "delete from tarifa where cd_tpveiculo = ?";
+
+                $result_tarifa = $this->db->query($sql_tarifa, $cd_tpveiculo);
+
+                if ($result_tarifa === FALSE) {
+                    throw new Exception("Erro ao excluir na tabela tarifa.");
+                }
+
+                //verifica se houve erros
+                if ($result_del === TRUE && $result_tarifa == TRUE) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } catch (Exception $ex) {
+                return 0;
+            }
+        }
+
     }
-
-    public function getVeiculos() {
-        $sql = "select * from tipo_veiculo";
-        return $this->db->query($sql);
-    }
-
-    public function getVeiculoById($cd_tpveiculo) {
-        $sql = "select * from tipo_veiculo where cd_tpveiculo = ?";
-        return $this->db->query($sql, $cd_tpveiculo);
-    }
-
-    public function editarVeiculo($cd_tpveiculo) {
-//        $sql = "select * from tipo_veiculo where cd_tpveiculo = ?";
-//        return $this->db->query($sql, $cd_tpveiculo);
-    }
-
-    public function cadastrarVeiculo($cd_tpveiculo) {
-//        $sql = "select * from tipo_veiculo where cd_tpveiculo = ?";
-//        return $this->db->query($sql, $cd_tpveiculo);
-    }
-
-    //SEM SENHA E COM NIVEL 0 DEFAULT (USUÁRIO)
-//    public function cadastrarUsuario($dados) {
-//        $sql = "INSERT INTO usuario"
-//                . "(nome, idt, endereco, celular, nivel, fixo)"
-//                . " VALUES (?, ?, ?, ?, ?, ?)";
-//        return $this->db->query($sql, array($dados['nome'], $dados['idt'], $dados['endereco'], $dados['celular'], $dados['nivel'], $dados['fixo']));
-//    }
-//
-//    public function getUsuarioById($cd_usuario) {
-//        $sql = "select * from usuario where cd_usuario = ?";
-//        return $this->db->query($sql, $cd_usuario)->row_array();
-//    }
-//
-//    public function excluirUsuario($cd_usuario) {
-//        $sql = "delete from usuario where cd_usuario = ?";
-//        return $this->db->query($sql, $cd_usuario);
-//    }
-//
-//    public function editarUsuario($dados) {
-//        $sql = "update usuario set nome = ?, endereco = ?, celular = ?, fixo = ?, nivel = ?, idt = ? where cd_usuario = ?";
-//        return $this->db->query($sql, array($dados['nome'], $dados['endereco'], $dados['celular'], $dados['fixo'],
-//                    $dados['nivel'], $dados['idt'], $dados['cd_usuario']));
-//    }
-//
-//    public function pesquisarUsuario($dados) {
-//        $sql = "select u.cd_usuario, u.nome, u.endereco, u.celular, u.fixo, u.nivel, u.idt, up.perfil "
-//                . " from usuario u"
-//                . " inner join usuario_perfil up on u.nivel = up.id_perfil"
-//                . " where u.nome like '%" . $dados . "%' or u.idt = " . $dados . "";
-//        return $this->db->query($sql)->row();
-//    }
-}

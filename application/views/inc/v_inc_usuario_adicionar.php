@@ -8,32 +8,32 @@
             <legend class="text-black hr3">Dados do novo usuário</legend>
             <div class="form-group">
                 <label class="control-label">Nome</label>
-                <input class="form-control" type="text" name="nome" required />
+                <input class="form-control text text-uppercase" type="text" name="nome" required />
             </div>
             <div class="form-group">
                 <label class="control-label">Identidade</label>
-                <input class="form-control" type="text" name="idt" required />
+                <input class="form-control text text-uppercase" type="text" name="idt" required />
             </div>
             <div class="form-group">
                 <label class="control-label">Endereço</label>
-                <input class="form-control" type="text" name="endereco" required />
+                <input class="form-control text text-uppercase" type="text" name="endereco" required />
             </div>
             <div class="form-group">
                 <label class="control-label">Celular</label>
-                <input class="form-control" type="text" name="celular" required />
+                <input class="form-control text text-uppercase" type="text" name="celular" required />
             </div>
             <div class="form-group">
                 <label class="control-label">Tel Fixo</label>
-                <input class="form-control" type="text" name="fixo" required />
+                <input class="form-control text text-uppercase" type="text" name="fixo" required />
             </div>
             <div class="form-group">
                 <label for="Perfil" class="control-label">Perfil</label>
-                <select class="form-control" name="nivel"  required>
+                <select class="form-control  text text-uppercase" name="nivel"  required>
                     <option value="">Selecione uma opção</option>
-                    <option value="0">Cliente</option>
-                    <option value="1">Operador</option>
-                    <option value="2">Financeiro</option>
-                    <option value="3">Gerente</option>
+                    <option value="0">CLIENTE</option>
+                    <option value="1">OPERADOR</option>
+                    <option value="2">FINANCEIRO</option>
+                    <option value="3">GERENTE</option>
                 </select>
             </div>
 
@@ -45,8 +45,8 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $("#salvarModal").click(function(e) {
+    $(document).ready(function () {
+        $("#salvarModal").click(function (e) {
             nome = $("input[name=nome]").val();
             idt = $("input[name=idt]").val();
             endereco = $("input[name=endereco]").val();
@@ -68,14 +68,14 @@
                     nivel: nivel,
                     acao: acao
                 },
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function() {
+                complete: function () {
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function(e) {
+                        $('#sucesso').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -83,7 +83,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function(e) {
+                        $('#erro').on('hidden.bs.modal', function (e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -92,11 +92,11 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function() {
+                error: function () {
                     $("#erroTexto").html("Erro no sistema ao cadastrar, tente novamente.");
                     $("#erro").modal('show');
-                    $().ready(function() {
-                        setTimeout(function() {
+                    $().ready(function () {
+                        setTimeout(function () {
                             $('#erro').modal('hide');
                         }, 2000);
                     });
