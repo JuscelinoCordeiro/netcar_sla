@@ -1,24 +1,24 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     //ESCLUIR SERVICO
-    $('a[id^=btnExc]').click(function () {
+    $('a[id^=btnExc]').click(function() {
         cd_agend = $(this).attr('cd_agend');
-        $('#excluir').on('shown.bs.modal', function (e) {
+        $('#excluir').on('shown.bs.modal', function(e) {
 
-            $('#excluirModal').click(function () {
+            $('#excluirModal').click(function() {
                 $.ajax({
                     type: "POST",
                     url: '/netcar/c_agendamento/excluirAgendamento',
                     cache: false,
                     data: {cd_agend: cd_agend},
-                    beforeSend: function (xhr) {
+                    beforeSend: function(xhr) {
                         xhr.overrideMimeType("text/plain; charset=UTF-8");
                     },
-                    complete: function () {
+                    complete: function() {
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data === '1') {
-                            $('#sucesso').on('hidden.bs.modal', function (e) {
+                            $('#sucesso').on('hidden.bs.modal', function(e) {
                                 window.location.reload();
                             });
                             $('#excluir').modal('hide');
@@ -26,7 +26,7 @@ $(document).ready(function () {
                             $('#sucessoTexto').html(msg);
                             $('#sucesso').modal('show');
                         } else {
-                            $('#erro').on('hidden.bs.modal', function (e) {
+                            $('#erro').on('hidden.bs.modal', function(e) {
                                 window.location.reload();
                             });
                             $('#excluir').modal('hide');
@@ -35,7 +35,7 @@ $(document).ready(function () {
                             $('#erro').modal('show');
                         }
                     },
-                    error: function () {
+                    error: function() {
                         $("#erro").html('Ocorreu um erro no sistema.');
                         $("#erro").dialog("open");
                     }
@@ -51,12 +51,12 @@ $(document).ready(function () {
 
     //FINALIZAR SERVIÇO
     //ATIVAR SERVIÇO
-    $('a[id^=btnFin]').click(function () {
+    $('a[id^=btnFin]').click(function() {
 
         cd_agend = $(this).attr('cd_agend');
-        $('#alteracao').on('shown.bs.modal', function (e) {
+        $('#alteracao').on('shown.bs.modal', function(e) {
 
-            $('#alteracaoModal').click(function () {
+            $('#alteracaoModal').click(function() {
                 $.ajax({
                     type: "POST",
                     url: '/netcar/c_agendamento/finalizarAgendamento',
@@ -64,15 +64,15 @@ $(document).ready(function () {
                     data: {
                         cd_agend: cd_agend
                     },
-                    beforeSend: function (xhr) {
+                    beforeSend: function(xhr) {
                         xhr.overrideMimeType("text/plain; charset=UTF-8");
                     },
-                    complete: function () {
+                    complete: function() {
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data === '1') {
 
-                            $('#sucesso').on('hidden.bs.modal', function (e) {
+                            $('#sucesso').on('hidden.bs.modal', function(e) {
                                 window.location.reload();
                             });
                             $('#alteracao').modal('hide');
@@ -82,7 +82,7 @@ $(document).ready(function () {
 
                         } else {
 
-                            $('#erro').on('hidden.bs.modal', function (e) {
+                            $('#erro').on('hidden.bs.modal', function(e) {
                                 window.location.reload();
                             });
                             $('#excluir').modal('hide');
@@ -91,7 +91,7 @@ $(document).ready(function () {
                             $('#erro').modal('show');
                         }
                     },
-                    error: function () {
+                    error: function() {
                         $("#erro").html('Ocorreu um erro no sistema.');
                         $("#erro").dialog("open");
                     }
@@ -106,25 +106,26 @@ $(document).ready(function () {
     });
 
     // EDITAR O SERVIÇO
-    $("a[id^=btnEdit]").click(function (e) {
-        cd_servico = $(this).attr('cd_servico');
+    $("a[id^=btnEdit]").click(function(e) {
+        cd_agend = $(this).attr('cd_agend');
+
         $.ajax({
             type: 'POST',
-            url: '/netcar/c_servico/editarServico',
+            url: '/netcar/c_agendamento/editarAgendamento',
             cache: false,
             data: {
-                cd_servico: cd_servico
+                cd_agend: cd_agend
             },
-            beforeSend: function (xhr) {
+            beforeSend: function(xhr) {
                 xhr.overrideMimeType("text/plain; charset=UTF-8");
             },
-            complete: function () {
+            complete: function() {
             },
-            success: function (data) {
+            success: function(data) {
                 $("#modalTexto").html(data);
                 $("#modal").modal('show');
             },
-            error: function () {
+            error: function() {
                 $("#erroTexto").html("erro");
                 $("#erro").modal('show');
             }

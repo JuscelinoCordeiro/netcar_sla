@@ -42,7 +42,7 @@
                                 <?php echo "ABERTO"; ?>
                             </span>
                             <a id="btnFin<?= $agendamento->cd_agendamento ?>" class="finalizar" cd_agend="<?= $agendamento->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_finalizar2.png') ?>" height="17" width="17" alt="finalizar" title="Finalizar agendamento" border="0"/></a>
-                            <a href="/netcar/agendamento_editar?cd_agendamento=<?= $agendamento->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar agendamento" border="0"/></a>
+                            <a id="btnEdit<?= $agendamento->cd_agendamento ?>" cd_agend="<?= $agendamento->cd_agendamento ?>" href="#"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar agendamento" border="0"/></a>
                             <a id="btnExc<?= $agendamento->cd_agendamento ?>" cd_agend="<?= $agendamento->cd_agendamento ?>" class="excluir" id="btnExc<?= $agendamento->cd_agendamento ?>" cd_agend="<?= $agendamento->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir agendamento" border="0"/></a>
                             <?php
                         } else {

@@ -116,12 +116,13 @@
                 $this->load->model('m_tarifa');
 
                 $cd_servico = $this->input->post('cd_servico');
-                $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
-                $dados['tipo_veiculos'] = $this->m_veiculo->getVeiculos()->result();
-                $dados['tarifas'] = $this->m_tarifa->getTarifaServico($cd_servico)->result();
+                $dados['agendamento'] = $this->m_agendamento->getAgendamento($cd_agend)->row();
+//            $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
+//            $dados['tipo_veiculos'] = $this->m_veiculo->getVeiculos()->result();
+//            $dados['tarifas'] = $this->m_tarifa->getTarifaServico($cd_servico)->result();
 
-                $dados['titulo'] = "Edição de Serviço";
-                $this->showAjax('inc/v_inc_servico_editar', $dados);
+                $dados['titulo'] = "Editar agendamento";
+                $this->showAjax('inc/v_inc_agendamento_editar', $dados);
             }
         }
 
