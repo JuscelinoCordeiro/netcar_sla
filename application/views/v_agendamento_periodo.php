@@ -25,39 +25,39 @@
             </tr>
         </thead>
         <?php
-        $i = 0;
-        foreach ($agendamentos as $ag) {
-            $i = $i + 1;
-            ?>
-            <tr class="text text-center text-uppercase">
-                <td><?= $i ?></td>
-                <td><?= $ag->nome ?></td>
-                <td><?= $ag->tipo ?></td>
-                <td><?= $ag->placa ? $ag->placa : "---" ?></td>
-                <td><?= $ag->servico ?></td>
-                <td><?= date('d/m/Y', strtotime($ag->data)) ?></td>
-                <td><?= $ag->horario ?></td>
-                <td><?= $ag->preco ?></td>
-                <td class="text-center">
-                    <?php
-                    $status = $ag->status;
-                    if ($status == 0) {
-                        ?>
-                        <span class="label label-warning">
-                            <?php echo "ABERTO"; ?>
-                        </span>
-                        <a id="btnFin<?= $ag->cd_agendamento ?>" class="finalizar" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_finalizar2.png') ?>" height="17" width="17" alt="finalizar" title="Finalizar agendamento" border="0"/></a>
-                        <a href="/netcar/agendamento_editar?cd_agendamento=<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar agendamento" border="0"/></a>
-                        <a id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>" class="excluir" id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir agendamento" border="0"/></a>
-                            <?php
-                        } else {
-                            echo "SERVIÇO REALIZADO";
-                        }
-                        ?>
-                </td>
-            </tr>
-            <?php
-        }
+            $i = 0;
+            foreach ($agendamentos as $ag) {
+                $i = $i + 1;
+                ?>
+                <tr class="text text-center text-uppercase">
+                    <td><?= $i ?></td>
+                    <td><?= $ag->nome ?></td>
+                    <td><?= $ag->tipo ?></td>
+                    <td><?= $ag->placa ? $ag->placa : "---" ?></td>
+                    <td><?= $ag->servico ?></td>
+                    <td><?= date('d/m/Y', strtotime($ag->data)) ?></td>
+                    <td><?= $ag->horario ?></td>
+                    <td><?= "R$ " . $ag->preco . ",00" ?></td>
+                    <td class="text-center">
+                        <?php
+                        $status = $ag->status;
+                        if ($status == 0) {
+                            ?>
+                            <span class="label label-warning">
+                                <?php echo "ABERTO"; ?>
+                            </span>
+                            <a id="btnFin<?= $ag->cd_agendamento ?>" class="finalizar" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_finalizar2.png') ?>" height="17" width="17" alt="finalizar" title="Finalizar agendamento" border="0"/></a>
+                            <a href="/netcar/agendamento_editar?cd_agendamento=<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar agendamento" border="0"/></a>
+                            <a id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>" class="excluir" id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir agendamento" border="0"/></a>
+                                <?php
+                            } else {
+                                echo "SERVIÇO REALIZADO";
+                            }
+                            ?>
+                    </td>
+                </tr>
+                <?php
+            }
         ?>
     </table>
 </div>
