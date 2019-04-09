@@ -1,12 +1,10 @@
 A FAZER
-
-- CORRIGIR EXCLUIR USUARIO (
-	restricao de chave por conta de agendamentos
-	solução desativar o usuario)
 	
 - TESTES DE VALIDAÇÃO
 - VALIDAÇÃO DE PERFIL
 - USUARIO MANTER SEUS AGENDAMENTOS
 - VALIDAR SE O USUARIO EXISTE ANTES DE CADASTRAR(
 	buscar pela identidade se existe ou desativado)
--EDITAR AGENDAMENTO
+- AGENDAMENTO
+	criar tabela de horario para permitir somente horários livre
+	
