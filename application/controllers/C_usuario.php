@@ -6,26 +6,25 @@
 
         function __construct() {
             parent::__construct();
-
-            if (!$this->session->logado) {
-                redirect('c_login');
-            }
-
+            $this->isLogado();
             $this->load->model('m_usuario');
+            $this->loadEntidade('Usuario');
         }
 
         public function contaUsuario() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "atualizar" )) {
-                $dados['nome'] = $this->input->post('nome');
-                $dados['idt'] = $this->input->post('idt');
-                $dados['endereco'] = $this->input->post('endereco');
-                $dados['celular'] = $this->input->post('celular');
-                $dados['fixo'] = $this->input->post('fixo');
-                $dados['cd_usuario'] = $this->input->post('cd_usuario');
+                $usuario = new Usuario();
 
-                $retorno = $this->m_usuario->atualizarContaUsuario($dados);
+                $usuario->setNome($this->input->post('nome'));
+                $usuario->setIdentidade($this->input->post('idt'));
+                $usuario->setEndereco($this->input->post('endereco'));
+                $usuario->setCelular($this->input->post('celular'));
+                $usuario->setFixo($this->input->post('fixo'));
+                $usuario->setCodigo($this->input->post('cd_usuario'));
 
-                unset($dados);
+
+                $retorno = $this->m_usuario->atualizarContaUsuario($usuario);
+
                 if ($retorno) {
                     echo 1;
                 } else {
@@ -34,6 +33,7 @@
             } else {
                 $cd_usuario = (int) $this->input->post('cd_usuario');
 
+                // pega um objeto usuario com os dados no banco
                 $dados['usuario'] = $this->m_usuario->getContaUsuario($cd_usuario);
                 $dados['titulo'] = "Minha conta";
 
@@ -53,18 +53,26 @@
 
         public function cadastrarUsuario() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
-                $dados['nome'] = $this->input->post('nome');
-                $dados['idt'] = $this->input->post('idt');
-                $dados['endereco'] = $this->input->post('endereco');
-                $dados['celular'] = $this->input->post('celular');
-                $dados['fixo'] = $this->input->post('fixo');
-                $dados['nivel'] = $this->input->post('nivel');
-//            print_r($dados);
-                $retorno = $this->m_usuario->cadastrarUsuario($dados);
+                $usuario = new Usuario();
 
-                unset($dados);
+                $usuario->setNome($this->input->post('nome'));
+                $usuario->setIdentidade($this->input->post('idt'));
+                $usuario->setEndereco($this->input->post('endereco'));
+                $usuario->setCelular($this->input->post('celular'));
+                $usuario->setFixo($this->input->post('fixo'));
+                $usuario->setNivel($this->input->post('nivel'));
 
-                if ($retorno) {
+                $existeUsuario = $this->m_usuario->existeUsuario($usuario->identidade);
+
+                if ($existeUsuario > 0) {
+                    $retorno = -1;
+                } else {
+                    $retorno = $this->m_usuario->cadastrarUsuario($usuario);
+                }
+
+                if ($retorno === -1) {
+                    echo -1;
+                } else if ($retorno === 1) {
                     echo 1;
                 } else {
                     echo 0;
@@ -77,15 +85,17 @@
 
         public function editarUsuario() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
-                $dados['nome'] = $this->input->post('nome');
-                $dados['idt'] = $this->input->post('idt');
-                $dados['endereco'] = $this->input->post('endereco');
-                $dados['celular'] = $this->input->post('celular');
-                $dados['fixo'] = $this->input->post('fixo');
-                $dados['nivel'] = $this->input->post('nivel');
-                $dados['cd_usuario'] = $this->input->post('cd_usuario');
+                $usuario = new Usuario();
 
-                $retorno = $this->m_usuario->editarUsuario($dados);
+                $usuario->setNome($this->input->post('nome'));
+                $usuario->setIdentidade($this->input->post('idt'));
+                $usuario->setEndereco($this->input->post('endereco'));
+                $usuario->setCelular($this->input->post('celular'));
+                $usuario->setFixo($this->input->post('fixo'));
+                $usuario->setNivel($this->input->post('nivel'));
+                $usuario->setCodigo($this->input->post('cd_usuario'));
+
+                $retorno = $this->m_usuario->editarUsuario($usuario);
 
                 unset($dados);
                 if ($retorno) {
@@ -96,6 +106,7 @@
             } else {
                 $cd_usuario = (int) $this->input->post('cd_usuario');
 
+                //pega o objeto usuario com os dados pelo codigo do usuario
                 $dados['usuario'] = $this->m_usuario->getUsuarioById($cd_usuario);
                 $dados['titulo'] = "Editar Usuário";
 
@@ -143,9 +154,6 @@
                 if (isset($dados['usuario']) && !empty($dados['usuario'])) {
                     $this->showAjax('inc/v_inc_usuario_senha', $dados);
                 }
-//            else {
-//                redirect('c_login/logout');
-//            }
             }
         }
 

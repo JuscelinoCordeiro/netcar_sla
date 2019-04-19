@@ -14,6 +14,7 @@
                     <label class="control-label">Senha</label>
                     <input class="form-control" type="password" name="senha" placeholder="Digite sua senha" required />
                 </div>
+                <a href="">Não possuo cadastro.</a>
                 <input type="hidden" name="acao" value="logar"/>
                 <input type="submit" value="Entrar" class="btn btn-success pull-right"/>
             </form>
@@ -24,10 +25,6 @@
                 echo '<div class="alert alert-danger">' . $mensagem . '</div>';
             }
         ?>
-        <p class="footer text-center">Page rendered in <strong>{elapsed_time}</strong>
-            seconds. <?php echo (ENVIRONMENT === 'development') ? 'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
-        </p>
-
     </div>
     <!--	div corpo-->
     <div class="col-md-4"></div>

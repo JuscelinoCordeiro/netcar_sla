@@ -31,7 +31,7 @@
 
         public function loadEntidade($classe) {
 //            echo base_url('application/entidades/' . $classe);
-            return require_once(APPPATH . 'entidades/' . $classe);
+            return require_once(APPPATH . 'entidades/' . $classe . '.php');
         }
 
     }

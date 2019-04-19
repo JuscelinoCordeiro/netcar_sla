@@ -6,10 +6,9 @@
 
         function __construct() {
             parent::__construct();
-
             $this->isLogado();
-
             $this->load->model('m_tarifa');
+            $this->loadEntidade('Tarifa');
         }
 
         public function index() {
@@ -22,11 +21,13 @@
         public function editarTarifa() {
 
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
-                $cd_servico = $this->input->post('cd_servico');
-                $cd_tpveiculo = $this->input->post('cd_tpveiculo');
-                $preco = $this->input->post('preco');
+                $tarifa = new Tarifa();
 
-                $retorno = $this->m_tarifa->editarTarifa($cd_servico, $cd_tpveiculo, $preco);
+                $tarifa->setServico($this->input->post('cd_servico'));
+                $tarifa->setTipoVeiculo($this->input->post('cd_tpveiculo'));
+                $tarifa->setPreco($this->input->post('preco'));
+
+                $retorno = $this->m_tarifa->editarTarifa($tarifa);
 
                 if ($retorno) {
                     echo 1;
@@ -50,11 +51,13 @@
         }
 
         public function getTarifaServicoTpVeiculo() {
-            $cd_servico = $this->input->post('cd_servico');
-            $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+            $tarifa = new Tarifa();
 
-            $tarifa = $this->m_tarifa->getTarifaServicoTpVeiculo($cd_servico, $cd_tpveiculo)->row()->preco;
-//        print_r($this->db->last_query());
+            $tarifa->setServico($this->input->post('cd_servico'));
+            $tarifa->setTipoVeiculo($this->input->post('cd_tpveiculo'));
+
+            $tarifa = $this->m_tarifa->getTarifaServicoTpVeiculo($tarifa)->row()->preco;
+
             if ($tarifa != NULL) {
                 echo "R$ " . $tarifa . ",00";
             } else {

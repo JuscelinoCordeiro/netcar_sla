@@ -6,12 +6,9 @@
 
         function __construct() {
             parent::__construct();
+            $this->isLogado();
             $this->load->model('m_agendamento');
-//            load_class(Agendamento, 'entidades');
-//            require_once base_url('application/entidades/Agendamento.php');
-//            require_once(APPPATH . 'entidades/Agendamento.php');
-            $this->loadEntidade('Agendamento.php');
-            $agendamento = new Agendamento();
+            $this->loadEntidade('Agendamento');
         }
 
         public function index() {
@@ -20,19 +17,34 @@
 
         public function listarAgendamentosDoDia() {
             $dtHoje = date('Y/m/d');
-            $dados['agendamentos_dia'] = $this->m_agendamento->getAgendamentosDoDia($dtHoje);
+            $cd_usuario_logado = ($this->session->userdata('dados_usuario')->cd_usuario);
+            $perfil_usuario_logado = ($this->session->userdata('dados_usuario')->nivel);
+
+            if (validaPerfil(array(M_perfil::Cliente), $perfil_usuario_logado)) {
+                $dados['agendamentos_dia'] = $this->m_agendamento->getAgendamentosDoDia($dtHoje, $cd_usuario_logado);
+            } else {
+                $dados['agendamentos_dia'] = $this->m_agendamento->getAgendamentosDoDia($dtHoje);
+            }
 
             $dados['titulo'] = "Agenda do dia";
             $this->showTemplate("v_agendamento_diario", $dados);
         }
 
         public function listarAgendamentos() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "pesquisar" )) {
+            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "pesquisar")) {
 
                 $dt_ini = inverteData($this->input->post('dt_inicio'));
                 $dt_fim = inverteData($this->input->post('dt_fim'));
 
-                $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim)->result();
+                $cd_usuario_logado = ($this->session->userdata('dados_usuario')->cd_usuario);
+                $perfil_usuario_logado = ($this->session->userdata('dados_usuario')->nivel);
+
+                if (validaPerfil(array(M_perfil::Cliente), $perfil_usuario_logado)) {
+                    $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim, $cd_usuario_logado)->result();
+                } else {
+                    $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim)->result();
+                }
+
                 $dados['dt_inicio'] = $dt_ini;
                 $dados['dt_fim'] = $dt_fim;
                 $dados['titulo'] = "Agendamentos";
@@ -44,16 +56,16 @@
         }
 
         public function cadastrarAgendamento() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "novoAgendamento" )) {
-                $dados['cd_usuario'] = $this->input->post('cd_usuario');
-                $dados['cd_tpveiculo'] = $this->input->post('cd_tpveiculo');
-                $dados['cd_servico'] = $this->input->post('cd_servico');
-                $dados['placa'] = $this->input->post('placa');
-                $dados['data'] = inverteData($this->input->post('data'));
-                $dados['horario'] = $this->input->post('horario');
-//            print_r($dados);
-//            die();
-                $retorno = $this->m_agendamento->cadastrarAgendamento($dados);
+            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "novoAgendamento")) {
+                $agendamento = new Agendamento();
+                $agendamento->setUsuario($this->input->post('cd_usuario'));
+                $agendamento->setTipoVeiculo($this->input->post('cd_tpveiculo'));
+                $agendamento->setServico($this->input->post('cd_servico'));
+                $agendamento->setPlaca($this->input->post('placa'));
+                $agendamento->setData(inverteData($this->input->post('data')));
+                $agendamento->setHorario($this->input->post('horario'));
+
+                $retorno = $this->m_agendamento->cadastrarAgendamento($agendamento);
 
                 if ($retorno) {
                     echo 1;
@@ -61,7 +73,7 @@
                     echo 0;
                 }
             } else {
-                if (($this->input->post('valor') !== null) && ($this->input->post('valor') === "agendamento" )) {
+                if (($this->input->post('valor') !== null) && ($this->input->post('valor') === "agendamento")) {
                     $this->load->model('m_usuario');
                     $this->load->model('m_veiculo');
                     $this->load->model('m_servico');
@@ -103,7 +115,7 @@
 
         //PERCISA COMBOBOX
         public function editarAgendamento() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
+            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar")) {
                 $cd_agend = $this->input->post('cd_agend');
 
                 //editar
@@ -122,10 +134,6 @@
 
                 $cd_servico = $this->input->post('cd_servico');
                 $dados['agendamento'] = $this->m_agendamento->getAgendamento($cd_agend)->row();
-//            $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
-//            $dados['tipo_veiculos'] = $this->m_veiculo->getVeiculos()->result();
-//            $dados['tarifas'] = $this->m_tarifa->getTarifaServico($cd_servico)->result();
-
                 $dados['titulo'] = "Editar agendamento";
                 $this->showAjax('inc/v_inc_agendamento_editar', $dados);
             }

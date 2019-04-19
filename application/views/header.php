@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
+$CI = &get_instance();
+$CI->load->model('m_perfil');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

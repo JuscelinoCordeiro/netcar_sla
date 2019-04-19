@@ -2,15 +2,15 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/estilo.css') ?>"/>
 
 <?php
-    print_r($agendamento);
+//    print_r($agendamento);
 //    die();
 ?>
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-        <h2 class="titulo">Agendar serviço</h2>
+        <h2 class="titulo">Editar agendamento</h2>
         <form id="form_cad_agendamento" action="" method="post">
-            <legend class="text-black hr3">Dados para cadastrar</legend>
+            <legend class="text-black hr3">Dados do agendamento</legend>
             <div class="form-group">
                 <label class="control-label">Nome</label>
                 <input class="form-control  text text-uppercase" type="text" name="nome" disabled="" cd_usuario="<?= $agendamento->cd_usuario ?>" value="<?= $agendamento->nome ?>"/>

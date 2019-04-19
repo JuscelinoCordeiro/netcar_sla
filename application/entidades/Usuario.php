@@ -10,8 +10,18 @@
         private $endereco;
         private $celular;
         private $fixo;
-        private $perfil;
+        private $nivel;
         private $ativo;
+
+        //METODOS MAGICOS
+        //======================================================================
+        public function __get($valor) {
+            return $this->$valor;
+        }
+
+        public function __set($atributo, $valor) {
+            $this->$atributo = $valor;
+        }
 
         //METODOS SET
         //======================================================================
@@ -39,8 +49,8 @@
             $this->fixo = $fixo;
         }
 
-        public function setPerfil($perfil) {
-            $this->perfil = $perfil;
+        public function setNivel($nivel) {
+            $this->nivel = $nivel;
         }
 
         public function setAtivo($ativo) {
@@ -73,8 +83,8 @@
             return $this->fixo;
         }
 
-        public function getPerfil() {
-            return $this->perfil;
+        public function getNivel() {
+            return $this->nivel;
         }
 
         public function getAtivo() {

@@ -137,8 +137,8 @@
                     throw new Exception("Erro ao cadastrar na tabela serviço.");
                 }
 
-                print_r($tipo_veiculos);
-                die();
+//                print_r($tipo_veiculos);
+//                die();
                 foreach ($tipo_veiculos as $tpv) {
                     $sql_tarifa = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
                     $insert2 = $this->db->query($sql_tarifa, array((int) $tpv, $novo_cod));

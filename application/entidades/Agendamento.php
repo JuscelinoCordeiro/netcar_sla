@@ -13,13 +13,23 @@
         private $horario;
         private $valor;
 
+        //METODOS MAGICOS
+        //======================================================================
+        public function __get($valor) {
+            return $this->$valor;
+        }
+
+        public function __set($atributo, $valor) {
+            $this->$atributo = $valor;
+        }
+
         //METODOS SET
         //======================================================================
         public function setCodigo($cd_agendamento) {
             $this->cd_agendamento = $cd_agendamento;
         }
 
-        public function setusuario($usuario) {
+        public function setUsuario($usuario) {
             $this->usuario = $usuario;
         }
 
@@ -28,7 +38,7 @@
         }
 
         public function setPlaca($placa) {
-            $this->servico = $placa;
+            $this->placa = $placa;
         }
 
         public function setServico($servico) {

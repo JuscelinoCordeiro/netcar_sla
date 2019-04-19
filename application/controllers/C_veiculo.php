@@ -6,12 +6,9 @@
 
         function __construct() {
             parent::__construct();
-
-            if (!$this->session->logado) {
-                redirect('c_login');
-            }
-
+            $this->isLogado();
             $this->load->model('m_veiculo');
+            $this->loadEntidade('Veiculo');
         }
 
         public function index() {
@@ -34,10 +31,11 @@
 
         public function editarVeiculo() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
-                $cd_tpveiculo = $this->input->post('cd_tpveiculo');
-                $tipo_veiculo = $this->input->post('tipo_veiculo');
+                $veiculo = new Veiculo();
+                $veiculo->setCodigo($this->input->post('cd_tpveiculo'));
+                $veiculo->setTipo($this->input->post('tipo_veiculo'));
 
-                $retorno = $this->m_veiculo->editarVeiculo($cd_tpveiculo, $tipo_veiculo);
+                $retorno = $this->m_veiculo->editarVeiculo($veiculo);
 
                 if ($retorno) {
                     echo 1;

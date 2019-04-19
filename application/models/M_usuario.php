@@ -1,7 +1,7 @@
 <?php
 
     if (!defined('BASEPATH'))
-        exit('No	direct script access allowed');
+        exit('No direct script access allowed');
 
     class M_usuario extends CI_Model {
 
@@ -19,11 +19,20 @@
         }
 
         //SEM SENHA E COM NIVEL 0 DEFAULT (USUÁRIO)
-        public function cadastrarUsuario($dados) {
-            $sql = "INSERT INTO usuario"
-                    . "(nome, idt, endereco, celular, nivel, fixo)"
-                    . " VALUES (?, ?, ?, ?, ?, ?)";
-            return $this->db->query($sql, array($dados['nome'], $dados['idt'], $dados['endereco'], $dados['celular'], $dados['nivel'], $dados['fixo']));
+        public function cadastrarUsuario($usuario) {
+            if ($usuario->nivel !== NULL) {
+                $sql = "INSERT INTO usuario"
+                        . "(nome, idt, endereco, celular, nivel, fixo)"
+                        . " VALUES (?, ?, ?, ?, ?, ?)";
+                return $this->db->query($sql, array($usuario->nome, $usuario->identidade, $usuario->endereco, $usuario->celular,
+                            $usuario->nivel, $usuario->fixo));
+            } else {
+                $sql = "INSERT INTO usuario"
+                        . "(nome, idt, endereco, celular, fixo, nivel)"
+                        . " VALUES (?, ?, ?, ?, ?, ?)";
+                return $this->db->query($sql, array($usuario->nome, $usuario->identidade, $usuario->endereco, $usuario->celular,
+                            $usuario->fixo, 0));
+            }
         }
 
         public function getUsuarioById($cd_usuario) {
@@ -33,29 +42,34 @@
 
         public function excluirUsuario($cd_usuario) {
 //        $sql = "delete from usuario where cd_usuario = ?";
+            //desativar para manter o historico de agendamento, não gera inconsistencia
             $sql = "update usuario set ativo = 0 where cd_usuario = ?";
             return $this->db->query($sql, $cd_usuario);
         }
 
-        public function editarUsuario($dados) {
-            $sql = "update usuario set nome = ?, endereco = ?, celular = ?, fixo = ?, nivel = ?, idt = ? where cd_usuario = ?";
-            return $this->db->query($sql, array($dados['nome'], $dados['endereco'], $dados['celular'], $dados['fixo'],
-                        $dados['nivel'], $dados['idt'], $dados['cd_usuario']));
+        public function editarUsuario($usuario) {
+            if ($usuario->nivel !== NULL) {
+                $sql = "update usuario set nome = ?, endereco = ?, celular = ?, fixo = ?, nivel = ?, idt = ? where cd_usuario = ?";
+                return $this->db->query($sql, array($usuario->nome, $usuario->endereco, $usuario->celular, $usuario->fixo,
+                            $usuario->nivel, $usuario->identidade, $usuario->cd_usuario));
+            } else {
+                $sql = "update usuario set nome = ?, endereco = ?, celular = ?, fixo = ?, idt = ? where cd_usuario = ?";
+                return $this->db->query($sql, array($usuario->nome, $usuario->endereco, $usuario->celular, $usuario->fixo,
+                            $usuario->identidade, $usuario->cd_usuario));
+            }
         }
 
-        public function atualizarContaUsuario($dados) {
+        public function atualizarContaUsuario($usuario) {
             $sql = "update usuario set nome = ?, endereco = ?, celular = ?, fixo = ?, idt = ? where cd_usuario = ?";
-            return $this->db->query($sql, array($dados['nome'], $dados['endereco'], $dados['celular'], $dados['fixo'],
-                        $dados['idt'], $dados['cd_usuario']));
+            return $this->db->query($sql, array($usuario->nome, $usuario->endereco, $usuario->celular, $usuario->fixo,
+                        $usuario->identidade, $usuario->cd_usuario));
         }
 
-//    public function pesquisarUsuario($dados) {
-//        $sql = "select u.cd_usuario, u.nome, u.endereco, u.celular, u.fixo, u.nivel, u.idt, up.perfil "
-//                . " from usuario u"
-//                . " inner join usuario_perfil up on u.nivel = up.id_perfil"
-//                . " where u.nome like '%" . $dados . "%' or u.idt = " . $dados . "";
-//        return $this->db->query($sql)->row();
-//    }
+        public function existeUsuario($idt) {
+            $sql = "select cd_usuario from usuario where idt = ?";
+            $valida = $this->db->query($sql, array($idt))->num_rows();
+            return $valida;
+        }
 
         public function getContaUsuario($cd_usuario) {
             $sql = "select cd_usuario, nome, idt, endereco, celular, nivel, fixo from usuario where cd_usuario = ?";

@@ -46,7 +46,13 @@
                             <span class="label label-warning">
                                 <?php echo "ABERTO"; ?>
                             </span>
-                            <a id="btnFin<?= $ag->cd_agendamento ?>" class="finalizar" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_finalizar2.png') ?>" height="17" width="17" alt="finalizar" title="Finalizar agendamento" border="0"/></a>
+                            <?php
+                            if (validaPerfil(array(M_perfil::Operador, M_perfil::Gerente), $this->session->userdata('dados_usuario')->nivel)) {
+                                ?>
+                                <a id="btnFin<?= $ag->cd_agendamento ?>" class="finalizar" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_finalizar2.png') ?>" height="17" width="17" alt="finalizar" title="Finalizar agendamento" border="0"/></a>
+                                <?php
+                            }
+                            ?>
                             <a href="/netcar/agendamento_editar?cd_agendamento=<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar agendamento" border="0"/></a>
                             <a id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>" class="excluir" id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir agendamento" border="0"/></a>
                                 <?php

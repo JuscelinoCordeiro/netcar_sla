@@ -26,23 +26,30 @@
                 <label class="control-label">Tel Fixo</label>
                 <input class="form-control text text-uppercase" type="text" name="fixo" required value="<?= $usuario['fixo'] ?>"/>
             </div>
-            <div class="form-group">
-                <label for="Perfil" class="control-label">Perfil</label>
-                <select class="form-control" name="nivel"  required>
-                    <option value="<?= $usuario['nivel'] ?>">
-                        <?php
-                            echo $usuario['nivel'] == "0" ? "CLIENTE" : "";
-                            echo $usuario['nivel'] == "1" ? "OPERADOR" : "";
-                            echo $usuario['nivel'] == "2" ? "FINANCEIRO" : "";
-                            echo $usuario['nivel'] == "3" ? "GERENTE" : "";
-                        ?>
-                    </option>
-                    <option value="0">Cliente</option>
-                    <option value="1">Operador</option>
-                    <option value="2">Financeiro</option>
-                    <option value="3">Gerente</option>
-                </select>
-            </div>
+            <?php
+                if (validaPerfil(array(M_perfil::Gerente), $this->session->userdata('dados_usuario')->nivel)) {
+                    ?>
+                    <div class="form-group">
+                        <label for="Perfil" class="control-label">Perfil</label>
+                        <select class="form-control" name="nivel"  required>
+                            <option value="<?= $usuario['nivel'] ?>">
+                                <?php
+                                echo $usuario['nivel'] == "0" ? "CLIENTE" : "";
+                                echo $usuario['nivel'] == "1" ? "OPERADOR" : "";
+                                echo $usuario['nivel'] == "2" ? "FINANCEIRO" : "";
+                                echo $usuario['nivel'] == "3" ? "GERENTE" : "";
+                                ?>
+                            </option>
+                            <option value="0">Cliente</option>
+                            <option value="1">Operador</option>
+                            <option value="2">Financeiro</option>
+                            <option value="3">Gerente</option>
+                        </select>
+                    </div>
+                    <?php
+                }
+            ?>
+
 
             <input type="hidden" name="acao" value="editar"/>
             <input type="hidden" name="cd_usuario" value="<?= $usuario['cd_usuario'] ?>"/>
@@ -52,8 +59,8 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $("#salvarModal").click(function (e) {
+    $(document).ready(function() {
+        $("#salvarModal").click(function(e) {
             nome = $("input[name=nome]").val();
             idt = $("input[name=idt]").val();
             endereco = $("input[name=endereco]").val();
@@ -78,14 +85,14 @@
                     acao: acao,
                     cd_usuario: cd_usuario
                 },
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function () {
+                complete: function() {
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function (e) {
+                        $('#sucesso').on('hidden.bs.modal', function(e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -93,7 +100,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function (e) {
+                        $('#erro').on('hidden.bs.modal', function(e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -102,7 +109,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function () {
+                error: function() {
                     $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }

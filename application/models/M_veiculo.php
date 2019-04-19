@@ -19,9 +19,9 @@
             return $this->db->query($sql, $cd_tpveiculo);
         }
 
-        public function editarVeiculo($cd_tpveiculo, $tipo_veiculo) {
+        public function editarVeiculo($veiculo) {
             $sql = "UPDATE tipo_veiculo SET tipo = ? WHERE cd_tpveiculo = ?";
-            return $this->db->query($sql, array($tipo_veiculo, $cd_tpveiculo));
+            return $this->db->query($sql, array($veiculo->tipo, $veiculo->cd_tpveiculo));
         }
 
         public function cadastrarVeiculo($tipo_veiculo) {
