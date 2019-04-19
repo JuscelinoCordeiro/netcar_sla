@@ -7,6 +7,11 @@
         function __construct() {
             parent::__construct();
             $this->load->model('m_agendamento');
+//            load_class(Agendamento, 'entidades');
+//            require_once base_url('application/entidades/Agendamento.php');
+//            require_once(APPPATH . 'entidades/Agendamento.php');
+            $this->loadEntidade('Agendamento.php');
+            $agendamento = new Agendamento();
         }
 
         public function index() {
