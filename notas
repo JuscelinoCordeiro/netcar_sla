@@ -27,3 +27,5 @@ gerenciamento de tarifas: Gerente, financeiro
 gerenciamento de serviços: Gerente
 
 gerenciamento de faturamento:Gerente, financeiro
+
+$this->session->userdata('dados_usuario')->nivel
