@@ -38,12 +38,13 @@
                 $this->load->model('m_servico');
                 $this->load->model('m_veiculo');
 
-                $cd_servico = $this->input->post('cd_servico');
-                $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+                $tarifa = new Tarifa();
+                $tarifa->setServico($this->input->post('cd_servico'));
+                $tarifa->setTipoVeiculo($this->input->post('cd_tpveiculo'));
 
-                $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
-                $dados['tipo_veiculo'] = $this->m_veiculo->getVeiculoById($cd_tpveiculo)->row();
-                $dados['tarifa'] = $this->m_tarifa->getTarifaServicoTpVeiculo($cd_servico, $cd_tpveiculo)->row();
+                $dados['servico'] = $this->m_servico->getServicoById($tarifa->getServico())->row();
+                $dados['tipo_veiculo'] = $this->m_veiculo->getVeiculoById($tarifa->getTipoVeiculo())->row();
+                $dados['tarifa'] = $this->m_tarifa->getTarifaServicoTpVeiculo($tarifa)->row();
 
                 $dados['titulo'] = "Edição de tarifa";
                 $this->showAjax('inc/v_inc_tarifa_editar', $dados);

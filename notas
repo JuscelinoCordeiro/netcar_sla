@@ -1,5 +1,5 @@
 A FAZER
-	
+
 - TESTES DE VALIDAÇÃO
 - VALIDAÇÃO DE PERFIL
 - USUARIO MANTER SEUS AGENDAMENTOS
@@ -8,8 +8,8 @@ A FAZER
 - AGENDAMENTO
 	criar tabela de horario para permitir somente horários livre
 	https://pt.stackoverflow.com/questions/237577/sistema-de-agendamento-por-data
-	
-	
+
+
 Usuários
 
 cliente - 123:456
@@ -29,3 +29,7 @@ gerenciamento de serviços: Gerente
 gerenciamento de faturamento:Gerente, financeiro
 
 $this->session->userdata('dados_usuario')->nivel
+
+#testes
+tarifa ok
+veiculo ok
