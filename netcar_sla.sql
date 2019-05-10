@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Tempo de geração: 22/04/2019 às 17:23
--- Versão do servidor: 5.7.25-0ubuntu0.16.04.2
--- Versão do PHP: 7.0.33-0ubuntu0.16.04.3
+-- Tempo de geração: 10/05/2019 às 18:37
+-- Versão do servidor: 5.7.26-0ubuntu0.16.04.1
+-- Versão do PHP: 7.0.33-0ubuntu0.16.04.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -46,19 +46,15 @@ INSERT INTO `agendamento` (`cd_agendamento`, `cd_usuario`, `cd_tpveiculo`, `cd_s
 (2, 2, 2, 2, 'PAI-4085', '0023-07-12', '18:00:00', 1),
 (5, 6, 7, 2, 'knu-2424', '2019-01-18', '18:20:00', 1),
 (6, 2, 2, 2, 'pbc-0909', '2019-01-22', '12:00:00', 1),
-(8, 2, 2, 3, NULL, '2019-03-22', '17:19:00', 0),
+(8, 2, 2, 3, NULL, '2019-03-22', '17:19:00', 1),
 (9, 3, 3, 3, NULL, '2019-03-25', '08:00:00', 1),
-(10, 112, 4, 3, NULL, '2019-03-25', '10:00:00', 1),
 (11, 6, 3, 4, NULL, '2019-03-25', '10:08:00', 1),
-(12, 6, 3, 4, NULL, '2019-03-25', '10:08:00', 0),
+(12, 6, 3, 4, NULL, '2019-03-25', '10:08:00', 1),
 (13, 1, 3, 4, NULL, '2019-04-19', '10:08:00', 1),
 (14, 6, 3, 4, NULL, '2019-03-25', '10:08:00', 1),
-(15, 6, 3, 4, NULL, '2019-04-02', '10:08:00', 0),
-(16, 6, 3, 4, NULL, '2019-04-02', '10:08:00', 1),
-(17, 1, 2, 2, 'ppp-5566', '2019-04-19', '23:00:00', 1),
-(19, 108, 2, 1, 'pai-4085', '2019-04-19', '12:00:00', 0),
-(20, 108, 1, 1, 'lpk-1010', '2019-04-19', '12:05:00', 0),
-(21, 108, 1, 1, 'lpk-1010', '2019-04-19', '12:05:00', 0);
+(15, 6, 3, 4, NULL, '2019-05-10', '10:08:00', 1),
+(16, 6, 3, 4, NULL, '2019-05-10', '10:08:00', 1),
+(17, 1, 2, 2, 'ppp-5566', '2019-05-10', '23:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +79,10 @@ INSERT INTO `faturamento` (`cd_fatura`, `cd_tpveiculo`, `cd_servico`, `data`, `h
 (9, 3, 4, '2019-03-25', '10:08:00', 20),
 (10, 3, 4, '2019-03-25', '09:08:00', 20),
 (11, 2, 2, '2019-03-26', '23:00:00', 30),
-(12, 3, 4, '2019-04-19', '10:08:00', 20);
+(12, 3, 4, '2019-04-19', '10:08:00', 20),
+(13, 3, 4, '2019-05-10', '10:08:00', 20),
+(14, 3, 4, '2019-03-25', '10:08:00', 20),
+(15, 2, 3, '2019-03-22', '17:19:00', 10);
 
 -- --------------------------------------------------------
 
@@ -226,7 +225,7 @@ CREATE TABLE `usuario` (
   `fixo` varchar(45) DEFAULT NULL,
   `senha` varchar(8) DEFAULT NULL,
   `nivel` int(4) DEFAULT '0',
-  `idt` int(11) NOT NULL,
+  `idt` varchar(11) NOT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -235,19 +234,15 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`cd_usuario`, `nome`, `endereco`, `celular`, `fixo`, `senha`, `nivel`, `idt`, `ativo`) VALUES
-(1, 'Manoel Souza', 'Rua da laguna', '99988-7766', '3312-4567', '456', 0, 123, 0),
-(2, 'Joaquim', 'Travessa Arlequim', '98765-4321', '3344-5566', '456', 1, 1234, 1),
-(3, 'Lorena Rocco', 'Rua Feitosa Bruna', '99856-9090', '3107-7788', '456', 2, 12345, 1),
-(5, 'Jose Pereira', 'tv barcelos 563', '99856-0000', '5390-6723', '456', 3, 123456, 1),
-(6, 'Thiago Bruno', 'Rua da Pátria', '99856-9090', '3107-7788', '456', 0, 567, 0),
-(7, 'Jose Alfredo', 'Rua Ibirapora', '2345-6789', '9900-8875', '456', 0, 678, 1),
-(8, 'Suzane', 'Rua da Pedreira', '88888-8888', '2233-8899', '456', 0, 789, 0),
-(108, 'Fortunato', 'rua pedreira', '8899-5564', '3366-8989', NULL, 0, 123, 1),
-(112, 'Iananda', 'rua tao tao distante', '9988-5566', '9988-5566', NULL, 3, 123, 1),
-(129, 're', 'ad', 'asd', 'asd', NULL, 0, 456456456, 0),
-(130, 'teste', 'asda', 'adas', '35', NULL, 0, 789789, 0),
-(131, 'we', 'as', 'as', 'as', NULL, 0, 400345898, 0),
-(132, 'qw', '121', '12', '12', NULL, 3, 1, 0);
+(1, 'Manoel Souza', 'Rua da laguna', '99988-7766', '3312-4567', '456', 0, '123', 0),
+(2, 'Joaquim', 'Travessa Arlequim', '98765-4321', '3344-5566', '456', 1, '1234', 1),
+(3, 'Lorena Rocco', 'Rua Feitosa Bruna', '99856-9090', '3107-7788', '456', 2, '12345', 1),
+(5, 'Jose Pereira', 'tv barcelos 563', '99856-0000', '5390-6723', '456', 3, '123456', 1),
+(6, 'Thiago Bruno', 'Rua da Pátria', '99856-9090', '3107-7788', '456', 0, '567', 0),
+(7, 'Jose Alfredo', 'Rua Ibirapora', '2345-6789', '9900-8875', '456', 0, '678', 1),
+(8, 'Suzane', 'Rua da Pedreira', '88888-8888', '2233-8899', '456', 0, '789', 0),
+(108, 'Fortunato', 'rua pedreira', '8899-5564', '3366-8989', NULL, 0, '12389', 0),
+(141, 'cliente balcão', 'loja', '999', '999', NULL, 0, '99999999999', 1);
 
 -- --------------------------------------------------------
 
@@ -348,7 +343,7 @@ ALTER TABLE `agendamento`
 -- AUTO_INCREMENT de tabela `faturamento`
 --
 ALTER TABLE `faturamento`
-  MODIFY `cd_fatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `cd_fatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de tabela `horario`
 --
@@ -368,7 +363,7 @@ ALTER TABLE `tipo_veiculo`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `cd_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `cd_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 --
 -- AUTO_INCREMENT de tabela `usuario_perfil`
 --

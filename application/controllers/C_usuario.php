@@ -64,25 +64,25 @@
 
                 $existeUsuario = $this->m_usuario->existeUsuario($usuario->identidade)->row();
 
-//                print_r($existeUsuario->num_rows());
+//                print_r($usuario);
 //                die();
 
                 if ($existeUsuario->num_rows() > 0) {
-                    $retorno = -1;
+//                    $retorno = 2;
+                    echo 2;
                 } else {
                     $retorno = $this->m_usuario->cadastrarUsuario($usuario);
+                    echo $retorno;
                 }
-//                echo "retorno<br>";
-//                print_r($retorno);
+//                echo "retorno = $retorno";
 //                print_r($this->db->last_query());
-//                if ($retorno == -1) {
-//                    echo -1;
-//                } else
-                if ($retorno == 1) {
-                    echo 1;
-                } else {
-                    echo 0;
-                }
+//                if ($retorno == 2) {
+//                    echo 2;
+//                } else if ($retorno == 1) {
+//                    echo 1;
+//                } else {
+//                    echo 0;
+//                }
             } else {
                 $dados['titulo'] = "teste ajax";
                 $this->showAjax('inc/v_inc_usuario_adicionar', $dados);
