@@ -1,15 +1,15 @@
 A FAZER
-
-- TESTES DE VALIDAÇÃO
-- VALIDAÇÃO DE PERFIL
-- USUARIO MANTER SEUS AGENDAMENTOS
-- VALIDAR SE O USUARIO EXISTE ANTES DE CADASTRAR(
-	buscar pela identidade se existe ou desativado)
-- AGENDAMENTO
+	
+- testes de validação
+- validação de perfil  OK
+- usuario manter seus agendamentos OK
+- validar se o usuario existe antes de cadastrar(	buscar pela identidade se existe ou desativado) OK
+- agendamento
 	criar tabela de horario para permitir somente horários livre
 	https://pt.stackoverflow.com/questions/237577/sistema-de-agendamento-por-data
-
-===============================================
+- ajustar finalizar agendamento
+	
+	
 Usuários
 
 cliente - 123:456
@@ -17,7 +17,7 @@ operador - 1234:456
 financeiro - 12345:456
 gerente - 123456:456
 
-===============================================
+OPERAÇÔES POR PERFIL
 gerenciamento de usuario: Gerente, Operador, ususario (alterar nivel: gerente)
 
 gerenciamento de veiculos: Gerente

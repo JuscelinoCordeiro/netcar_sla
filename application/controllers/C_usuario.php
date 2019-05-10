@@ -64,9 +64,10 @@
 
                 $existeUsuario = $this->m_usuario->existeUsuario($usuario->identidade)->row();
 
-//                print_r($existeUsuario);
+//                print_r($existeUsuario->num_rows());
+//                die();
 
-                if (isset($existeUsuario)) {
+                if ($existeUsuario->num_rows() > 0) {
                     $retorno = -1;
                 } else {
                     $retorno = $this->m_usuario->cadastrarUsuario($usuario);
