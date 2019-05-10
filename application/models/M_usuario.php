@@ -67,8 +67,7 @@
 
         public function existeUsuario($idt) {
             $sql = "select cd_usuario from usuario where idt = ?";
-            $valida = $this->db->query($sql, array($idt))->num_rows();
-            return $valida;
+            return $this->db->query($sql, array($idt));
         }
 
         public function getContaUsuario($cd_usuario) {
