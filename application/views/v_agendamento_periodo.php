@@ -1,3 +1,4 @@
+<script type="text/javascript" language="javascript" src="<?= base_url('assets/js/jn_agendamento.js') ?>"></script>
 <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css') ?>"/>
 <link rel="stylesheet" href="<?= base_url('assets/css/estilo.css') ?>"/>
 <style>
@@ -54,7 +55,7 @@
                             }
                             ?>
                             <a href="/netcar/agendamento_editar?cd_agendamento=<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_edit.png') ?>" alt="editar" title="Editar agendamento" border="0"/></a>
-                            <a id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>" class="excluir" id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir agendamento" border="0"/></a>
+                            <a  id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>" class="excluir" id="btnExc<?= $ag->cd_agendamento ?>" cd_agend="<?= $ag->cd_agendamento ?>"><img src="<?= base_url('assets/img/b_excluir.png') ?>" alt="excluir" title="Excluir agendamento" border="0"/></a>
                                 <?php
                             } else {
                                 echo "SERVIÇO REALIZADO";
