@@ -12,6 +12,7 @@
         private $fixo;
         private $nivel;
         private $ativo;
+        private $senha;
 
         //METODOS MAGICOS
         //======================================================================
@@ -57,6 +58,10 @@
             $this->ativo = $ativo;
         }
 
+        public function setSenha($senha) {
+            $this->senha = $senha;
+        }
+
         //METODOS GET
         //======================================================================
         public function getCodigo() {
@@ -89,6 +94,10 @@
 
         public function getAtivo() {
             return $this->ativo;
+        }
+
+        public function getSenha() {
+            return $this->senha;
         }
 
     }

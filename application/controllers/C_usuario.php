@@ -53,8 +53,8 @@
 
         public function cadastrarUsuario() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
-                $usuario = new Usuario();
 
+                $usuario = new Usuario();
                 $usuario->setNome($this->input->post('nome'));
                 $usuario->setIdentidade($this->input->post('idt'));
                 $usuario->setEndereco($this->input->post('endereco'));
@@ -62,17 +62,22 @@
                 $usuario->setFixo($this->input->post('fixo'));
                 $usuario->setNivel($this->input->post('nivel'));
 
-                $existeUsuario = $this->m_usuario->existeUsuario($usuario->identidade);
+                $existeUsuario = $this->m_usuario->existeUsuario($usuario->identidade)->row();
 
-                if ($existeUsuario > 0) {
+//                print_r($existeUsuario);
+
+                if (isset($existeUsuario)) {
                     $retorno = -1;
                 } else {
                     $retorno = $this->m_usuario->cadastrarUsuario($usuario);
                 }
-
-                if ($retorno === -1) {
-                    echo -1;
-                } else if ($retorno === 1) {
+//                echo "retorno<br>";
+//                print_r($retorno);
+//                print_r($this->db->last_query());
+//                if ($retorno == -1) {
+//                    echo -1;
+//                } else
+                if ($retorno == 1) {
                     echo 1;
                 } else {
                     echo 0;
@@ -94,6 +99,7 @@
                 $usuario->setFixo($this->input->post('fixo'));
                 $usuario->setNivel($this->input->post('nivel'));
                 $usuario->setCodigo($this->input->post('cd_usuario'));
+//                $usuario->setSenha($this->input->post('senha'));
 
                 $retorno = $this->m_usuario->editarUsuario($usuario);
 

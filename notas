@@ -9,7 +9,7 @@ A FAZER
 	criar tabela de horario para permitir somente horários livre
 	https://pt.stackoverflow.com/questions/237577/sistema-de-agendamento-por-data
 
-
+===============================================
 Usuários
 
 cliente - 123:456
@@ -17,7 +17,7 @@ operador - 1234:456
 financeiro - 12345:456
 gerente - 123456:456
 
-
+===============================================
 gerenciamento de usuario: Gerente, Operador, ususario (alterar nivel: gerente)
 
 gerenciamento de veiculos: Gerente
@@ -30,6 +30,7 @@ gerenciamento de faturamento:Gerente, financeiro
 
 $this->session->userdata('dados_usuario')->nivel
 
+===============================================
 #testes
 tarifa ok
 veiculo ok

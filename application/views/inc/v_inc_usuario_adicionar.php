@@ -39,6 +39,24 @@
                             <option value="3">GERENTE</option>
                         </select>
                     </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label">Senha</label>
+                            <span id="dt_agenda">
+                                <div class="controls">
+                                    <input class="form-control" type="text" name="senha"/>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="form-group pull-right">
+                            <label class="control-label">Confirme a senha</label>
+                            <span id="dt_agenda2">
+                                <div class="controls">
+                                    <input  class="form-control" type="text" name="confirma_senha"/>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
                     <?php
                 }
             ?>
@@ -58,13 +76,15 @@
             fixo = $("input[name=fixo]").val();
             nivel = $("select[name=nivel]").val();
             acao = $("input[name=acao]").val();
+//            senha = $("input[name=senha]").val();
+//            confirma_senha = $("input[name=confirma_senha]").val();
 //            alert(nome);
             if (nome == '' || idt == '' || endereco == '' || celular == '' || fixo == '') {
                 $('#erro').on('hidden.bs.modal', function(e) {
                     window.location.reload();
                 });
                 $('#excluir').modal('hide');
-                var msg = 'Todos os campos são obrigatórios.';
+                var msg = 'Os campos nome, identidade, endereço e telefone devem ser preenchidos.';
                 $('#erroTexto').html(msg);
                 $('#erro').modal('show');
             } else {
@@ -80,6 +100,7 @@
                         fixo: fixo,
                         nivel: nivel,
                         acao: acao
+//                        senha: senha
                     },
                     beforeSend: function(xhr) {
                         xhr.overrideMimeType("text/plain; charset=UTF-8");
