@@ -1,7 +1,7 @@
 <?php
 
     if (!defined('BASEPATH'))
-        exit('No	direct script access allowed');
+        exit('No direct script access allowed');
 
     class M_faturamento extends CI_Model {
 

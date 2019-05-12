@@ -113,7 +113,7 @@
             }
         }
 
-        //PERCISA COMBOBOX
+        //PRECISA COMBOBOX
         public function editarAgendamento() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar")) {
                 $cd_agend = $this->input->post('cd_agend');

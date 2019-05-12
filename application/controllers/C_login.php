@@ -27,6 +27,8 @@
                 $senha = $this->input->post('senha');
                 $acao = $this->input->post('acao');
 
+//                $senha = 
+
                 if (isset($acao) && $acao === 'logar') {
                     if ((isset($idt) && !empty($idt)) && (isset($senha) && !empty($senha))) {
                         //verifica se existe o usuario

@@ -3,21 +3,24 @@ A FAZER
 - testes de validação
 - validação de perfil  OK
 - usuario manter seus agendamentos OK
-- validar se o usuario existe antes de cadastrar(	buscar pela identidade se existe ou desativado) OK
+- validar se o usuario existe antes de cadastrar(buscar pela identidade se existe ou desativado) OK
 - agendamento
 	criar tabela de horario para permitir somente horários livre
 	https://pt.stackoverflow.com/questions/237577/sistema-de-agendamento-por-data
 - ajustar finalizar agendamento
+- criar editar agendamento
 	
-	
-Usuários
-
+================================================================================
+USUÁRIOS
+-----------
 cliente - 123:456
 operador - 1234:456
 financeiro - 12345:456
 gerente - 123456:456
 
+================================================================================
 OPERAÇÔES POR PERFIL
+--------------------
 gerenciamento de usuario: Gerente, Operador, ususario (alterar nivel: gerente)
 
 gerenciamento de veiculos: Gerente
@@ -30,7 +33,7 @@ gerenciamento de faturamento:Gerente, financeiro
 
 $this->session->userdata('dados_usuario')->nivel
 
-===============================================
+================================================================================
 #testes
 tarifa ok
 veiculo ok
