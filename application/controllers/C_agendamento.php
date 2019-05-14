@@ -131,9 +131,13 @@
 
                 $this->load->model('m_veiculo');
                 $this->load->model('m_tarifa');
+                $this->load->model('m_servico');
+                $this->load->model('m_veiculo');
 
                 $cd_servico = $this->input->post('cd_servico');
                 $dados['agendamento'] = $this->m_agendamento->getAgendamento($cd_agend)->row();
+                $dados['tipo_veiculos'] = $this->m_veiculo->getVeiculos()->result();
+                $dados['servicos'] = $this->m_servico->getServicosAtivos()->result();
                 $dados['titulo'] = "Editar agendamento";
                 $this->showAjax('inc/v_inc_agendamento_editar', $dados);
             }

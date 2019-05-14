@@ -3,6 +3,8 @@
 
 <?php
 //    print_r($agendamento);
+//    print_r($servicos);
+//    print_r($tipo_veiculos);
 //    die();
 ?>
 <div class="row">
@@ -39,6 +41,16 @@
                 <label for="Perfil" class="control-label">Serviço</label>
                 <select class="form-control text text-uppercase" name="servico" id="servico"  required>
                     <option value="">Selecione o tipo de veículo primeiro</option>
+                    <?php
+                        foreach ($servicos as $servico) {
+                            if ($agendamento->cd_servico == $servico->cd_servico) {
+                                $selecionado = "selected";
+                            } else {
+                                $selecionado = "";
+                            }
+                            echo '<option ' . $selecionado . ' value="' . $servico->cd_servico . '">' . $servico->servico . '</option>';
+                        }
+                    ?>
                 </select>
             </div>
             <div class="form-inline">
@@ -69,7 +81,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Valor</label>
-                <input class="form-control  text text-uppercase" type="text" name="preco" id="preco" required value="<?= $agendamento->preco ?>"/>
+                <input class="form-control  text text-uppercase" type="text" name="preco" id="preco" required value="R$ <?= $agendamento->preco ?>,00"/>
             </div>
             <input type="hidden" name="acao" value="editar"/>
         </form>
@@ -87,7 +99,7 @@
             cd_servico = $("select[name=servico]").val();
             data = $("input[name=data]").val();
             horario = $("input[name=horario]").val();
-//            valor = $("input[name=preco]").val();
+            valor = $("input[name=preco]").val();
             acao = $("input[name=acao]").val();
 
             $.ajax({
