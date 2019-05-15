@@ -91,7 +91,7 @@
         }
 
         public function excluirAgendamento() {
-            $cd_agend = $this->input->post('cd_agend');
+            $cd_agend = $this->security->xss_clean($this->input->post('cd_agend'));
 
             $retorno = $this->m_agendamento->excluirAgendamento($cd_agend);
             if ($retorno) {
@@ -102,7 +102,7 @@
         }
 
         public function finalizarAgendamento() {
-            $cd_agend = $this->input->post('cd_agend');
+            $cd_agend = $this->security->xss_clean($this->input->post('cd_agend'));
 
             $retorno = $this->m_agendamento->finalizarAgendamento($cd_agend);
 
@@ -113,31 +113,19 @@
             }
         }
 
-        //PRECISA COMBOBOX
         public function editarAgendamento() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar")) {
                 $agendamento = new Agendamento();
 
-                $agendamento->setCodigo($this->input->post('cd_agend'));
-                $agendamento->setData(inverteData($this->input->post('data')));
-                $agendamento->setHorario($this->input->post('horario'));
-                $agendamento->setPlaca($this->input->post('placa'));
-                $agendamento->setServico($this->input->post('cd_servico'));
-                $agendamento->setTipoVeiculo($this->input->post('cd_tpveiculo'));
-                $agendamento->setUsuario($this->input->post('cd_usuario'));
-                $agendamento->setValor($this->input->post('valor'));
+                $agendamento->setCodigo($this->security->xss_clean($this->input->post('cd_agend')));
+                $agendamento->setData($this->security->xss_clean(inverteData($this->input->post('data'))));
+                $agendamento->setHorario($this->security->xss_clean($this->input->post('horario')));
+                $agendamento->setPlaca($this->security->xss_clean($this->input->post('placa')));
+                $agendamento->setServico($this->security->xss_clean($this->input->post('cd_servico')));
+                $agendamento->setTipoVeiculo($this->security->xss_clean($this->input->post('cd_tpveiculo')));
+                $agendamento->setUsuario($this->security->xss_clean($this->input->post('cd_usuario')));
+                $agendamento->setValor($this->security->xss_clean($this->input->post('valor')));
 
-                /* cd_agend: cd_agend,
-                  cd_usuario: cd_usuario,
-                  placa: placa,
-                  cd_tpveiculo: cd_tpveiculo,
-                  cd_servico: cd_servico,
-                  data: data,
-                  horario: horario,
-                  valor: valor,
-                  acao: acao */
-
-                //editar
                 $retorno = $this->m_agendamento->editarAgendamento($agendamento);
 
                 if ($retorno) {
@@ -146,7 +134,7 @@
                     echo 0;
                 }
             } else {
-                $cd_agend = $this->input->post('cd_agend');
+                $cd_agend = $this->security->xss_clean($this->input->post('cd_agend'));
 
                 $this->load->model('m_veiculo');
                 $this->load->model('m_tarifa');
