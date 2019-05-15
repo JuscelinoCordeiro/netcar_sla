@@ -30,10 +30,12 @@
         }
 
         public function editarVeiculo() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+
+            if (($acao !== null) && ($acao === "editar" )) {
                 $veiculo = new Veiculo();
-                $veiculo->setCodigo($this->input->post('cd_tpveiculo'));
-                $veiculo->setTipo($this->input->post('tipo_veiculo'));
+                $veiculo->setCodigo($this->security->xss_clean($this->input->post('cd_tpveiculo')));
+                $veiculo->setTipo($this->security->xss_clean($this->input->post('tipo_veiculo')));
 
                 $retorno = $this->m_veiculo->editarVeiculo($veiculo);
 
@@ -43,7 +45,7 @@
                     echo 0;
                 }
             } else {
-                $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+                $cd_tpveiculo = $this->security->xss_clean($this->input->post('cd_tpveiculo'));
                 $dados['veiculo'] = $this->m_veiculo->getVeiculoById($cd_tpveiculo)->row();
                 $dados['titulo'] = "Editar Veículo";
                 $this->showAjax('inc/v_inc_veiculo_editar', $dados);
@@ -51,8 +53,10 @@
         }
 
         public function cadastrarVeiculo() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
-                $tipo_veiculo = $this->input->post('tipo_veiculo');
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+
+            if (($acao !== null) && ($acao === "cadastrar" )) {
+                $tipo_veiculo = $this->security->xss_clean($this->input->post('tipo_veiculo'));
 
                 $retorno = $this->m_veiculo->cadastrarVeiculo($tipo_veiculo);
 
@@ -68,7 +72,7 @@
         }
 
         public function excluirVeiculo() {
-            $cd_tpveiculo = $this->input->post('cd_tpveiculo');
+            $cd_tpveiculo = $this->security->xss_clean($this->input->post('cd_tpveiculo'));
 
             $retorno = $this->m_veiculo->excluirVeiculo($cd_tpveiculo);
 

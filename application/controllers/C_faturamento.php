@@ -23,9 +23,10 @@
         }
 
         public function listarFaturamentoPeriodo() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "pesquisar" )) {
-                $dt_ini = inverteData($this->input->post('dt_inicio'));
-                $dt_fim = inverteData($this->input->post('dt_fim'));
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+            if (($acao !== null) && ($acao === "pesquisar" )) {
+                $dt_ini = inverteData($this->security->xss_clean($this->input->post('dt_inicio')));
+                $dt_fim = inverteData($this->security->xss_clean($this->input->post('dt_fim')));
 
                 //a variavel faturamento recebe um array contendo um arraylist de objetos de faturamento e
                 // a soma dos faturamentos

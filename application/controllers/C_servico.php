@@ -8,6 +8,7 @@
             parent::__construct();
             $this->isLogado();
             $this->load->model('m_servico');
+            $this->loadEntidade('Servico');
         }
 
         public function index() {
@@ -29,8 +30,9 @@
         }
 
         public function editarServico() {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
 
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
+            if (($acao !== null) && ($acao === "editar" )) {
                 $cd_servico = $this->input->post('cd_servico');
                 $servico = $this->input->post('servico');
                 $tipo_veiculos = $this->input->post('tipo_veiculos');
@@ -47,7 +49,7 @@
                 $this->load->model('m_veiculo');
                 $this->load->model('m_tarifa');
 
-                $cd_servico = $this->input->post('cd_servico');
+                $cd_servico = $this->security->xss_clean($this->input->post('cd_servico'));
                 $dados['servico'] = $this->m_servico->getServicoById($cd_servico)->row();
                 //== explicação
 //                $servico = $this->m_servico->getServicoById($cd_servico)->row();
@@ -62,9 +64,11 @@
         }
 
         public function cadastrarServico() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
-                $servico = $this->input->post('servico');
-                $tipo_veiculos = $this->input->post('tipo_veiculos');
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+
+            if (($acao !== null) && ($acao === "cadastrar" )) {
+                $servico = $this->security->xss_clean($this->input->post('servico'));
+                $tipo_veiculos = $this->security->xss_clean($this->input->post('tipo_veiculos'));
 
                 $retorno = $this->m_servico->cadastrarServico($servico, $tipo_veiculos);
 
@@ -76,14 +80,13 @@
             } else {
                 $this->load->model('m_veiculo');
                 $dados['tipo_veiculos'] = $this->m_veiculo->getVeiculos()->result();
-
                 $dados['titulo'] = "Cadastro de Serviço";
                 $this->showAjax('inc/v_inc_servico_adicionar', $dados);
             }
         }
 
         public function excluirServico() {
-            $cd_servico = $this->input->post('cd_servico');
+            $cd_servico = $this->security->xss_clean($this->input->post('cd_servico'));
 
             $retorno = $this->m_servico->excluirServico($cd_servico);
 
@@ -95,8 +98,8 @@
         }
 
         public function mudarStatus() {
-            $cd_servico = $this->input->post('cd_servico');
-            $status = $this->input->post('status');
+            $cd_servico = $this->security->xss_clean($this->input->post('cd_servico'));
+            $status = $this->security->xss_clean($this->input->post('status'));
 
             $retorno = $this->m_servico->mudarStatus($cd_servico, $status);
 
@@ -108,10 +111,10 @@
         }
 
         public function comboServicos() {
-            $cd_tpVeiculo = $this->input->post('cd_tpveiculo');
+            $cd_tpVeiculo = $this->security->xss_clean($this->input->post('cd_tpveiculo'));
 
             $servicos = $this->m_servico->getServicosTpVeiculos($cd_tpVeiculo)->result();
-//        print_r($servicos);
+
             $servico = "<option value=\"\">Selecione um serviço</option>";
             foreach ($servicos as $sv) {
                 $servico .= '<option value="' . $sv->cd_servico . '">' . $sv->servico . '</option>';

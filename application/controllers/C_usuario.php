@@ -12,15 +12,17 @@
         }
 
         public function contaUsuario() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "atualizar" )) {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+
+            if (($acao !== null) && ($acao === "atualizar" )) {
                 $usuario = new Usuario();
 
-                $usuario->setNome($this->input->post('nome'));
-                $usuario->setIdentidade($this->input->post('idt'));
-                $usuario->setEndereco($this->input->post('endereco'));
-                $usuario->setCelular($this->input->post('celular'));
-                $usuario->setFixo($this->input->post('fixo'));
-                $usuario->setCodigo($this->input->post('cd_usuario'));
+                $usuario->setNome($this->security->xss_clean($this->input->post('nome')));
+                $usuario->setIdentidade($this->security->xss_clean($this->input->post('idt')));
+                $usuario->setEndereco($this->security->xss_clean($this->input->post('endereco')));
+                $usuario->setCelular($this->security->xss_clean($this->input->post('celular')));
+                $usuario->setFixo($this->security->xss_clean($this->input->post('fixo')));
+                $usuario->setCodigo($this->security->xss_clean($this->input->post('cd_usuario')));
 
 
                 $retorno = $this->m_usuario->atualizarContaUsuario($usuario);
@@ -31,7 +33,7 @@
                     echo 0;
                 }
             } else {
-                $cd_usuario = (int) $this->input->post('cd_usuario');
+                $cd_usuario = (int) $this->security->xss_clean($this->input->post('cd_usuario'));
 
                 // pega um objeto usuario com os dados no banco
                 $dados['usuario'] = $this->m_usuario->getContaUsuario($cd_usuario);
@@ -52,37 +54,26 @@
         }
 
         public function cadastrarUsuario() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "cadastrar" )) {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+
+            if (($acao !== null) && ($acao === "cadastrar" )) {
 
                 $usuario = new Usuario();
-                $usuario->setNome($this->input->post('nome'));
-                $usuario->setIdentidade($this->input->post('idt'));
-                $usuario->setEndereco($this->input->post('endereco'));
-                $usuario->setCelular($this->input->post('celular'));
-                $usuario->setFixo($this->input->post('fixo'));
-                $usuario->setNivel($this->input->post('nivel'));
+                $usuario->setNome($this->security->xss_clean($this->input->post('nome')));
+                $usuario->setIdentidade($this->security->xss_clean($this->input->post('idt')));
+                $usuario->setEndereco($this->security->xss_clean($this->input->post('endereco')));
+                $usuario->setCelular($this->security->xss_clean($this->input->post('celular')));
+                $usuario->setFixo($this->security->xss_clean($this->input->post('fixo')));
+                $usuario->setNivel($this->security->xss_clean($this->input->post('nivel')));
 
                 $existeUsuario = $this->m_usuario->existeUsuario($usuario->identidade)->row();
 
-//                print_r($usuario);
-//                die();
-
                 if ($existeUsuario->num_rows() > 0) {
-//                    $retorno = 2;
                     echo 2;
                 } else {
                     $retorno = $this->m_usuario->cadastrarUsuario($usuario);
                     echo $retorno;
                 }
-//                echo "retorno = $retorno";
-//                print_r($this->db->last_query());
-//                if ($retorno == 2) {
-//                    echo 2;
-//                } else if ($retorno == 1) {
-//                    echo 1;
-//                } else {
-//                    echo 0;
-//                }
             } else {
                 $dados['titulo'] = "teste ajax";
                 $this->showAjax('inc/v_inc_usuario_adicionar', $dados);
@@ -90,21 +81,20 @@
         }
 
         public function editarUsuario() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar" )) {
-                $usuario = new Usuario();
+            $acao = $this->security->xss_clean($this->input->post('acao'));
 
-                $usuario->setNome($this->input->post('nome'));
-                $usuario->setIdentidade($this->input->post('idt'));
-                $usuario->setEndereco($this->input->post('endereco'));
-                $usuario->setCelular($this->input->post('celular'));
-                $usuario->setFixo($this->input->post('fixo'));
-                $usuario->setNivel($this->input->post('nivel'));
-                $usuario->setCodigo($this->input->post('cd_usuario'));
-//                $usuario->setSenha($this->input->post('senha'));
+            if (($acao !== null) && ($acao === "editar" )) {
+                $usuario = new Usuario();
+                $usuario->setNome($this->security->xss_clean($this->input->post('nome')));
+                $usuario->setIdentidade($this->security->xss_clean($this->input->post('idt')));
+                $usuario->setEndereco($this->security->xss_clean($this->input->post('endereco')));
+                $usuario->setCelular($this->security->xss_clean($this->input->post('celular')));
+                $usuario->setFixo($this->security->xss_clean($this->input->post('fixo')));
+                $usuario->setNivel($this->security->xss_clean($this->input->post('nivel')));
+                $usuario->setCodigo($this->security->xss_clean($this->input->post('cd_usuario')));
 
                 $retorno = $this->m_usuario->editarUsuario($usuario);
 
-                unset($dados);
                 if ($retorno) {
                     echo 1;
                 } else {
@@ -127,7 +117,7 @@
         }
 
         public function excluirUsuario() {
-            $cd_usuario = $this->input->post('cd_usuario');
+            $cd_usuario = $this->security->xss_clean($this->input->post('cd_usuario'));
 
             $retorno = $this->m_usuario->excluirUsuario($cd_usuario);
             if ($retorno) {
@@ -138,7 +128,9 @@
         }
 
         public function trocarSenha() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "trocar_senha" )) {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+
+            if (($acao !== null) && ($acao === "trocar_senha" )) {
                 $dados['senha_antiga'] = $this->input->post('senha_antiga');
                 $dados['senha_nova'] = $this->input->post('senha_nova');
                 $dados['cd_usuario'] = $this->input->post('cd_usuario');
@@ -153,7 +145,7 @@
                     echo 0;
                 }
             } else {
-                $cd_usuario = (int) $this->input->post('cd_usuario');
+                $cd_usuario = (int) $this->security->xss_clean($this->input->post('cd_usuario'));
 
                 $dados['usuario'] = $this->m_usuario->getContaUsuario($cd_usuario);
                 $dados['titulo'] = "Trocar senha";

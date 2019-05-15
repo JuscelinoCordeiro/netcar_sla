@@ -23,11 +23,10 @@
             if (($this->session->userdata('logado') === TRUE)) {
                 redirect('c_inicio/index');
             } else {
-                $idt = $this->input->post('idt');
-                $senha = $this->input->post('senha');
-                $acao = $this->input->post('acao');
+                $idt = $this->security->xss_clean($this->input->post('idt'));
+                $senha = $this->security->xss_clean($this->input->post('senha'));
+                $acao = $this->security->xss_clean($this->input->post('acao'));
 
-//                $senha = 
 
                 if (isset($acao) && $acao === 'logar') {
                     if ((isset($idt) && !empty($idt)) && (isset($senha) && !empty($senha))) {
@@ -35,6 +34,7 @@
                         $valida = $this->m_login->existeUsuario($idt, $senha);
 
                         if ($valida) {
+                            $usuario = new Usuario();
                             //pega o objeto com os dados do usuário
                             $usuario = $this->m_login->getUsuario($idt, $senha);
                             $this->session->set_userdata('dados_usuario', $usuario);

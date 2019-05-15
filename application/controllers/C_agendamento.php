@@ -31,10 +31,11 @@
         }
 
         public function listarAgendamentos() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "pesquisar")) {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
 
-                $dt_ini = inverteData($this->input->post('dt_inicio'));
-                $dt_fim = inverteData($this->input->post('dt_fim'));
+            if (($acao !== null) && ($acao === "pesquisar")) {
+                $dt_ini = inverteData($this->security->xss_clean($this->input->post('dt_inicio')));
+                $dt_fim = inverteData($this->security->xss_clean($this->input->post('dt_fim')));
 
                 $cd_usuario_logado = ($this->session->userdata('dados_usuario')->cd_usuario);
                 $perfil_usuario_logado = ($this->session->userdata('dados_usuario')->nivel);
@@ -56,7 +57,8 @@
         }
 
         public function cadastrarAgendamento() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "novoAgendamento")) {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+            if (($acao !== null) && ($acao === "novoAgendamento")) {
                 $agendamento = new Agendamento();
                 $agendamento->setUsuario($this->input->post('cd_usuario'));
                 $agendamento->setTipoVeiculo($this->input->post('cd_tpveiculo'));
@@ -73,7 +75,8 @@
                     echo 0;
                 }
             } else {
-                if (($this->input->post('valor') !== null) && ($this->input->post('valor') === "agendamento")) {
+                $valor = $this->security->xss_clean($this->input->post('valor'));
+                if (($valor !== null) && ($valor === "agendamento")) {
                     $this->load->model('m_usuario');
                     $this->load->model('m_veiculo');
                     $this->load->model('m_servico');
@@ -114,7 +117,9 @@
         }
 
         public function editarAgendamento() {
-            if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar")) {
+            $acao = $this->security->xss_clean($this->input->post('acao'));
+
+            if (($acao !== null) && ($acao === "editar")) {
                 $agendamento = new Agendamento();
 
                 $agendamento->setCodigo($this->security->xss_clean($this->input->post('cd_agend')));
