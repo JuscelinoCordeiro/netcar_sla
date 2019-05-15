@@ -54,8 +54,14 @@
             return $this->db->query($sql, $cd_agend);
         }
 
-        public function editarAgendamento() {
-
+        public function editarAgendamento($agendamento) {
+            $sql = "update agendamento set "
+                    . "cd_tpveiculo = ?, cd_servico = ?, "
+                    . "placa = ?, data = ?, horario = ? "
+                    . "where cd_agendamento = ?";
+            return $this->db->query($sql, array($agendamento->tipo_veiculo, $agendamento->servico,
+                        $agendamento->placa, $agendamento->data, $agendamento->horario,
+                        $agendamento->cd_agendamento));
         }
 
         public function cadastrarAgendamento($agendamento) {

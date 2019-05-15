@@ -30,8 +30,8 @@
                         <td><?= $agendamento->tipo ?></td>
                         <td><?= $agendamento->placa ? $agendamento->placa : "---" ?></td>
                         <td><?= $agendamento->servico ?></td>
-                        <td><?= date('d/m/Y', strtotime($agendamento->data)) ?></td>
-                        <td><?= $agendamento->horario ?></td>
+                        <td><?= dataView($agendamento->data) ?></td>
+                        <td><?= horaView($agendamento->horario) ?></td>
                         <td><?= "R$ " . $agendamento->preco . ",00" ?></td>
                         <td class="text-center">
                             <?php

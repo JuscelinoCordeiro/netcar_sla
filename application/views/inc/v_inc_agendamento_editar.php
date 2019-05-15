@@ -84,16 +84,18 @@
                 <input class="form-control  text text-uppercase" type="text" name="preco" id="preco" required value="R$ <?= $agendamento->preco ?>,00"/>
             </div>
             <input type="hidden" name="acao" value="editar"/>
+            <input type="hidden" name="cd_agend" value="<?= $agendamento->cd_agendamento ?>"/>
         </form>
     </div>
     <div class="col-md-2"></div>
 </div>
 
 <script>
+    //editar o agendamento
     $(document).ready(function() {
-        //cadastrar o agendamento
         $("#salvarModal").click(function(e) {
-            cd_usuario = $("select[name=usuario]").val();
+            cd_agend = $("input[name=cd_agend]").val();
+            cd_usuario = $(this).attr('cd_usuario');
             placa = $("input[name=placa]").val();
             cd_tpveiculo = $("select[name=tipo_veiculo]").val();
             cd_servico = $("select[name=servico]").val();
@@ -104,15 +106,17 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/netcar/c_agendamento/cadastrarAgendamento',
+                url: '/netcar/c_agendamento/editarAgendamento',
                 cache: false,
                 data: {
+                    cd_agend: cd_agend,
                     cd_usuario: cd_usuario,
                     placa: placa,
                     cd_tpveiculo: cd_tpveiculo,
                     cd_servico: cd_servico,
                     data: data,
                     horario: horario,
+                    valor: valor,
                     acao: acao
                 },
                 beforeSend: function(xhr) {

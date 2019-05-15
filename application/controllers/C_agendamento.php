@@ -116,10 +116,29 @@
         //PRECISA COMBOBOX
         public function editarAgendamento() {
             if (($this->input->post('acao') !== null) && ($this->input->post('acao') === "editar")) {
-                $cd_agend = $this->input->post('cd_agend');
+                $agendamento = new Agendamento();
+
+                $agendamento->setCodigo($this->input->post('cd_agend'));
+                $agendamento->setData(inverteData($this->input->post('data')));
+                $agendamento->setHorario($this->input->post('horario'));
+                $agendamento->setPlaca($this->input->post('placa'));
+                $agendamento->setServico($this->input->post('cd_servico'));
+                $agendamento->setTipoVeiculo($this->input->post('cd_tpveiculo'));
+                $agendamento->setUsuario($this->input->post('cd_usuario'));
+                $agendamento->setValor($this->input->post('valor'));
+
+                /* cd_agend: cd_agend,
+                  cd_usuario: cd_usuario,
+                  placa: placa,
+                  cd_tpveiculo: cd_tpveiculo,
+                  cd_servico: cd_servico,
+                  data: data,
+                  horario: horario,
+                  valor: valor,
+                  acao: acao */
 
                 //editar
-                $retorno = $this->m_agendamento->editarAgendamento($cd_servico, $servico, $tipo_veiculos);
+                $retorno = $this->m_agendamento->editarAgendamento($agendamento);
 
                 if ($retorno) {
                     echo 1;
@@ -134,7 +153,6 @@
                 $this->load->model('m_servico');
                 $this->load->model('m_veiculo');
 
-                $cd_servico = $this->input->post('cd_servico');
                 $dados['agendamento'] = $this->m_agendamento->getAgendamento($cd_agend)->row();
                 $dados['tipo_veiculos'] = $this->m_veiculo->getVeiculos()->result();
                 $dados['servicos'] = $this->m_servico->getServicosAtivos()->result();
