@@ -37,9 +37,17 @@
             cd_usuario = $("input[name=cd_usuario]").val();
 
             if (senha_nova !== senha_confirma) {
-                alert("As senhas estão diferentes.");
-                exit();
+//                function() {
+                $("#erroTexto").html("Erro!! A nova senha não coincide com a confirmação.");
+                $("#erro").modal('show');
+//                }
             }
+
+//            if (senha_nova === "") {
+//                $("#erroTexto").html("Erro!! A senha não pode ser em branco.");
+//                $("#erro").modal('show');
+//            }
+
 
 
             $.ajax({

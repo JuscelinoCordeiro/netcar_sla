@@ -1,7 +1,8 @@
 ================================================================================
 A FAZER
 ------------------
-- mensagem na troca de senha	
+- mensagem na troca de senha
+- implementar a troca de senha do usuario
 - testes de validação
 - validação de perfil  OK
 - usuario manter seus agendamentos OK
