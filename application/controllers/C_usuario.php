@@ -22,7 +22,7 @@
                 $usuario->setEndereco($this->security->xss_clean($this->input->post('endereco')));
                 $usuario->setCelular($this->security->xss_clean($this->input->post('celular')));
                 $usuario->setFixo($this->security->xss_clean($this->input->post('fixo')));
-                $usuario->setCodigo($this->security->xss_clean($this->input->post('cd_usuario')));
+                $usuario->setCodigo($this->session->userdata('dados_usuario')->cd_usuario);
 
 
                 $retorno = $this->m_usuario->atualizarContaUsuario($usuario);
@@ -33,14 +33,10 @@
                     echo 0;
                 }
             } else {
-                $cd_usuario_logado = ($this->session->userdata('dados_usuario')->cd_usuario);
-                $cd_usuario = (int) $this->security->xss_clean($this->input->post('cd_usuario'));
+                $usuario_logado = ($this->session->userdata('dados_usuario')->cd_usuario);
 
-                //verificando se a alteração dos dados é do usuário logado
-                if ($cd_usuario === $usuario) {
-                    $dados['usuario'] = $this->m_usuario->getContaUsuario($cd_usuario);
-                    $dados['titulo'] = "Minha conta";
-                }
+                $dados['usuario'] = $this->m_usuario->getContaUsuario($usuario_logado);
+                $dados['titulo'] = "Minha conta";
 
 
                 if (isset($dados['usuario']) && !empty($dados['usuario'])) {
@@ -137,15 +133,9 @@
             if (($acao !== null) && ($acao === "trocar_senha" )) {
                 $senha_atual = $this->security->xss_clean($this->input->post('senha_atual'));
                 $senha_nova = $this->security->xss_clean($this->input->post('senha_nova'));
+                $usuario_logado = $this->session->userdata('dados_usuario')->cd_usuario;
 
-
-                $dados['senha_atual'] = sha1($senha_atual);
-                $dados['senha_nova'] = sha1($senha_nova);
-                $dados['cd_usuario'] = $this->security->xss_clean($this->input->post('cd_usuario'));
-
-                $retorno = $this->m_usuario->atualizarContaUsuario($dados);
-
-                unset($dados);
+                $retorno = $this->m_usuario->trocarSenha($usuario_logado, $senha_atual, $senha_nova);
 
                 if ($retorno) {
                     echo 1;
@@ -153,14 +143,8 @@
                     echo 0;
                 }
             } else {
-                $cd_usuario = (int) $this->security->xss_clean($this->input->post('cd_usuario'));
-
-                $dados['usuario'] = $this->m_usuario->getContaUsuario($cd_usuario);
                 $dados['titulo'] = "Trocar senha";
-
-                if (isset($dados['usuario']) && !empty($dados['usuario'])) {
-                    $this->showAjax('inc/v_inc_usuario_senha', $dados);
-                }
+                $this->showAjax('inc/v_inc_usuario_senha', $dados);
             }
         }
 

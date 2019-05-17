@@ -27,26 +27,23 @@
                 <input class="form-control text text-uppercase" type="text" name="fixo" required value="<?= $usuario['fixo'] ?>"/>
             </div>
             <input type="hidden" name="acao" value="atualizar"/>
-            <input type="hidden" name="cd_usuario" value="<?= $usuario['cd_usuario'] ?>"/>
         </form>
     </div>
     <div class="col-md-2"></div>
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
 //        $("#salvarModal").html("Atualizar dados");
 
-        $("#salvarModal").click(function (e) {
+        $("#salvarModal").click(function(e) {
             nome = $("input[name=nome]").val();
             idt = $("input[name=idt]").val();
             endereco = $("input[name=endereco]").val();
             celular = $("input[name=celular]").val();
             fixo = $("input[name=fixo]").val();
             acao = $("input[name=acao]").val();
-            cd_usuario = $("input[name=cd_usuario]").val();
-
 
             $.ajax({
                 type: 'POST',
@@ -61,14 +58,14 @@
                     acao: acao,
                     cd_usuario: cd_usuario
                 },
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function () {
+                complete: function() {
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function (e) {
+                        $('#sucesso').on('hidden.bs.modal', function(e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -76,7 +73,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function (e) {
+                        $('#erro').on('hidden.bs.modal', function(e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -85,7 +82,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function () {
+                error: function() {
                     $("#erroTexto").html("Erro no sistema, tente novamente.");
                     $("#erro").modal('show');
                 }
