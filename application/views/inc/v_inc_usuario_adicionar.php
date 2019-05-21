@@ -44,7 +44,7 @@
                             <label class="control-label">Senha</label>
                             <span id="dt_agenda">
                                 <div class="controls">
-                                    <input class="form-control" type="text" name="senha"/>
+                                    <input class="form-control" type="password" name="senha"/>
                                 </div>
                             </span>
                         </div>
@@ -52,7 +52,7 @@
                             <label class="control-label">Confirme a senha</label>
                             <span id="dt_agenda2">
                                 <div class="controls">
-                                    <input  class="form-control" type="text" name="confirma_senha"/>
+                                    <input  class="form-control" type="password" name="confirma_senha"/>
                                 </div>
                             </span>
                         </div>
@@ -76,15 +76,23 @@
             fixo = $("input[name=fixo]").val();
             nivel = $("select[name=nivel]").val();
             acao = $("input[name=acao]").val();
-//            senha = $("input[name=senha]").val();
-//            confirma_senha = $("input[name=confirma_senha]").val();
+            senha = $("input[name=senha]").val();
+            confirma_senha = $("input[name=confirma_senha]").val();
 //            alert(nome);
             if (nome == '' || idt == '' || endereco == '' || celular == '' || fixo == '') {
                 $('#erro').on('hidden.bs.modal', function(e) {
-                    window.location.reload();
+//                    window.location.reload();
                 });
                 $('#excluir').modal('hide');
                 var msg = 'Os campos nome, identidade, endereço e telefone devem ser preenchidos.';
+                $('#erroTexto').html(msg);
+                $('#erro').modal('show');
+            } else if ((senha !== '') && (senha !== confirma_senha)) {
+                $('#erro').on('hidden.bs.modal', function(e) {
+//                    window.location.reload();
+                });
+                $('#excluir').modal('hide');
+                var msg = 'As senha não coincidem.';
                 $('#erroTexto').html(msg);
                 $('#erro').modal('show');
             } else {
@@ -99,8 +107,8 @@
                         celular: celular,
                         fixo: fixo,
                         nivel: nivel,
-                        acao: acao
-//                        senha: senha
+                        acao: acao,
+                        senha: senha
                     },
                     beforeSend: function(xhr) {
                         xhr.overrideMimeType("text/plain; charset=UTF-8");
@@ -108,7 +116,7 @@
                     complete: function() {
                     },
                     success: function(data) {
-                        if (data === '-1') {
+                        if (data === '2') {
                             $('#erro').on('hidden.bs.modal', function(e) {
                                 window.location.reload();
                             });

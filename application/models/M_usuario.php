@@ -22,16 +22,16 @@
         public function cadastrarUsuario($usuario) {
             if ($usuario->nivel !== NULL) {
                 $sql = "INSERT INTO usuario"
-                        . "(nome, idt, endereco, celular, nivel, fixo)"
-                        . " VALUES (?, ?, ?, ?, ?, ?)";
+                        . "(nome, idt, endereco, celular, nivel, fixo, senha)"
+                        . " VALUES (?, ?, ?, ?, ?, ?, ?)";
                 return $this->db->query($sql, array($usuario->nome, $usuario->identidade, $usuario->endereco, $usuario->celular,
-                            $usuario->nivel, $usuario->fixo));
+                            $usuario->nivel, $usuario->fixo, $usuario->senha));
             } else {
                 $sql = "INSERT INTO usuario"
-                        . "(nome, idt, endereco, celular, fixo, nivel)"
-                        . " VALUES (?, ?, ?, ?, ?, ?)";
+                        . "(nome, idt, endereco, celular, fixo, nivel, senha)"
+                        . " VALUES (?, ?, ?, ?, ?, ?, ?)";
                 return $this->db->query($sql, array($usuario->nome, $usuario->identidade, $usuario->endereco, $usuario->celular,
-                            $usuario->fixo, 0));
+                            $usuario->fixo, 0, $usuario->senha));
             }
         }
 

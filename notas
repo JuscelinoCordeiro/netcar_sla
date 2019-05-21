@@ -1,7 +1,8 @@
 ================================================================================
 A FAZER
 ------------------
-- mensagem na troca de senha 
+- mensagem na troca de senha
+- implementar o hash nas senha (cadastrar usuario, editar usuario, trocar senha, login)
 - implementar a troca de senha do usuario ok
 - testes de validação
 - validação de perfil  OK
@@ -12,7 +13,7 @@ A FAZER
 	https://pt.stackoverflow.com/questions/237577/sistema-de-agendamento-por-data
 - ajustar finalizar agendamento OK
 - criar editar agendamento OK
-	
+
 ================================================================================
 USUÁRIOS
 -----------

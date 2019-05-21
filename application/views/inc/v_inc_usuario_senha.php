@@ -34,11 +34,32 @@
             acao = $("input[name=acao]").val();
 
             if (senha_atual === "") {
-                alert("Senha atual vazia.");
+//                alert("Senha atual vazia.");
+                $('#erro').on('hidden.bs.modal', function(e) {
+//                    window.location.reload();
+                });
+                $('#excluir').modal('hide');
+                var msg = 'Senha atual vazia.';
+                $('#erroTexto').html(msg);
+                $('#erro').modal('show');
             } else if (senha_nova === "") {
-                alert("A nova senha não pode ser vazia.");
+//                alert("A nova senha não pode ser vazia.");
+                $('#erro').on('hidden.bs.modal', function(e) {
+//                    window.location.reload();
+                });
+                $('#excluir').modal('hide');
+                var msg = 'A nova senha não pode ser vazia.';
+                $('#erroTexto').html(msg);
+                $('#erro').modal('show');
             } else if (senha_nova !== senha_confirma) {
-                alert("A nova senha não coincide.");
+//                alert("A nova senha não coincide.");
+                $('#erro').on('hidden.bs.modal', function(e) {
+//                    window.location.reload();
+                });
+                $('#excluir').modal('hide');
+                var msg = 'A nova senha não coincide.';
+                $('#erroTexto').html(msg);
+                $('#erro').modal('show');
             } else {
                 $.ajax({
                     type: 'POST',

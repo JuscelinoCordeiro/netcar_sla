@@ -65,8 +65,9 @@
                 $usuario->setCelular($this->security->xss_clean($this->input->post('celular')));
                 $usuario->setFixo($this->security->xss_clean($this->input->post('fixo')));
                 $usuario->setNivel($this->security->xss_clean($this->input->post('nivel')));
+                $usuario->setSenha($this->security->xss_clean($this->input->post('senha')));
 
-                $existeUsuario = $this->m_usuario->existeUsuario($usuario->identidade)->row();
+                $existeUsuario = $this->m_usuario->existeUsuario($usuario->getIdentidade());
 
                 if ($existeUsuario->num_rows() > 0) {
                     echo 2;
