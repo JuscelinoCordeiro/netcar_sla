@@ -2,17 +2,17 @@
 A FAZER
 ------------------
 - mensagem na troca de senha
-- implementar o hash nas senha (cadastrar usuario, editar usuario, trocar senha, login)
-- implementar a troca de senha do usuario ok
-- testes de validação
-- validação de perfil  OK
-- usuario manter seus agendamentos OK
-- validar se o usuario existe antes de cadastrar(buscar pela identidade se existe ou desativado) OK
+
 - agendamento
 	criar tabela de horario para permitir somente horários livre
 	https://pt.stackoverflow.com/questions/237577/sistema-de-agendamento-por-data
-- ajustar finalizar agendamento OK
-- criar editar agendamento OK
+	
+- separar cadastro de tipoVeiculo/serviço da função de cadastrar serviço
+- exclusao de serviço com agendamento ja realizado ???
+- excluir usuarios sem agendamentos
+- cadastro de senha no caso de usuario criado sem senha
+- mudar a msg na tela de pesquisa agendamento periodo para o usuario sem agendamentos
+- tabela para armazenar varios perfis por usuario (usuario_perfil)
 
 ================================================================================
 USUÁRIOS

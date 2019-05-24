@@ -31,8 +31,10 @@
                 if (isset($acao) && $acao === 'logar') {
                     if ((isset($idt) && !empty($idt)) && (isset($senha) && !empty($senha))) {
                         //verifica se existe o usuario
-//                        $senha = sha1($senha);
+                        $senha = sha1($senha);
                         $valida = $this->m_login->existeUsuario($idt, $senha);
+
+
 
                         if ($valida) {
                             $usuario = new Usuario();
@@ -46,6 +48,9 @@
                             $info['mensagem'] = "Usuário e/ou senha inválido";
                             $this->index($info);
                         }
+                    } else {
+                        $info['mensagem'] = "Usuário e/ou senha inválido";
+                        $this->index($info);
                     }
                 }
             }

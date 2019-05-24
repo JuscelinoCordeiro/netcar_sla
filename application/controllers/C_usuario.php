@@ -65,7 +65,10 @@
                 $usuario->setCelular($this->security->xss_clean($this->input->post('celular')));
                 $usuario->setFixo($this->security->xss_clean($this->input->post('fixo')));
                 $usuario->setNivel($this->security->xss_clean($this->input->post('nivel')));
-                $usuario->setSenha($this->security->xss_clean($this->input->post('senha')));
+
+                $senha = $this->security->xss_clean($this->input->post('senha'));
+                $senha = sha1($senha);
+                $usuario->setSenha($senha);
 
                 $existeUsuario = $this->m_usuario->existeUsuario($usuario->getIdentidade());
 
@@ -136,6 +139,8 @@
                 $senha_nova = $this->security->xss_clean($this->input->post('senha_nova'));
                 $usuario_logado = $this->session->userdata('dados_usuario')->cd_usuario;
 
+                $senha_atual = sha1($senha_atual);
+                $senha_nova = sha1($senha_nova);
                 $retorno = $this->m_usuario->trocarSenha($usuario_logado, $senha_atual, $senha_nova);
 
                 if ($retorno) {

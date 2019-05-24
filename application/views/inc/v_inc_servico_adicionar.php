@@ -4,7 +4,6 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <h2 class="titulo">Cadastrar Serviço</h2>
-        <!--<a class="btn btn-success pull-right" href="/netcar/index.jsp"><i class="icon-arrow-left icon-white"></i>Voltar</a>-->
         <form id="form_cad_usuario" action="" method="post">
             <legend class="text-black hr3">Dados do Serviço</legend>
             <div class="form-group">
@@ -31,16 +30,15 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $("#salvarModal").click(function (e) {
+    $(document).ready(function() {
+        $("#salvarModal").click(function(e) {
             servico = $("input[name=servico]").val();
             acao = $("input[name=acao]").val();
             var tipo_veiculos = new Array();
-            $("input[name=check]:checked").each(function () {
+            $("input[name=check]:checked").each(function() {
                 tipo_veiculos.push($(this).val());
             });
-//            alert(tipo_veiculos);
-//            exit();
+
             $.ajax({
                 type: 'POST',
                 url: '/netcar/c_servico/cadastrarServico',
@@ -50,14 +48,14 @@
                     tipo_veiculos: tipo_veiculos,
                     acao: acao
                 },
-                beforeSend: function (xhr) {
+                beforeSend: function(xhr) {
                     xhr.overrideMimeType("text/plain; charset=UTF-8");
                 },
-                complete: function () {
+                complete: function() {
                 },
-                success: function (data) {
+                success: function(data) {
                     if (data === '1') {
-                        $('#sucesso').on('hidden.bs.modal', function (e) {
+                        $('#sucesso').on('hidden.bs.modal', function(e) {
                             window.location.reload();
                         });
                         $('#alteracao').modal('hide');
@@ -65,7 +63,7 @@
                         $('#sucessoTexto').html(msg);
                         $('#sucesso').modal('show');
                     } else {
-                        $('#erro').on('hidden.bs.modal', function (e) {
+                        $('#erro').on('hidden.bs.modal', function(e) {
                             window.location.reload();
                         });
                         $('#excluir').modal('hide');
@@ -74,7 +72,7 @@
                         $('#erro').modal('show');
                     }
                 },
-                error: function () {
+                error: function() {
                     $("#erroTexto").html("Erro no sistema ao cadastrar, tente novamente.");
                     $("#erro").modal('show');
                 }

@@ -1,8 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
-$CI = &get_instance();
-$CI->load->model('m_perfil');
+    defined('BASEPATH') OR exit('No direct script access allowed');
+    isset($titulo) ? $titulo : $titulo = "NetCar - SLA";
+    $CI = &get_instance();
+    $CI->load->model('m_perfil');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -27,6 +27,7 @@ $CI->load->model('m_perfil');
         <script type="text/javascript" src="<?= base_url('assets/js/spry/SpryValidationTextField.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui/js/jquery-ui-1.10.4.custom.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/js_navbar.js') ?>"></script>
+        <script type="text/javascript" src="<?= base_url('assets/js/mask/dist/jquery.mask.min.js') ?>"></script>
 
     </head>
     <body>

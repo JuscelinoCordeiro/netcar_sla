@@ -20,11 +20,11 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Celular</label>
-                <input id="celular" class="form-control text text-uppercase" type="text" name="celular" required />
+                <input class="form-control text text-uppercase" type="text" name="celular" required />
             </div>
             <div class="form-group">
                 <label class="control-label">Tel Fixo</label>
-                <input id="telFixo" class="form-control text text-uppercase" type="text" name="fixo" required />
+                <input class="form-control text text-uppercase" type="text" name="fixo" required />
             </div>
             <?php
                 if (validaPerfil(array(M_perfil::Gerente), $this->session->userdata('dados_usuario')->nivel)) {
@@ -44,7 +44,7 @@
                             <label class="control-label">Senha</label>
                             <span id="dt_agenda">
                                 <div class="controls">
-                                    <input id="senha" class="form-control" type="password" name="senha"/>
+                                    <input class="form-control" type="password" name="senha"/>
                                 </div>
                             </span>
                         </div>
@@ -52,11 +52,10 @@
                             <label class="control-label">Confirme a senha</label>
                             <span id="dt_agenda2">
                                 <div class="controls">
-                                    <input class="form-control" type="password" name="confirma_senha" />
+                                    <input  class="form-control" type="password" name="confirma_senha"/>
                                 </div>
                             </span>
                         </div>
-                        <div id="senha-status"></div>
                     </div>
                     <?php
                 }
@@ -155,34 +154,6 @@
                 });
 
                 e.preventDefault();
-            }
-        });
-
-        $("#celular").mask('(00)00000-0000', {
-            placeholder: '(__)_____-____'
-        })
-        $("#telFixo").mask('0000-0000', {
-            placeholder: '____-____'
-        });
-        $("#senha").keyup(function() {
-            var numeros = /([0-9])/;
-            var letras = /([a-zA-Z])/;
-            var caracteres_especiais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
-
-            if ($('#senha').val().length < 6) {
-                $('#senha-status').removeClass();
-                $('#senha-status').addClass('alert alert-warning');
-                $('#senha-status').html("Fraca (Deve ter pelo menos 6 caracteres)");
-            } else {
-                if ($('#senha').val().match(numeros) && $('#senha').val().match(letras) && $('#senha').val().match(caracteres_especiais)) {
-                    $('#senha-status').removeClass();
-                    $('#senha-status').addClass('alert alert-success');
-                    $('#senha-status').html("Forte");
-                } else {
-                    $('#senha-status').removeClass();
-                    $('#senha-status').addClass('alert alert-info');
-                    $('#senha-status').html("Média (Deve conter letras, números e caracteres especiais)");
-                }
             }
         });
     });

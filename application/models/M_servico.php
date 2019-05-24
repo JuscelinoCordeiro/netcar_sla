@@ -137,17 +137,18 @@
                     throw new Exception("Erro ao cadastrar na tabela serviço.");
                 }
 
-//                print_r($tipo_veiculos);
-//                die();
-                foreach ($tipo_veiculos as $tpv) {
-                    $sql_tarifa = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
-                    $insert2 = $this->db->query($sql_tarifa, array((int) $tpv, $novo_cod));
+                $insert2 = TRUE;
+                if (!empty($tipo_veiculos)) {
+                    foreach ($tipo_veiculos as $tpv) {
+                        $sql_tarifa = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
+                        $insert2 = $this->db->query($sql_tarifa, array((int) $tpv, $novo_cod));
 
-//                echo "<pre> " . $this->db->last_query();
-                    if ($insert2 === FALSE) {
-                        throw new Exception("Erro ao cadastrar na tabela tarifa.");
+                        if ($insert2 === FALSE) {
+                            throw new Exception("Erro ao cadastrar na tabela tarifa.");
+                        }
                     }
                 }
+
 
                 if ($insert1 === TRUE && $insert2 == TRUE) {
                     return 1;
