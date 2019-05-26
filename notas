@@ -11,7 +11,7 @@ A FAZER
 - exclusao de serviço com agendamento ja realizado ???
 - excluir usuarios sem agendamentos
 - cadastro de senha no caso de usuario criado sem senha
-- mudar a msg na tela de pesquisa agendamento periodo para o usuario sem agendamentos
+- mudar a msg na tela de pesquisa agendamento periodo para o usuario sem agendamentos OK
 - tabela para armazenar varios perfis por usuario (usuario_perfil)
 
 ================================================================================

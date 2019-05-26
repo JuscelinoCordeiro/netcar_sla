@@ -9,6 +9,12 @@
             parent::__construct();
         }
 
+        public function cadastrarTarifa($cd_tpveiculo, $cd_servico) {
+            $sql = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
+
+            return $this->db->query($sql, array($cd_tpveiculo, $cd_servico));
+        }
+
         public function getTarifas() {
             $sql = "SELECT t.*, tv.tipo, s.servico
                 FROM tarifa t
@@ -42,6 +48,18 @@
                 where cd_servico = ? and cd_tpveiculo = ?";
 
             return $this->db->query($sql, array($tarifa->preco, (int) $tarifa->servico, (int) $tarifa->tipo_veiculo));
+        }
+
+        public function excluirTarifa($cd_servico) {
+            $sql = "delete from tarifa where cd_servico = ?";
+
+            return $this->db->query($sql, $cd_servico);
+        }
+
+        public function excluirTarifaTpVeiculo($cd_tpveiculo, $cd_servico) {
+            $sql = "delete from tarifa where cd_tpveiculo = ? and cd_servico = ?";
+
+            return $this->db->query($sql, array($cd_tpveiculo, $cd_servico));
         }
 
     }

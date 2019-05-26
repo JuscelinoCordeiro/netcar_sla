@@ -33,31 +33,8 @@
         }
 
         public function excluirServico($cd_servico) {
-            try {
-                $sql_serv = "delete from servico where cd_servico = ?";
-                $result_serv = $this->db->query($sql_serv, $cd_servico);
-
-                if ($result_serv === FALSE) {
-                    throw new Exception("Erro ao excluir na tabela serviço.");
-                }
-
-                $sql_tarifa = "delete from tarifa where cd_servico = ?";
-
-                $result_tarifa = $this->db->query($sql_tarifa, $cd_servico);
-
-                if ($result_tarifa === FALSE) {
-                    throw new Exception("Erro ao excluir na tabela tarifa.");
-                }
-
-                //verifica se houve erros
-                if ($result_serv === TRUE && $result_tarifa == TRUE) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            } catch (Exception $ex) {
-                return 0;
-            }
+            $sql = "delete from servico where cd_servico = ?";
+            return $this->db->query($sql, $cd_servico);
         }
 
         public function editarServico($cd_servico, $servico, $tipo_veiculos) {
@@ -80,15 +57,17 @@
                     array_push($tarifados, $tarifa->cd_tpveiculo);
                 }
 
-                //monta qa query para a tebela tarifas
-                $insert_tarifa = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
-                $del_tarifa = "delete from tarifa where cd_tpveiculo = ? and cd_servico = ?";
-
-                //se o tipo se serviço por tipo_veiculo nao existir, cadastra na tabela tarifas
+                //monta a query para a tabela tarifas
+//                $insert_tarifa = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
+//                $del_tarifa = "delete from tarifa where cd_tpveiculo = ? and cd_servico = ?";
+//
+//                
+                //se o tipo se serviço por tipo_veiculo nao estiver tarifado, cadastra na tabela tarifas
                 $result_up_tarifa = TRUE;
                 foreach ($tipo_veiculos as $tpveiculo) {
                     if (!in_array($tpveiculo, $tarifados)) {
-                        $result_up_tarifa = $this->db->query($insert_tarifa, array((int) $tpveiculo, $cd_servico));
+//                        $result_up_tarifa = $this->db->query($insert_tarifa, array((int) $tpveiculo, $cd_servico));
+                        $result_up_tarifa = $this->m_tarifa->cadastrarTarifa($tpveiculo, $cd_servico);
                         if ($result_up_tarifa === FALSE) {
                             throw new Exception("Erro ao cadastrar na tabela tarifa.");
                         }
@@ -99,7 +78,8 @@
                 $result_del_tarifa = TRUE;
                 foreach ($tarifados as $tarifado) {
                     if (!in_array($tarifado, $tipo_veiculos)) {
-                        $result_del_tarifa = $this->db->query($del_tarifa, array($tarifado, $cd_servico));
+//                        $result_del_tarifa = $this->db->query($del_tarifa, array($tarifado, $cd_servico));
+                        $result_del_tarifa = $this->m_tarifa->excluirTarifaTpVeiculo($tarifado, $cd_servico);
 
                         if ($result_del_tarifa === FALSE) {
                             throw new Exception("Erro ao cadastrar na tabela tarifa.");
@@ -119,6 +99,7 @@
         }
 
         public function cadastrarServico($servico, $tipo_veiculos) {
+            $this->load->model('m_tarifa');
             try {
 
                 $sql_ultimoSv = "select MAX(cd_servico) ultimo_cod from servico";
@@ -140,8 +121,9 @@
                 $insert2 = TRUE;
                 if (!empty($tipo_veiculos)) {
                     foreach ($tipo_veiculos as $tpv) {
-                        $sql_tarifa = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
-                        $insert2 = $this->db->query($sql_tarifa, array((int) $tpv, $novo_cod));
+                        $insert2 = $this->m_tarifa->cadastrarTarifa($tpv, $novo_cod);
+//                        $sql_tarifa = "insert into tarifa (cd_tpveiculo, cd_servico) values (?, ?)";
+//                        $insert2 = $this->db->query($sql_tarifa, array((int) $tpv, $novo_cod));
 
                         if ($insert2 === FALSE) {
                             throw new Exception("Erro ao cadastrar na tabela tarifa.");

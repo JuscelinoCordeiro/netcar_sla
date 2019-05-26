@@ -40,6 +40,8 @@
                 //editar
                 $retorno = $this->m_servico->editarServico($cd_servico, $servico, $tipo_veiculos);
 
+
+
                 if ($retorno) {
                     echo 1;
                 } else {
@@ -86,11 +88,20 @@
         }
 
         public function excluirServico() {
+            $this->load->model('m_tarifa');
             $cd_servico = $this->security->xss_clean($this->input->post('cd_servico'));
 
-            $retorno = $this->m_servico->excluirServico($cd_servico);
+            //excluindo o serviço
+            $retorno1 = $this->m_servico->excluirServico($cd_servico);
 
-            if ($retorno) {
+            //excluindo as tarifas do serviço caso existam
+            $retorno2 = TRUE;
+            $tarifas = $this->m_tarifa->getTarifaServico($cd_servico);
+            if ($tarifas->num_rows() > 0) {
+                $retorno2 = $this->m_tarifa->excluirTarifa($cd_servico);
+            }
+
+            if ($retorno1 && $retorno2) {
                 echo 1;
             } else {
                 echo 0;
