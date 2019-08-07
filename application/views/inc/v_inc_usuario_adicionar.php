@@ -167,11 +167,11 @@
         $("#senha").keyup(function() {
             var numeros = /([0-9])/;
             var letras = /([a-zA-Z])/;
-            var caracteres_especiais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+            var caracteres_especiais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<,:])/;
 
             if ($('#senha').val().length < 6) {
                 $('#senha-status').removeClass();
-                $('#senha-status').addClass('alert alert-warning');
+                $('#senha-status').addClass('alert alert-danger');
                 $('#senha-status').html("Fraca (Deve ter pelo menos 6 caracteres)");
             } else {
                 if ($('#senha').val().match(numeros) && $('#senha').val().match(letras) && $('#senha').val().match(caracteres_especiais)) {
@@ -180,7 +180,7 @@
                     $('#senha-status').html("Forte");
                 } else {
                     $('#senha-status').removeClass();
-                    $('#senha-status').addClass('alert alert-info');
+                    $('#senha-status').addClass('alert alert-warning');
                     $('#senha-status').html("Média (Deve conter letras, números e caracteres especiais)");
                 }
             }

@@ -41,9 +41,9 @@
                 $perfil_usuario_logado = ($this->session->userdata('dados_usuario')->nivel);
 
                 if (validaPerfil(array(M_perfil::Cliente), $perfil_usuario_logado)) {
-                    $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim, $cd_usuario_logado)->result();
+                    $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim, $cd_usuario_logado);
                 } else {
-                    $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim)->result();
+                    $dados['agendamentos'] = $this->m_agendamento->getAgendamentoByData($dt_ini, $dt_fim);
                 }
 
                 $dados['dt_inicio'] = $dt_ini;
