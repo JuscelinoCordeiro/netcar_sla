@@ -13,7 +13,6 @@
 
         public function index() {
 
-            $teste = 0;
             $info['titulo'] = "Veículos";
             $dados['veiculos'] = $this->m_veiculo->getVeiculos();
             $this->load->view('header', $info);
