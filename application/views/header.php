@@ -27,8 +27,6 @@
         <script type="text/javascript" src="<?= base_url('assets/js/spry/SpryValidationTextField.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui/js/jquery-ui-1.10.4.custom.js') ?>"></script>
         <script type="text/javascript" src="<?= base_url('assets/js/js_navbar.js') ?>"></script>
-        <script type="text/javascript" src="<?= base_url('assets/js/mask/dist/jquery.mask.min.js') ?>"></script>
-
     </head>
     <body>
         <div id="main" class="container-fluid">

@@ -25,7 +25,7 @@
       |
      */
     $config['base_url'] = 'http://localhost/netcar';
-//$config['base_url'] = 'http://192.168.0.8/netcar';
+//$config['base_url'] = 'http://45.162.228.171:9052/netcar';
 
     /*
       |--------------------------------------------------------------------------
