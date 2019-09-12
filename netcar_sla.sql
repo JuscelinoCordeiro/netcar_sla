@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2.1
--- http://www.phpmyadmin.net
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 24/05/2019 às 15:39
--- Versão do servidor: 5.7.26-0ubuntu0.16.04.1
--- Versão do PHP: 7.0.33-0ubuntu0.16.04.4
+-- Host: localhost:3306
+-- Tempo de geração: 12/09/2019 às 18:45
+-- Versão do servidor: 5.7.27-0ubuntu0.18.04.1
+-- Versão do PHP: 7.2.19-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -35,10 +37,10 @@ CREATE TABLE `agendamento` (
   `data` date NOT NULL,
   `horario` time NOT NULL,
   `status` tinyint(4) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `agendamento`
+-- Despejando dados para a tabela `agendamento`
 --
 
 INSERT INTO `agendamento` (`cd_agendamento`, `cd_usuario`, `cd_tpveiculo`, `cd_servico`, `placa`, `data`, `horario`, `status`) VALUES
@@ -54,10 +56,8 @@ INSERT INTO `agendamento` (`cd_agendamento`, `cd_usuario`, `cd_tpveiculo`, `cd_s
 (14, 6, 3, 4, NULL, '2019-03-25', '10:08:00', 1),
 (15, 6, 3, 4, NULL, '2019-05-10', '10:08:00', 1),
 (16, 6, 3, 4, NULL, '2019-05-10', '10:08:00', 1),
-(18, 2, 2, 1, 'pai4085', '2019-05-24', '14:00:00', 1),
-(19, 141, 2, 2, 'jkl-9090', '2019-05-24', '14:20:00', 0),
-(20, 141, 3, 2, 'tat0606', '2019-05-24', '14:40:00', 0),
-(21, 141, 1, 1, 'jkl-4567', '2019-05-24', '18:00:00', 0);
+(17, 1, 2, 2, 'ppp-5566', '2019-05-10', '23:00:00', 1),
+(20, 141, 2, 1, '---', '2019-09-05', '12:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -72,10 +72,10 @@ CREATE TABLE `faturamento` (
   `data` date NOT NULL,
   `horario` time NOT NULL,
   `valor` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `faturamento`
+-- Despejando dados para a tabela `faturamento`
 --
 
 INSERT INTO `faturamento` (`cd_fatura`, `cd_tpveiculo`, `cd_servico`, `data`, `horario`, `valor`) VALUES
@@ -86,18 +86,7 @@ INSERT INTO `faturamento` (`cd_fatura`, `cd_tpveiculo`, `cd_servico`, `data`, `h
 (13, 3, 4, '2019-05-10', '10:08:00', 20),
 (14, 3, 4, '2019-03-25', '10:08:00', 20),
 (15, 2, 3, '2019-03-22', '17:19:00', 10),
-(16, 2, 1, '2019-05-24', '14:00:00', 15);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `horario`
---
-
-CREATE TABLE `horario` (
-  `cd_horario` int(11) NOT NULL,
-  `horario` time DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(16, 2, 1, '2019-09-05', '12:00:00', 15);
 
 -- --------------------------------------------------------
 
@@ -109,10 +98,10 @@ CREATE TABLE `servico` (
   `cd_servico` int(11) NOT NULL,
   `servico` varchar(45) NOT NULL,
   `ativo` tinyint(4) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `servico`
+-- Despejando dados para a tabela `servico`
 --
 
 INSERT INTO `servico` (`cd_servico`, `servico`, `ativo`) VALUES
@@ -120,7 +109,8 @@ INSERT INTO `servico` (`cd_servico`, `servico`, `ativo`) VALUES
 (2, 'lavagem americana', 1),
 (3, 'aspiração', 1),
 (4, 'lavagem geral', 1),
-(7, 'Lavagem + secagem', 0);
+(7, 'Lavagem + secagem', 1),
+(8, 'POLIMENTO', 0);
 
 -- --------------------------------------------------------
 
@@ -132,10 +122,10 @@ CREATE TABLE `tarifa` (
   `cd_tpveiculo` int(11) NOT NULL,
   `cd_servico` int(11) NOT NULL,
   `preco` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `tarifa`
+-- Despejando dados para a tabela `tarifa`
 --
 
 INSERT INTO `tarifa` (`cd_tpveiculo`, `cd_servico`, `preco`) VALUES
@@ -144,7 +134,7 @@ INSERT INTO `tarifa` (`cd_tpveiculo`, `cd_servico`, `preco`) VALUES
 (2, 3, 10),
 (2, 4, 20),
 (3, 2, 35),
-(3, 3, 0),
+(3, 3, 10),
 (3, 4, 20),
 (4, 2, 50),
 (4, 3, 10),
@@ -157,24 +147,22 @@ INSERT INTO `tarifa` (`cd_tpveiculo`, `cd_servico`, `preco`) VALUES
 (3, 6, NULL),
 (4, 6, NULL),
 (5, 6, NULL),
-(7, 3, NULL),
 (1, 7, NULL),
 (2, 7, NULL),
 (3, 7, NULL),
 (6, 6, NULL),
-(7, 6, NULL),
 (6, 5, NULL),
-(7, 5, NULL),
-(7, 4, 50),
-(7, 2, NULL),
 (1, 1, 12),
-(3, 1, NULL),
+(3, 1, 0),
 (4, 1, NULL),
 (5, 1, NULL),
 (6, 1, NULL),
-(7, 1, 25),
-(3, 9, NULL),
-(4, 9, NULL);
+(11, 1, NULL),
+(7, 2, NULL),
+(7, 7, NULL),
+(11, 7, NULL),
+(2, 8, NULL),
+(3, 8, NULL);
 
 -- --------------------------------------------------------
 
@@ -185,10 +173,10 @@ INSERT INTO `tarifa` (`cd_tpveiculo`, `cd_servico`, `preco`) VALUES
 CREATE TABLE `tipo_veiculo` (
   `cd_tpveiculo` int(11) NOT NULL,
   `tipo` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `tipo_veiculo`
+-- Despejando dados para a tabela `tipo_veiculo`
 --
 
 INSERT INTO `tipo_veiculo` (`cd_tpveiculo`, `tipo`) VALUES
@@ -212,27 +200,26 @@ CREATE TABLE `usuario` (
   `endereco` varchar(245) DEFAULT NULL,
   `celular` varchar(45) DEFAULT NULL,
   `fixo` varchar(45) DEFAULT NULL,
-  `senha` varchar(200) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL,
   `nivel` int(4) DEFAULT '0',
   `idt` varchar(11) NOT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `usuario`
+-- Despejando dados para a tabela `usuario`
 --
 
 INSERT INTO `usuario` (`cd_usuario`, `nome`, `endereco`, `celular`, `fixo`, `senha`, `nivel`, `idt`, `ativo`) VALUES
-(1, 'Manoel Souza', 'Rua da laguna', '99988-7766', '3312-4567', '51eac6b471a284d3341d8c0c63d0f1a286262a18', 0, '123', 0),
-(2, 'Joaquim', 'Travessa Arlequim', '98765-4321', '3344-5566', '51eac6b471a284d3341d8c0c63d0f1a286262a18', 1, '1234', 1),
-(3, 'Lorena Rocco', 'Rua Feitosa Bruna', '99856-9090', '3107-7788', '51eac6b471a284d3341d8c0c63d0f1a286262a18', 2, '12345', 1),
-(5, 'Jose Pereira da silva', 'tv barcelos 563', '99856-0000', '5390-6723', '51eac6b471a284d3341d8c0c63d0f1a286262a18', 3, '123456', 1),
-(6, 'Thiago Bruno', 'Rua da Pátria', '99856-9090', '3107-7788', '51eac6b471a284d3341d8c0c63d0f1a286262a18', 0, '567', 0),
-(7, 'Jose Alfredo', 'Rua Ibirapora 356', '2345-6789', '9900-8875', '51eac6b471a284d3341d8c0c63d0f1a286262a18', 0, '678', 1),
-(8, 'Suzane', 'Rua da Pedreira', '88888-8888', '2233-8899', '51eac6b471a284d3341d8c0c63d0f1a286262a18', 0, '789', 0),
+(1, 'Manoel Souza', 'Rua da laguna', '99988-7766', '3312-4567', '456', 0, '123', 0),
+(2, 'Joaquim', 'Travessa Arlequim', '98765-4321', '3344-5566', '456', 1, '1234', 1),
+(3, 'Lorena Rocco', 'Rua Feitosa Bruna', '99856-9090', '3107-7788', '456', 2, '12345', 1),
+(5, 'Jose Pereira', 'tv barcelos 563', '99856-0000', '5390-6723', '456', 3, '123456', 1),
+(6, 'Thiago Bruno', 'Rua da Pátria', '99856-9090', '3107-7788', '456', 0, '567', 0),
+(7, 'Jose Alfredo', 'Rua Ibirapora', '2345-6789', '9900-8875', '456', 0, '678', 1),
+(8, 'Suzane', 'Rua da Pedreira', '88888-8888', '2233-8899', '456', 0, '789', 0),
 (108, 'Fortunato', 'rua pedreira', '8899-5564', '3366-8989', NULL, 0, '12389', 0),
-(141, 'cliente balcão', 'loja', '999', '9999-9999', NULL, 0, '99999999999', 1),
-(150, 'Perla Fonseca', 'sqn 305, bloco j, apto 203 - asa norte', '0', '0', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 0, '12340078', 0);
+(141, 'cliente balcão', 'loja', '999', '999', NULL, 0, '99999999999', 1);
 
 -- --------------------------------------------------------
 
@@ -243,10 +230,10 @@ INSERT INTO `usuario` (`cd_usuario`, `nome`, `endereco`, `celular`, `fixo`, `sen
 CREATE TABLE `usuario_perfil` (
   `id_perfil` int(11) NOT NULL,
   `perfil` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Fazendo dump de dados para tabela `usuario_perfil`
+-- Despejando dados para a tabela `usuario_perfil`
 --
 
 INSERT INTO `usuario_perfil` (`id_perfil`, `perfil`) VALUES
@@ -254,16 +241,6 @@ INSERT INTO `usuario_perfil` (`id_perfil`, `perfil`) VALUES
 (1, 'Operador'),
 (2, 'Financeiro'),
 (3, 'Gerente');
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `veiculo`
---
-
-CREATE TABLE `veiculo` (
-  `cd_veiculo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Índices de tabelas apagadas
@@ -283,12 +260,6 @@ ALTER TABLE `agendamento`
 --
 ALTER TABLE `faturamento`
   ADD PRIMARY KEY (`cd_fatura`);
-
---
--- Índices de tabela `horario`
---
-ALTER TABLE `horario`
-  ADD PRIMARY KEY (`cd_horario`);
 
 --
 -- Índices de tabela `servico`
@@ -315,12 +286,6 @@ ALTER TABLE `usuario_perfil`
   ADD PRIMARY KEY (`id_perfil`);
 
 --
--- Índices de tabela `veiculo`
---
-ALTER TABLE `veiculo`
-  ADD PRIMARY KEY (`cd_veiculo`);
-
---
 -- AUTO_INCREMENT de tabelas apagadas
 --
 
@@ -328,42 +293,38 @@ ALTER TABLE `veiculo`
 -- AUTO_INCREMENT de tabela `agendamento`
 --
 ALTER TABLE `agendamento`
-  MODIFY `cd_agendamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `cd_agendamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
 --
 -- AUTO_INCREMENT de tabela `faturamento`
 --
 ALTER TABLE `faturamento`
   MODIFY `cd_fatura` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT de tabela `horario`
---
-ALTER TABLE `horario`
-  MODIFY `cd_horario` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de tabela `servico`
 --
 ALTER TABLE `servico`
   MODIFY `cd_servico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT de tabela `tipo_veiculo`
 --
 ALTER TABLE `tipo_veiculo`
-  MODIFY `cd_tpveiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `cd_tpveiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `cd_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `cd_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+
 --
 -- AUTO_INCREMENT de tabela `usuario_perfil`
 --
 ALTER TABLE `usuario_perfil`
   MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT de tabela `veiculo`
---
-ALTER TABLE `veiculo`
-  MODIFY `cd_veiculo` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- Restrições para dumps de tabelas
 --
@@ -375,6 +336,7 @@ ALTER TABLE `agendamento`
   ADD CONSTRAINT `fk_agendamento_servico1` FOREIGN KEY (`cd_servico`) REFERENCES `servico` (`cd_servico`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_agendamento_tipo_veiculo1` FOREIGN KEY (`cd_tpveiculo`) REFERENCES `tipo_veiculo` (`cd_tpveiculo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_table1_usuario1` FOREIGN KEY (`cd_usuario`) REFERENCES `usuario` (`cd_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
